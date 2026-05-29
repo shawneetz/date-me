@@ -1,6 +1,12 @@
 // src/data/shawn.js
 // This is YOUR resume. Edit any field and it updates everywhere.
 
+import hobby1 from "../assets/hobby-1.png";
+import hobby2 from "../assets/hobby-2.png";
+import hobby3 from "../assets/hobby-3.png";
+import hobby4 from "../assets/hobby-4.png";
+import hobby5 from "../assets/hobby-5.png";
+import hobby6 from "../assets/hobby-6.png";
 import { personalTakesCategories } from "./personalTakesCategories";
 
 export const shawnProfile = {
@@ -45,11 +51,10 @@ export const shawnProfile = {
   hobbies: [
     {
       id: "manhwa",
-      title: "Reading Manhwa / Manga",
+      title: "Reading Manhwa & Manga",
       description:
         "I love stories in general, but the visual medium of manhwa and manga makes them hit differently — I get lost in the art as much as the plot. Ask me for recommendations; I have opinions.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1612036782180-6f0b6cd7d37c?w=800&q=80",
+      imageUrl: hobby1,
       imageAlt: "Stack of manga volumes",
     },
     {
@@ -57,17 +62,15 @@ export const shawnProfile = {
       title: "Watching Anime",
       description:
         "It started as entertainment, became a love for storytelling craft. Some of my biggest inspirations come from anime — the way emotion is animated in this medium is unlike anything else.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&q=80",
+      imageUrl: hobby2,
       imageAlt: "Anime-style city lights at night",
     },
     {
       id: "diy",
-      title: "DIY & Electronics Projects",
+      title: "DIY & Electronics",
       description:
         "Former robotics competitor. I love engineering things — making a microcontroller do something useful, 3D modeling parts, and figuring out how systems work by taking them apart (and hopefully putting them back together).",
-      imageUrl:
-        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80",
+      imageUrl: hobby3,
       imageAlt: "Electronics workbench with tools",
     },
     {
@@ -75,17 +78,15 @@ export const shawnProfile = {
       title: "Programming",
       description:
         "CS student by study, builder by nature. I find something deeply satisfying about creating something from nothing — a working system, a tool, a small program that solves a real problem.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&q=80",
+      imageUrl: hobby4,
       imageAlt: "Code on a laptop screen",
     },
     {
       id: "travel",
-      title: "Travelling & Trying New Things",
+      title: "Travelling",
       description:
         "I think the best version of yourself comes from exposure — new places, new food, new conversations. I'm the kind of person who says yes to things before thinking too hard about them.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80",
+      imageUrl: hobby5,
       imageAlt: "Travel map and camera on a table",
     },
     {
@@ -93,8 +94,7 @@ export const shawnProfile = {
       title: "Cooking",
       description:
         "Cooking is one of the ways I take care of people. I experiment more than I follow recipes and I'll happily cook for you — no occasion needed.",
-      imageUrl:
-        "https://images.unsplash.com/photo-1556910103-1c02745aae4d?w=800&q=80",
+      imageUrl: hobby6,
       imageAlt: "Home cooking in a pan",
     },
   ],

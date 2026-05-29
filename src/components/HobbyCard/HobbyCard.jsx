@@ -1,31 +1,30 @@
 import "./HobbyCard.css";
+import { truncateHobbyDescription } from "../../utils/hobbyCard";
 
 /**
  * HobbyCard
- * Purpose: Display hobby card with image, title, and truncated description (for carousel)
- *
- * Pipeline:
- * Props (title, description, imageUrl, imageAlt)
- *   -> Call truncateHobbyDescription(description)
- *   -> Render media section (image OR placeholder gradient)
- *   -> Render body (title + truncated text)
+ * Purpose: Standalone hobby card (not used by the arcade HobbiesSection —
+ * the arcade layout renders media inline). Kept for potential reuse.
  */
-import { truncateHobbyDescription } from "../../utils/hobbyCard";
-
 export default function HobbyCard({ title, description, imageUrl, imageAlt }) {
   const text = truncateHobbyDescription(description);
 
   return (
     <article className="hobby-card">
-      <div className="hobby-card-media">
+      <h3 className="hobby-card-title">{title}</h3>
+
+      <div className="hobby-card-screen">
         {imageUrl ? (
           <img src={imageUrl} alt={imageAlt || title} loading="lazy" />
         ) : (
-          <div className="hobby-card-placeholder" aria-hidden="true" />
+          <div className="hobby-card-placeholder" aria-hidden="true">
+            NO SIGNAL
+          </div>
         )}
+        <div className="hobby-card-scanlines" aria-hidden="true" />
       </div>
+
       <div className="hobby-card-body">
-        <h3 className="hobby-card-title">{title}</h3>
         <p className="hobby-card-description">{text}</p>
       </div>
     </article>

@@ -1,212 +1,893 @@
 @import "../shared/section-layout.css";
-@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-/* Hobbies carousel — layout + retro controls (scoped to carousel only) */
+/* ═══════════════════════════════════════════════════════════
+   HOBBIES SECTION — Coin-Op Arcade Cabinet
+   The whole section IS the cabinet. Top to bottom:
+   [MARQUEE] → [SCREEN / DETAIL] → [DIVIDER RAIL] → [CONTROL PANEL / CAROUSEL]
+═══════════════════════════════════════════════════════════ */
 
-.hobbies-carousel {
-  --hobby-gap: 0.75rem;
-  --hobby-card-height: 440px;
-  --hobby-slide-width: 100%;
-
-  position: relative;
+.hs-section {
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0;
   width: 100%;
-  overflow: hidden;
 }
 
-.hobbies-carousel::after {
+/* ── CABINET SHELL ─────────────────────────────────────────
+   Double-border trick: outer ring (dark) + inner ring (accent)
+   Corner "bolts" via pseudo-elements.
+──────────────────────────────────────────────────────────── */
+.hs-cabinet {
+  position: relative;
+  background: var(--building-dark);
+  /* Outer border = cabinet metal casing */
+  border: 4px solid #0a0e14;
+  /* Inner border = neon trim via outline */
+  outline: 2px solid var(--sky-teal);
+  outline-offset: -6px;
+  border-radius: 0;
+  overflow: visible; /* let corner bolts bleed outside */
+  box-shadow:
+    0 0 0 1px #000,
+    8px 8px 0 #000,
+    0 0 32px rgba(30, 95, 110, 0.25),
+    inset 0 0 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Corner bolts — 4 pixel squares at each corner */
+.hs-cabinet::before,
+.hs-cabinet::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--sky-dusk);
+  box-shadow: 1px 1px 0 #000;
+  z-index: 10;
+}
+.hs-cabinet::before {
+  top: -1px;
+  left: -1px;
+}
+.hs-cabinet::after {
+  top: -1px;
+  right: -1px;
+}
+
+/* Two more bolts via a wrapper span injected in JSX */
+.hs-cabinet-bolt-bl,
+.hs-cabinet-bolt-br {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--sky-dusk);
+  box-shadow: 1px 1px 0 #000;
+  z-index: 10;
+  pointer-events: none;
+}
+.hs-cabinet-bolt-bl {
+  bottom: -1px;
+  left: -1px;
+}
+.hs-cabinet-bolt-br {
+  bottom: -1px;
+  right: -1px;
+}
+
+/* ── MARQUEE ───────────────────────────────────────────────
+   Simulates the light-box header above a real cabinet screen.
+   Diagonal hazard stripes + glowing title.
+──────────────────────────────────────────────────────────── */
+.hs-marquee {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  border-bottom: 3px solid #000;
+}
+
+/* Hazard stripe background */
+.hs-marquee::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 180px 180px;
+  background: repeating-linear-gradient(
+    -45deg,
+    #0a0e14 0px,
+    #0a0e14 6px,
+    #0d1520 6px,
+    #0d1520 12px
+  );
+  opacity: 0.9;
 }
 
-.hobbies-carousel-stage {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  width: 100%;
+/* Amber neon glow strip at the bottom of the marquee */
+.hs-marquee::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--sky-amber);
+  box-shadow: 0 0 8px 2px rgba(232, 164, 74, 0.6);
 }
 
-.hobbies-carousel-viewport {
-  flex: 1;
-  min-width: 0;
-  height: var(--hobby-card-height);
-  overflow: hidden;
-  touch-action: pan-y;
-}
-
-.hobbies-carousel-track {
-  display: flex;
-  align-items: center;
-  gap: var(--hobby-gap);
-  height: 100%;
-  will-change: transform;
-  transition: transform 300ms ease;
-}
-
-.hobbies-carousel-track.is-instant {
-  transition: none;
-}
-
-.hobbies-carousel-slide {
-  --hobby-accent: var(--sky-amber);
-
-  flex: 0 0 var(--hobby-slide-width);
-  width: var(--hobby-slide-width);
-  height: 100%;
-  flex-shrink: 0;
-  opacity: 1;
-  transform: scale(1);
-  filter: none;
-  transition:
-    opacity 300ms ease,
-    transform 300ms ease,
-    filter 300ms ease;
-}
-
-.carousel-controls {
+.hs-marquee-inner {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-top: 0.15rem;
-  padding: 0 0.5rem;
+  justify-content: space-between;
+  padding: 0.6rem 1rem 0.55rem;
+  gap: 0.5rem;
+}
+
+.hs-marquee-title {
+  font-family: "VT323", monospace;
+  font-size: 1.45rem;
+  letter-spacing: 0.2em;
+  color: var(--sky-amber);
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px rgba(232, 164, 74, 0.9),
+    0 0 20px rgba(232, 164, 74, 0.4);
+  line-height: 1;
+}
+
+.hs-marquee-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hs-marquee-coin {
+  font-family: "VT323", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--sky-gold);
+  background: rgba(240, 192, 96, 0.08);
+  border: 1px solid rgba(240, 192, 96, 0.3);
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+.hs-marquee-credits {
+  font-family: "VT323", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--light-red);
+  animation: marqueeCredsBlink 1.1s step-end infinite;
+}
+
+@keyframes marqueeCredsBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── LAYOUT ────────────────────────────────────────────────
+   Mobile: screen on top, control panel below
+   Desktop ≥900: screen left (55%), controls right (45%)
+──────────────────────────────────────────────────────────── */
+.hs-layout {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 900px) {
+  .hs-layout {
+    flex-direction: row;
+    align-items: stretch;
+    min-height: 380px;
+  }
+}
+
+/* ── SCREEN PANEL (detail view) ────────────────────────────
+   Styled as the CRT monitor inside the cabinet bezel.
+──────────────────────────────────────────────────────────── */
+.hs-detail-container {
+  position: relative;
+  width: 100%;
+  height: 290px;
+  /* Phosphor green ambient */
+  background: #010a06;
+  border-bottom: 3px solid #000;
+  overflow: hidden;
   flex-shrink: 0;
 }
 
-.carousel-nav-btn {
+@media (min-width: 900px) {
+  .hs-detail-container {
+    width: 55%;
+    height: auto;
+    min-height: 380px;
+    border-bottom: none;
+    border-right: 3px solid #000;
+  }
+}
+
+/* CRT vignette + phosphor tint */
+.hs-detail-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* Horizontal RGB scanlines — slightly coloured for CRT feel */
+.hs-detail-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 80, 0.015),
+    rgba(0, 255, 80, 0.015) 1px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 80, 255, 0.01) 2px,
+    rgba(0, 80, 255, 0.01) 3px,
+    transparent 3px,
+    transparent 4px
+  );
+  z-index: 7;
+}
+
+/* Screen bezel notch — top-right timestamp overlay */
+.hs-screen-hud {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  z-index: 8;
+  font-family: "VT323", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(96, 200, 208, 0.45);
+  pointer-events: none;
+  line-height: 1.5;
+  text-align: right;
+}
+
+/* Screen content */
+.hs-detail {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 1.1rem 1.35rem 1rem;
+  position: relative;
+  z-index: 5;
+}
+
+@media (min-width: 900px) {
+  .hs-detail {
+    padding: 1.65rem 1.75rem;
+  }
+}
+
+/* Animated slot accent bar on the left */
+.hs-detail-body {
+  position: relative;
+  padding-left: 1.1rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hs-detail-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--slot-accent, #f0c060);
+  box-shadow: 0 0 8px 1px var(--slot-accent, #f0c060);
+  opacity: 0.85;
+}
+
+/* Small "NOW LOADING" chip above the title */
+.hs-detail-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "VT323", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  color: var(--slot-accent, #f0c060);
+  margin-bottom: 0.3rem;
+  opacity: 0.7;
   flex-shrink: 0;
-  background: var(--building-mid);
-  border: 2px solid var(--sky-dusk);
-  border-radius: 0;
-  color: var(--sky-dusk);
-  width: 32px;
-  height: 32px;
+}
+
+.hs-detail-tag-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--slot-accent, #f0c060);
+  animation: tagDotBlink 0.9s step-end infinite;
+}
+
+@keyframes tagDotBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.hs-detail-title {
+  font-family: "VT323", monospace;
+  font-size: 1.55rem;
+  color: var(--slot-accent, #f0c060);
+  letter-spacing: 0.04em;
+  margin-top: 0;
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 10px rgba(var(--slot-accent-rgb, 240, 192, 96), 0.6),
+    0 0 30px rgba(var(--slot-accent-rgb, 240, 192, 96), 0.2);
+  flex-shrink: 0;
+  line-height: 1.05;
+}
+
+@media (min-width: 900px) {
+  .hs-detail-title {
+    font-size: 1.9rem;
+  }
+}
+
+.hs-detail-desc-container {
+  overflow-y: auto;
+  padding-right: 0.4rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.hs-detail-desc-container::-webkit-scrollbar {
+  display: none;
+}
+
+.hs-detail-desc {
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  color: rgba(168, 200, 224, 0.82);
+  line-height: 1.75;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .hs-detail-desc {
+    font-size: 0.75rem;
+  }
+}
+
+/* SKILL METER — health-bar style */
+.hs-detail-meter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0.85rem;
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(var(--slot-accent-rgb, 240, 192, 96), 0.18);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle inner glow */
+.hs-detail-meter::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--slot-accent-rgb, 240, 192, 96), 0.04) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+.hs-meter-label {
+  font-family: "VT323", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: rgba(46, 139, 138, 0.8);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.hs-meter-track {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* Each pip is a health-bar segment */
+.hs-meter-pip {
+  display: block;
+  flex: 1;
+  height: 7px;
+  background: var(--slot-accent, #f0c060);
+  clip-path: polygon(2px 0%, 100% 0%, calc(100% - 2px) 100%, 0% 100%);
+}
+
+/* ── DIVIDER RAIL ───────────────────────────────────────────
+   The physical metal bar between screen and control panel.
+──────────────────────────────────────────────────────────── */
+.hs-rail {
+  height: 14px;
+  background: #060c12;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.45rem;
-  line-height: 1;
-  box-shadow: 2px 2px 0 #000;
-  transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.15s ease,
-    transform 0.15s ease;
 }
 
-.carousel-nav-btn:hover:not(:disabled) {
-  border-color: var(--sky-amber);
-  color: var(--sky-amber);
-  background: rgba(232, 164, 74, 0.12);
+/* Rivet pattern along the rail */
+.hs-rail::before {
+  content: "· · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · · ·";
+  font-family: "VT323", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: rgba(30, 95, 110, 0.5);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.carousel-nav-btn:disabled {
-  opacity: 0.35;
-  cursor: not-allowed;
+@media (min-width: 900px) {
+  .hs-rail {
+    display: none;
+  } /* hidden on desktop — vertical divider used instead */
 }
 
-.carousel-nav-btn:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 0 0 0 #000;
-}
-
-.carousel-dots {
+/* ── CONTROL PANEL (carousel) ──────────────────────────────
+   The joystick + button panel below the screen.
+   Darker, more "industrial" feel.
+──────────────────────────────────────────────────────────── */
+.hs-carousel-wrapper {
+  background: #060c12;
   display: flex;
-  gap: 8px;
-  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
 }
 
-.carousel-dot {
-  --hobby-accent: var(--sky-amber);
-
-  width: 8px;
-  height: 8px;
-  border-radius: 0;
-  background: transparent;
-  border: 1px solid var(--sky-dusk);
-  cursor: pointer;
-  transition:
-    background 300ms ease,
-    border-color 300ms ease;
-  padding: 0;
+/* Subtle radial light from the center (overhead lamp effect) */
+.hs-carousel-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(30, 95, 110, 0.12) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
-.carousel-dot:hover {
-  border-color: var(--hobby-accent, var(--sky-amber));
+@media (min-width: 900px) {
+  .hs-carousel-wrapper {
+    width: 45%;
+    flex-shrink: 0;
+    /* Vertical divider on desktop */
+    border-left: 3px solid #000;
+    box-shadow: inset 2px 0 0 rgba(30, 95, 110, 0.2);
+  }
 }
 
-.carousel-dot.active {
-  background: var(--hobby-accent, var(--sky-amber));
-  border-color: var(--hobby-accent, var(--sky-amber));
-  box-shadow: none;
-  width: 8px;
-  height: 8px;
-}
-
-.carousel-counter {
+/* "INSERT COIN" strip — classic arcade prompt at top of control panel */
+.hs-insert-coin {
   position: relative;
   z-index: 2;
   text-align: center;
-  margin-top: 0;
-  flex-shrink: 0;
-  font-family: "Press Start 2P", monospace;
-  font-size: 0.6rem;
-  color: var(--sky-dusk);
-  letter-spacing: 0.04em;
+  padding: 0.5rem 0 0.1rem;
+  font-family: "VT323", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.3em;
+  color: var(--light-cyan);
+  text-transform: uppercase;
+  animation: insertCoinBlink 1.6s step-end infinite;
 }
 
-@media (max-width: 639px) {
-  .hobbies-carousel {
-    --hobby-slide-width: 100%;
+@keyframes insertCoinBlink {
+  0%,
+  100% {
+    opacity: 1;
   }
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  99% {
+    opacity: 0;
+  }
+}
 
-  .hobbies-carousel-slide {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-  }
+/* ── CAROUSEL CONTROLS ─────────────────────────────────────── */
+.hs-carousel-controls {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  flex: 1;
+  min-height: 0;
+  padding: 0.35rem 0 0.85rem;
+}
 
-  .hobbies-carousel-slide .hobby-card {
-    width: 87.5%;
-    max-width: 87.5%;
-  }
+/* JOYSTICK-STYLE NAV BUTTONS
+   Pixel-raised shadow makes them look like actual buttons */
+.hs-nav-btn {
+  position: relative;
+  background: #0d1a24;
+  border: 2px solid var(--sky-dusk);
+  /* Raised pixel shadow = bottom+right dark lines */
+  box-shadow:
+    3px 3px 0 #000,
+    inset 1px 1px 0 rgba(96, 200, 208, 0.12);
+  color: var(--sky-dusk);
+  font-size: 0.85rem;
+  padding: 0;
+  width: 30px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0;
+  flex-shrink: 0;
+  z-index: 20;
+  transition: none; /* instant pixel-press feel */
+  user-select: none;
+}
+
+.hs-nav-btn:hover {
+  background: #142232;
+  border-color: var(--light-cyan);
+  color: var(--light-cyan);
+  box-shadow:
+    3px 3px 0 #000,
+    inset 1px 1px 0 rgba(96, 200, 208, 0.2),
+    0 0 8px rgba(96, 200, 208, 0.2);
+}
+
+/* Pressed state — shadow collapses, button "sinks" */
+.hs-nav-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 #000;
 }
 
 @media (min-width: 640px) {
-  .hobbies-carousel {
-    --hobby-gap: 0.85rem;
-    --hobby-card-height: 360px;
-    --hobby-slide-width: 55%;
+  .hs-nav-btn {
+    width: 34px;
+    height: 62px;
+    font-size: 0.95rem;
   }
+}
 
-  .hobbies-carousel-slide .hobby-card {
-    width: 100%;
-    max-width: none;
+/* ── CAROUSEL STAGE ────────────────────────────────────────── */
+.hs-carousel-stage {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+  height: 210px;
+}
+
+@media (min-width: 640px) {
+  .hs-carousel-stage {
+    height: 250px;
   }
+}
 
-  .hobbies-carousel-slide:not(.is-active) {
-    opacity: 0.45;
-    filter: brightness(0.6);
-    transform: scale(0.88);
+/* P1 Pointer */
+.hs-pointer {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+  animation: pointerHover 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes pointerHover {
+  from {
+    transform: translate(-50%, 0px);
   }
+  to {
+    transform: translate(-50%, 5px);
+  }
+}
 
-  .hobbies-carousel-slide.is-active {
+.hs-pointer-text {
+  background: #c41010;
+  color: #fff;
+  font-family: "Press Start 2P", "VT323", monospace;
+  font-size: 0.5rem;
+  padding: 2px 5px;
+  /* Double border = pixel outline */
+  border: 2px solid #fff;
+  box-shadow: 1px 1px 0 #000;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+}
+
+.hs-pointer-arrow {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #c41010;
+  margin-top: -2px;
+  filter: drop-shadow(0 1px 0 #000);
+}
+
+/* ── SLOT CARDS ─────────────────────────────────────────────
+   Character portrait style.
+──────────────────────────────────────────────────────────── */
+.hs-slot {
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  aspect-ratio: 3 / 4;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -66px;
+}
+
+@media (min-width: 640px) {
+  .hs-slot {
+    width: 130px;
+    margin-left: -65px;
+    margin-top: -87px;
+  }
+}
+
+.hs-slot-media {
+  position: relative;
+  width: 100%;
+  flex-grow: 1;
+  background: #000;
+  /* Non-selected: flat dark border */
+  border: 2px solid #1a2535;
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 #000;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+/* Selected card — glowing accent border */
+.hs-slot--selected .hs-slot-media {
+  border-color: var(--slot-accent);
+  box-shadow:
+    3px 3px 0 #000,
+    0 0 12px rgba(var(--slot-accent-rgb), 0.55),
+    inset 0 0 8px rgba(var(--slot-accent-rgb), 0.1);
+}
+
+.hs-slot-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+  filter: contrast(1.1) saturate(0.6) brightness(0.5);
+  transition: filter 0.25s ease;
+}
+
+.hs-slot--selected .hs-slot-media img {
+  filter: contrast(1.15) saturate(1.1) brightness(1.05);
+}
+
+.hs-slot:hover:not(.hs-slot--selected) .hs-slot-media img {
+  filter: contrast(1.1) saturate(0.8) brightness(0.75);
+}
+
+.hs-slot-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1a1a2e 0%, #0a0e18 100%);
+}
+
+.hs-slot-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.2) 2px,
+    rgba(0, 0, 0, 0.2) 4px
+  );
+  z-index: 1;
+}
+
+/* Animated selection ring */
+.hs-slot-ring {
+  position: absolute;
+  inset: 3px;
+  border: 2px solid var(--slot-accent);
+  pointer-events: none;
+  z-index: 2;
+  animation: slotRingPulse 1.4s ease-in-out infinite;
+}
+
+.hs-slot-ring::before,
+.hs-slot-ring::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--slot-accent);
+  box-shadow: 0 0 4px var(--slot-accent);
+}
+.hs-slot-ring::before {
+  top: -3px;
+  left: -3px;
+}
+.hs-slot-ring::after {
+  bottom: -3px;
+  right: -3px;
+}
+
+@keyframes slotRingPulse {
+  0%,
+  100% {
     opacity: 1;
-    filter: none;
-    transform: scale(1);
+    box-shadow: 0 0 6px rgba(var(--slot-accent-rgb), 0.4);
   }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 2px rgba(var(--slot-accent-rgb), 0.1);
+  }
+}
+
+/* Name tag beneath the portrait */
+.hs-slot-footer {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
+/* HP-bar style name strip */
+.hs-slot-name-bar {
+  background: #000;
+  border: 1px solid #1a2535;
+  border-top: none;
+  padding: 3px 5px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+}
+
+.hs-slot--selected .hs-slot-name-bar {
+  background: rgba(var(--slot-accent-rgb), 0.1);
+  border-color: var(--slot-accent);
+}
+
+.hs-slot-channel {
+  font-family: "VT323", monospace;
+  font-size: 0.62rem;
+  color: #3a5060;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.hs-slot-name {
+  font-family: "VT323", monospace;
+  font-size: 0.65rem;
+  color: #4a7080;
+  text-align: right;
+  line-height: 1.1;
+  text-transform: uppercase;
+  transition: color 0.15s;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hs-slot--selected .hs-slot-channel,
+.hs-slot--selected .hs-slot-name {
+  color: var(--slot-accent);
+}
+
+/* ── INSERT COIN FOOTER ─────────────────────────────────────
+   Bottom strip of the whole cabinet.
+──────────────────────────────────────────────────────────── */
+.hs-coin-footer {
+  position: relative;
+  z-index: 2;
+  border-top: 2px solid #000;
+  background: #040810;
+  padding: 5px 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.hs-coin-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(30, 95, 110, 0.4) 30%,
+    rgba(30, 95, 110, 0.4) 70%,
+    transparent
+  );
+}
+
+.hs-coin-text {
+  font-family: "VT323", monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(30, 95, 110, 0.55);
+  text-transform: uppercase;
+}
+
+.hs-coin-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.hs-coin-dot {
+  width: 5px;
+  height: 5px;
+  background: rgba(30, 95, 110, 0.3);
+}
+
+.hs-coin-dot.active {
+  background: var(--sky-teal);
+  box-shadow: 0 0 4px var(--sky-teal);
 }

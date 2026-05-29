@@ -1,275 +1,556 @@
-/* ── Hero: Option C layout ───────────────────────────────────────── */
+/* ── Hero: Retro ID Card / Player Profile ────────────────────────── */
+
+@import url("https://fonts.googleapis.com/css2?family=VT323:wght@400&display=swap");
 
 .hero {
   width: 100%;
   box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 180px 1px 1fr;
-  grid-template-rows: 1fr;
-  column-gap: 0;
-  align-items: stretch;
-  margin-top: 2rem;
+  position: relative;
+  margin-top: 1.5rem;
   margin-bottom: 0;
-  min-height: 0;
 }
 
-/* ── Left column ─────────────────────────────────────────────────── */
+/* ── Outer card frame ─────────────────────────────────────────────── */
+.hero-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
+  border: 2px solid var(--sky-teal);
+  box-shadow:
+    4px 4px 0 #000,
+    0 0 32px rgba(96, 200, 208, 0.07);
+  position: relative;
+  overflow: hidden;
+  background: var(--building-dark);
+}
 
-.hero-left {
+/* Scanline overlay on the whole card */
+.hero-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.045) 3px,
+    rgba(0, 0, 0, 0.045) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* ── Top bar ───────────────────────────────────────────────────────── */
+.hero-topbar {
+  grid-column: 1 / -1;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding-right: 20px;
-  padding-bottom: 4px;
+  justify-content: space-between;
+  padding: 5px 10px 5px 8px;
+  background: var(--teal-shadow);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.07) 1px,
+    rgba(0, 0, 0, 0.07) 2px
+  );
+  user-select: none;
+  position: relative;
+  z-index: 6;
 }
 
-.hero-photo-frame {
-  width: 100%;
-  flex: 1 1 auto;
-  min-height: 0;
+.hero-topbar-dots {
   display: flex;
-  flex-direction: column;
-}
-
-.hero-photo-frame .hero-photo-wrap,
-.hero-photo-frame .hero-photo {
-  flex: 1 1 auto;
-  height: 100%;
-  min-height: 0;
-  aspect-ratio: unset;
-}
-
-.hero-photo-frame .hero-photo img {
-  object-position: center top;
-}
-
-/* ── Stat pills ──────────────────────────────────────────────────── */
-
-.hero-pills {
-  display: flex;
-  flex-direction: column;
   gap: 4px;
+  align-items: center;
+}
+
+.hero-topbar-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.hero-topbar-title {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.22em;
+  color: var(--sky-gold);
+  text-transform: uppercase;
+}
+
+.hero-topbar-signal {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--sky-dusk);
+}
+
+.hero-topbar-sigdot {
+  width: 5px;
+  height: 5px;
+  background: var(--light-green);
+  border-radius: 50%;
+  animation: heroSigBlink 2s step-end infinite;
+}
+
+@keyframes heroSigBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.15;
+  }
+}
+
+/* ── Left column: portrait ───────────────────────────────────────── */
+.hero-portrait-col {
+  grid-row: 2;
+  position: relative;
+  border-right: 2px solid var(--sky-teal);
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(
+    180deg,
+    var(--sky-mid-lo) 0%,
+    var(--building-dark) 100%
+  );
+  overflow: hidden;
+}
+
+/* "PLAYER 1" badge */
+.hero-player-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  font-family: "Press Start 2P", monospace;
+  font-size: 0.45rem;
+  letter-spacing: 0.04em;
+  color: var(--building-dark);
+  background: var(--sky-amber);
+  padding: 3px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 2px 2px 0 #000;
+  white-space: nowrap;
+}
+
+/* Photo container */
+.hero-photo-slot {
+  flex: 1 1 auto;
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+}
+
+.hero-photo-slot img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: contrast(1.08) saturate(0.88);
+}
+
+/* Pixel corner brackets */
+.hero-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  z-index: 8;
+  pointer-events: none;
+}
+.hero-corner--tl {
+  top: 5px;
+  left: 5px;
+  border-top: 2px solid var(--light-cyan);
+  border-left: 2px solid var(--light-cyan);
+}
+.hero-corner--tr {
+  top: 5px;
+  right: 5px;
+  border-top: 2px solid var(--light-cyan);
+  border-right: 2px solid var(--light-cyan);
+}
+.hero-corner--bl {
+  bottom: 5px;
+  left: 5px;
+  border-bottom: 2px solid var(--light-cyan);
+  border-left: 2px solid var(--light-cyan);
+}
+.hero-corner--br {
+  bottom: 5px;
+  right: 5px;
+  border-bottom: 2px solid var(--light-cyan);
+  border-right: 2px solid var(--light-cyan);
+}
+
+/* Scanline on photo */
+.hero-photo-slot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.12) 2px,
+    rgba(0, 0, 0, 0.12) 4px
+  );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Placeholder if no photo */
+.hero-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  background: linear-gradient(145deg, var(--sky-mid-lo), var(--building-dark));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  color: var(--sky-dusk);
+  letter-spacing: 0.1em;
+}
+
+/* ── Stat block (desktop: below photo, stacked rows) ─────────────── */
+.hero-stat-block {
+  padding: 8px 10px 10px;
+  border-top: 1px solid rgba(96, 200, 208, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
 }
 
-.hero-pill {
-  background: rgba(46, 139, 138, 0.1);
-  border: 1px solid rgba(46, 139, 138, 0.3);
+.hero-stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.hero-stat-key {
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--sky-dusk);
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.hero-stat-val {
   font-family: "VT323", monospace;
   font-size: 13px;
   letter-spacing: 0.1em;
   color: var(--light-cyan);
-  text-align: center;
-  padding: 3px 6px;
-  border-radius: 0;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
+  text-align: right;
+  white-space: nowrap;
 }
 
-.hero-pill:hover {
-  background: rgba(46, 139, 138, 0.2);
-  border-color: rgba(96, 200, 208, 0.5);
-}
-
-/* ── Vertical divider ────────────────────────────────────────────── */
-
-.hero-divider {
-  width: 1px;
-  background: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(96, 200, 208, 0.25) 15%,
-    rgba(96, 200, 208, 0.25) 85%,
-    transparent 100%
-  );
-  align-self: stretch;
-}
-
-/* ── Right column ────────────────────────────────────────────────── */
-
-.hero-right {
+/* ── Right column: info ──────────────────────────────────────────── */
+.hero-info-col {
+  grid-row: 2;
   display: flex;
   flex-direction: column;
+  padding: 16px 18px 14px 20px;
   gap: 10px;
-  padding-left: 20px;
-  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    var(--sky-mid-lo) 0%,
+    var(--building-dark) 65%
+  );
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
 }
 
+/* Subtle grid dot pattern on right col */
+.hero-info-col::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(30, 95, 110, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30, 95, 110, 0.06) 1px, transparent 1px);
+  background-size: 14px 14px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-info-col > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Eyebrow */
 .hero-eyebrow {
   font-family: "VT323", monospace;
-  font-size: 13px;
-  letter-spacing: 0.18em;
+  font-size: 12px;
+  letter-spacing: 0.22em;
   color: var(--sky-dusk);
   text-transform: uppercase;
   margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-/* ── Name: always two lines ──────────────────────────────────────── */
-
+/* Name */
 .hero-name {
   font-family: "VT323", monospace;
   font-weight: 400;
-  line-height: 1.05;
+  line-height: 1;
   margin: 0;
   display: flex;
   flex-direction: column;
-  text-shadow:
-    0 0 20px rgba(240, 192, 96, 0.35),
-    0 0 50px rgba(232, 164, 74, 0.15);
 }
 
 .hero-name-line1 {
   font-family: "VT323", monospace;
-  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  font-size: clamp(2.2rem, 3.6vw, 3rem);
   color: var(--sky-dusk);
   letter-spacing: 0.04em;
 }
 
 .hero-name-line2 {
   font-family: "VT323", monospace;
-  font-size: clamp(3rem, 6vw, 4.4rem);
+  font-size: clamp(3rem, 5.6vw, 4.4rem);
   color: var(--sky-gold);
   letter-spacing: 0.02em;
+  text-shadow:
+    0 0 18px rgba(240, 192, 96, 0.4),
+    0 0 40px rgba(232, 164, 74, 0.18);
 }
 
-/* ── Horizontal rule ─────────────────────────────────────────────── */
+/* Terminal prompt divider */
+.hero-terminal-rule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--sky-dusk);
+  margin: 0;
+}
 
-.hero-rule {
-  width: 100%;
+.hero-terminal-rule::after {
+  content: "";
+  flex: 1;
   height: 1px;
   background: linear-gradient(90deg, rgba(96, 200, 208, 0.3), transparent);
-  flex-shrink: 0;
 }
 
-/* ── Caption ─────────────────────────────────────────────────────── */
-
-.hero-caption {
-  font-family: "Nunito", sans-serif;
-  font-size: 12px;
-  color: var(--faded);
-  font-style: italic;
-  line-height: 1.6;
+/* Caption as terminal output */
+.hero-terminal-line {
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  color: var(--star-blue);
+  line-height: 1.65;
   margin: 0;
-  opacity: 0.85;
+  padding-left: 2px;
+  opacity: 0.9;
 }
 
-/* ── Fun fact ────────────────────────────────────────────────────── */
+.hero-terminal-line .hero-prompt {
+  color: var(--sky-dusk);
+  margin-right: 4px;
+  user-select: none;
+}
 
-.hero-funfact {
-  margin-top: 4px;
-  padding: 10px 12px;
+/* Fun fact — ">> SYS NOTE" style */
+.hero-sysnote {
   border-left: 2px solid rgba(96, 200, 208, 0.35);
-  background: rgba(96, 200, 208, 0.05);
-  border-radius: 0 4px 4px 0;
+  background: rgba(96, 200, 208, 0.04);
+  padding: 8px 10px 8px 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-top: auto;
 }
 
-.hero-funfact-label {
+.hero-sysnote-label {
   font-family: "VT323", monospace;
-  font-size: 12px;
-  letter-spacing: 0.15em;
-  color: var(--sky-dusk);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--sky-amber);
   text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-.hero-funfact p {
+.hero-sysnote-label::before {
+  content: ">>";
+  color: var(--sky-dusk);
+  font-size: 11px;
+}
+
+.hero-sysnote p {
   font-family: "Space Mono", monospace;
-  font-size: 11.5px;
+  font-size: 10.5px;
   color: var(--star-blue);
   line-height: 1.65;
   margin: 0;
 }
 
-/* hide original caption (rendered in right col instead) */
-.hero-photo-caption {
-  display: none;
+/* ── Pixel cityscape footer ──────────────────────────────────────── */
+.hero-cityscape {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(30, 95, 110, 0.4);
+  height: 36px;
+  overflow: hidden;
+  position: relative;
+  background: var(--building-dark);
+  z-index: 6;
+  flex-shrink: 0;
 }
 
-/* ── Mobile: stack vertically ────────────────────────────────────── */
+.hero-cityscape svg {
+  width: 100%;
+  height: 100%;
+}
 
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE — full-width portrait + horizontal stat strip
+   ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 639px) {
-  .hero {
+  .hero-card {
+    /* Stack: topbar / portrait-col / info-col / cityscape */
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto;
   }
 
-  .hero-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(96, 200, 208, 0.25),
-      transparent
-    );
-    align-self: auto;
-    margin: 8px 0;
+  .hero-topbar {
+    grid-column: 1;
+    grid-row: 1;
   }
 
-  .hero-left {
-    padding-right: 0;
-    padding-bottom: 0;
-  }
-
-  .hero-photo-frame {
-    flex: unset;
-  }
-
-  .hero-photo-frame .hero-photo-wrap,
-  .hero-photo-frame .hero-photo {
-    aspect-ratio: 1 / 1;
+  /* ── Portrait col: full width, fixed height ── */
+  .hero-portrait-col {
+    grid-column: 1;
+    grid-row: 2;
+    border-right: none;
+    border-bottom: 2px solid var(--sky-teal);
+    flex-direction: column; /* photo stacked above stats */
     height: auto;
-    flex: unset;
   }
 
-  .hero-right {
-    padding-left: 0;
-    padding-top: 8px;
+  /* Photo fills width, taller on mobile for presence */
+  .hero-photo-slot {
+    width: 100%;
+    height: 300px;
+    flex: 0 0 300px;
   }
 
+  .hero-player-badge {
+    font-size: 0.38rem;
+    padding: 2px 5px;
+    top: 6px;
+    left: 6px;
+  }
+
+  /* ── Stats: horizontal 3-column grid across full width ── */
+  .hero-stat-block {
+    border-top: 1px solid rgba(96, 200, 208, 0.25);
+    border-left: none;
+    padding: 0;
+    flex-direction: row; /* three cells side by side */
+    gap: 0;
+    background: rgba(0, 0, 0, 0.38);
+  }
+
+  /* Each stat-row becomes a column cell */
+  .hero-stat-row {
+    flex: 1;
+    flex-direction: column; /* label above value */
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 7px 4px 8px;
+    text-align: center;
+  }
+
+  /* Dividers between cells */
+  .hero-stat-row + .hero-stat-row {
+    border-left: 1px solid rgba(96, 200, 208, 0.18);
+  }
+
+  .hero-stat-key {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--sky-dusk);
+  }
+
+  .hero-stat-val {
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    color: var(--light-cyan);
+    text-align: center;
+  }
+
+  /* ── Info col: full width below portrait ── */
+  .hero-info-col {
+    grid-column: 1;
+    grid-row: 3;
+    padding: 14px 16px 12px;
+    gap: 9px;
+  }
+
+  /* Bigger name on mobile — fills the width better */
   .hero-name-line1 {
-    font-size: clamp(2rem, 8vw, 2.8rem);
+    font-size: clamp(2.8rem, 11vw, 3.4rem);
+  }
+  .hero-name-line2 {
+    font-size: clamp(3.8rem, 15.5vw, 4.8rem);
   }
 
-  .hero-name-line2 {
-    font-size: clamp(2.8rem, 11vw, 3.6rem);
+  .hero-cityscape {
+    grid-column: 1;
+    grid-row: 4;
+    height: 26px;
   }
 }
 
-/* ── Tablet ───────────────────────────────────────────────────────── */
-
+/* ── TABLET ──────────────────────────────────────────────────────── */
 @media (min-width: 640px) and (max-width: 1023px) {
-  .hero {
-    grid-template-columns: 160px 1px 1fr;
+  .hero-card {
+    grid-template-columns: 165px 1fr;
   }
 
   .hero-name-line1 {
+    font-family: "VT323", monospace;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+  }
+  .hero-name-line2 {
+    font-family: "VT323", monospace;
+    font-size: clamp(2.4rem, 5vw, 3.4rem);
+  }
+}
+
+/* ── DESKTOP ─────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .hero-card {
+    grid-template-columns: 215px 1fr;
+  }
+
+  .hero-name-line1 {
+    font-family: "VT323", monospace;
     font-size: clamp(2rem, 3.5vw, 2.8rem);
   }
-
   .hero-name-line2 {
-    font-size: clamp(2.8rem, 5vw, 3.8rem);
-  }
-}
-
-/* ── Desktop ─────────────────────────────────────────────────────── */
-
-@media (min-width: 1024px) {
-  .hero {
-    grid-template-columns: 200px 1px 1fr;
-    margin-top: 2.5rem;
-  }
-
-  .hero-name-line1 {
-    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
-  }
-
-  .hero-name-line2 {
-    font-size: clamp(3rem, 6vw, 4.4rem);
+    font-family: "VT323", monospace;
+    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
   }
 }
