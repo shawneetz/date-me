@@ -1,6 +1,7 @@
 /**
  * SubcategoryPanel
- * Purpose: Render single subcategory section within modal with list of takes
+ * Purpose: Render a single "X vs Y" comparison within the modal,
+ *          with the question as a label and a sincere personal answer below it.
  */
 import { motion } from "framer-motion";
 import "./SubcategoryPanel.css";
@@ -13,14 +14,13 @@ export default function SubcategoryPanel({ subcategory, index }) {
       transition={{ duration: 0.35, delay: index * 0.05 }}
       className="takes-subcategory"
     >
-      <h4 className="takes-subcategory__title">{subcategory.title}</h4>
-      <ul className="takes-subcategory__list">
-        {subcategory.takes?.map((take, i) => (
-          <li key={i} className="takes-subcategory__take">
-            {take}
-          </li>
-        ))}
-      </ul>
+      <div className="takes-subcategory__question">
+        <span className="takes-subcategory__bullet" aria-hidden="true">
+          ▸
+        </span>
+        <h4 className="takes-subcategory__title">{subcategory.title}</h4>
+      </div>
+      <p className="takes-subcategory__answer">{subcategory.answer}</p>
     </motion.article>
   );
 }

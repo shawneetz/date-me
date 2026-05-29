@@ -1,10 +1,12 @@
 export const TAKE_CHAR_LIMIT = 140;
 
+/**
+ * Count "takes" in a category.
+ * In the new format each subcategory IS one take (one answer),
+ * so the count equals the number of subcategories.
+ */
 export function countCategoryTakes(category) {
-  return category.subcategories.reduce(
-    (sum, sub) => sum + (sub.takes?.length ?? 0),
-    0,
-  );
+  return category.subcategories.length;
 }
 
 export function clampTake(text) {
