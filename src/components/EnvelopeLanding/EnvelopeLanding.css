@@ -1,0 +1,327 @@
+/* EnvelopeLanding — full-page envelope reveal animation */
+
+/* ── Stars ──────────────────────────────────────────────────────── */
+
+.env-stars {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.env-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--star-white);
+  border-radius: 0;
+  animation: starTwinkle var(--star-duration, 2s) ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
+  opacity: var(--star-opacity, 0.6);
+}
+
+@keyframes starTwinkle {
+  0%,
+  100% {
+    opacity: var(--star-opacity, 0.6);
+  }
+  50% {
+    opacity: 0.1;
+  }
+}
+
+/* ── Page layout ─────────────────────────────────────────────────── */
+
+.env-page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow: hidden;
+  background: var(--sky-deep);
+}
+
+.env-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: linear-gradient(
+      rgba(30, 95, 110, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(30, 95, 110, 0.05) 1px, transparent 1px);
+  background-size: 8px 8px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.env-scene {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* ── Scanline overlay ────────────────────────────────────────────── */
+
+.env-scanlines {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.04) 3px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+}
+
+/* ── Fade-in utility ─────────────────────────────────────────────── */
+
+@keyframes envFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.env-fade-in {
+  animation: envFadeUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── Pre-label ───────────────────────────────────────────────────── */
+
+.env-pre-label {
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  letter-spacing: 0.2em;
+  color: var(--sky-dusk);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── Envelope ────────────────────────────────────────────────────── */
+
+.env-wrap {
+  position: relative;
+  width: 320px;
+  cursor: pointer;
+}
+
+.env-wrap:hover .env-flap {
+  transform: rotateX(-160deg);
+}
+
+.env-wrap:hover .env-hover-hint {
+  opacity: 1;
+}
+
+.env-outer {
+  width: 320px;
+  height: 200px;
+  position: relative;
+  filter: drop-shadow(4px 4px 0 #000);
+  transition: filter 0.2s ease;
+}
+
+.env-wrap:hover .env-outer {
+  filter: drop-shadow(6px 6px 0 #000);
+}
+
+.env-body {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, var(--sky-mid) 0%, var(--building-dark) 100%);
+  border: 2px solid var(--sky-teal);
+  border-radius: 4px;
+}
+
+.env-body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+/* V-fold inner crease lines */
+.env-vfold {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.env-vfold::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 0 solid transparent;
+  border-bottom: 100px solid var(--teal-shadow);
+}
+
+.env-vfold::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border-right: 160px solid transparent;
+  border-left: 0 solid transparent;
+  border-bottom: 100px solid var(--teal-shadow);
+}
+
+/* Flap */
+.env-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 100px solid var(--sky-teal);
+  transform-origin: top center;
+  transform: rotateX(0deg);
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 5;
+}
+
+.env-flap::after {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 100px solid var(--teal-shadow);
+  opacity: 0.35;
+}
+
+/* Wax seal */
+.env-seal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  background: var(--light-red);
+  border: 2px solid rgba(0, 0, 0, 0.4);
+  border-radius: 0;
+  box-shadow: 2px 2px 0 #000;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.env-wrap:hover .env-seal {
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* Pixel heart inside seal */
+.env-pixel-heart {
+  display: grid;
+  grid-template-columns: repeat(7, 5px);
+  grid-template-rows: repeat(5, 5px);
+  gap: 0;
+  image-rendering: pixelated;
+}
+
+.ph {
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.pn {
+  background: transparent;
+}
+
+.env-hover-hint {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: var(--sky-dusk);
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Opening animation */
+@keyframes shakeEnv {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+  75% {
+    transform: translateX(4px) rotate(1deg);
+  }
+}
+
+.env-wrap.is-opening {
+  animation: shakeEnv 0.3s ease;
+}
+
+.env-wrap.is-open .env-flap {
+  transform: rotateX(-160deg);
+}
+
+/* Rising letter preview */
+@keyframes letterRise {
+  from {
+    transform: translateX(-50%) translateY(60px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 1;
+  }
+}
+
+.env-letter-preview {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 260px;
+  height: 140px;
+  background: linear-gradient(160deg, var(--sky-mid-lo), var(--building-dark));
+  border: 1px solid var(--sky-teal);
+  border-radius: 2px;
+  z-index: 4;
+  animation: letterRise 0.55s 0.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  pointer-events: none;
+}

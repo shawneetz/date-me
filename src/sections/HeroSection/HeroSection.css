@@ -1,0 +1,275 @@
+/* ── Hero: Option C layout ───────────────────────────────────────── */
+
+.hero {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 180px 1px 1fr;
+  grid-template-rows: 1fr;
+  column-gap: 0;
+  align-items: stretch;
+  margin-top: 2rem;
+  margin-bottom: 0;
+  min-height: 0;
+}
+
+/* ── Left column ─────────────────────────────────────────────────── */
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-right: 20px;
+  padding-bottom: 4px;
+}
+
+.hero-photo-frame {
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-photo-frame .hero-photo-wrap,
+.hero-photo-frame .hero-photo {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  aspect-ratio: unset;
+}
+
+.hero-photo-frame .hero-photo img {
+  object-position: center top;
+}
+
+/* ── Stat pills ──────────────────────────────────────────────────── */
+
+.hero-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.hero-pill {
+  background: rgba(46, 139, 138, 0.1);
+  border: 1px solid rgba(46, 139, 138, 0.3);
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--light-cyan);
+  text-align: center;
+  padding: 3px 6px;
+  border-radius: 0;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.hero-pill:hover {
+  background: rgba(46, 139, 138, 0.2);
+  border-color: rgba(96, 200, 208, 0.5);
+}
+
+/* ── Vertical divider ────────────────────────────────────────────── */
+
+.hero-divider {
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(96, 200, 208, 0.25) 15%,
+    rgba(96, 200, 208, 0.25) 85%,
+    transparent 100%
+  );
+  align-self: stretch;
+}
+
+/* ── Right column ────────────────────────────────────────────────── */
+
+.hero-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 20px;
+  justify-content: center;
+}
+
+.hero-eyebrow {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  color: var(--sky-dusk);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Name: always two lines ──────────────────────────────────────── */
+
+.hero-name {
+  font-family: "VT323", monospace;
+  font-weight: 400;
+  line-height: 1.05;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  text-shadow:
+    0 0 20px rgba(240, 192, 96, 0.35),
+    0 0 50px rgba(232, 164, 74, 0.15);
+}
+
+.hero-name-line1 {
+  font-family: "VT323", monospace;
+  font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  color: var(--sky-dusk);
+  letter-spacing: 0.04em;
+}
+
+.hero-name-line2 {
+  font-family: "VT323", monospace;
+  font-size: clamp(3rem, 6vw, 4.4rem);
+  color: var(--sky-gold);
+  letter-spacing: 0.02em;
+}
+
+/* ── Horizontal rule ─────────────────────────────────────────────── */
+
+.hero-rule {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(96, 200, 208, 0.3), transparent);
+  flex-shrink: 0;
+}
+
+/* ── Caption ─────────────────────────────────────────────────────── */
+
+.hero-caption {
+  font-family: "Nunito", sans-serif;
+  font-size: 12px;
+  color: var(--faded);
+  font-style: italic;
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ── Fun fact ────────────────────────────────────────────────────── */
+
+.hero-funfact {
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-left: 2px solid rgba(96, 200, 208, 0.35);
+  background: rgba(96, 200, 208, 0.05);
+  border-radius: 0 4px 4px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-funfact-label {
+  font-family: "VT323", monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  color: var(--sky-dusk);
+  text-transform: uppercase;
+}
+
+.hero-funfact p {
+  font-family: "Space Mono", monospace;
+  font-size: 11.5px;
+  color: var(--star-blue);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* hide original caption (rendered in right col instead) */
+.hero-photo-caption {
+  display: none;
+}
+
+/* ── Mobile: stack vertically ────────────────────────────────────── */
+
+@media (max-width: 639px) {
+  .hero {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .hero-divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(96, 200, 208, 0.25),
+      transparent
+    );
+    align-self: auto;
+    margin: 8px 0;
+  }
+
+  .hero-left {
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+
+  .hero-photo-frame {
+    flex: unset;
+  }
+
+  .hero-photo-frame .hero-photo-wrap,
+  .hero-photo-frame .hero-photo {
+    aspect-ratio: 1 / 1;
+    height: auto;
+    flex: unset;
+  }
+
+  .hero-right {
+    padding-left: 0;
+    padding-top: 8px;
+  }
+
+  .hero-name-line1 {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .hero-name-line2 {
+    font-size: clamp(2.8rem, 11vw, 3.6rem);
+  }
+}
+
+/* ── Tablet ───────────────────────────────────────────────────────── */
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .hero {
+    grid-template-columns: 160px 1px 1fr;
+  }
+
+  .hero-name-line1 {
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+  }
+
+  .hero-name-line2 {
+    font-size: clamp(2.8rem, 5vw, 3.8rem);
+  }
+}
+
+/* ── Desktop ─────────────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: 200px 1px 1fr;
+    margin-top: 2.5rem;
+  }
+
+  .hero-name-line1 {
+    font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+  }
+
+  .hero-name-line2 {
+    font-size: clamp(3rem, 6vw, 4.4rem);
+  }
+}

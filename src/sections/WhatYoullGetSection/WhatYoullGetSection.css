@@ -1,0 +1,120 @@
+@import "../shared/section-layout.css";
+
+/* ── Manifest Header ─────────────────────────────────────────────── */
+.manifest-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: "VT323", monospace;
+  font-size: 16px;
+  letter-spacing: 2px;
+  color: var(--light-green);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.manifest-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--light-green);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: blink-green 1.2s step-end infinite;
+}
+
+/* ── Item List ───────────────────────────────────────────────────── */
+.manifest-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Individual Row ──────────────────────────────────────────────── */
+.manifest-item {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 3px;
+  border-left-width: 3px;
+  border-left-style: solid;
+  transition: filter 0.2s ease;
+}
+
+.manifest-item:hover {
+  filter: brightness(1.12);
+}
+
+/* Icon cell */
+.manifest-icon {
+  font-family: "VT323", monospace;
+  font-size: 18px;
+  line-height: 1;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* Text cell */
+.manifest-text {
+  font-family: "Space Mono", monospace;
+  font-size: clamp(12px, 1.3vw, 13px);
+  color: var(--star-blue);
+  line-height: 1.5;
+}
+
+/* Progress bar cell */
+.manifest-bar-track {
+  width: 64px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 2px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.manifest-bar-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  transition: width 0.8s ease-out;
+}
+
+.manifest-bar-fill.loaded {
+  width: 100%;
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────── */
+@keyframes blink-green {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 767px) {
+  .manifest-icon {
+    font-size: 16px;
+  }
+
+  .manifest-text {
+    font-size: 11px;
+  }
+
+  .manifest-bar-track {
+    width: 40px;
+  }
+
+  .manifest-item {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .manifest-header {
+    font-size: 14px;
+  }
+}
