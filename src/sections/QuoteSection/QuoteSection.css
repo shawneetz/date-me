@@ -1,163 +1,674 @@
 @import "../shared/section-layout.css";
 
-/* ── Wrapper ─────────────────────────────────────────────────────── */
-.quote-wrapper {
-  max-width: 620px;
-  margin: 0 auto;
-}
+/* ════════════════════════════════════════════════════════════════════
+   GRAFFITI ALLEY — QuoteSection
+   A lived-in city wall. Spray paint, stickers, torn posters, taped
+   notes. Quotes feel left behind by the city's personality layers.
+════════════════════════════════════════════════════════════════════ */
 
-/* ── Rooftop silhouette ──────────────────────────────────────────── */
-.rooftop {
-  display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  height: 28px;
-  margin-bottom: -1px;
-  padding: 0 12px;
-}
-
-.rooftop-block {
-  background: var(--building-dark);
-  border: 1px solid var(--teal-shadow);
-  border-bottom: none;
-  flex-shrink: 0;
-}
-
-/* ── Signal label strip ──────────────────────────────────────────── */
-.quote-label-strip {
-  background: var(--teal-shadow);
-  padding: 5px 16px;
-  text-align: center;
-  font-family: "VT323", monospace;
-  font-size: 14px;
-  letter-spacing: 2.5px;
-  color: var(--light-cyan);
-  text-transform: uppercase;
-}
-
-/* ── Quote card ──────────────────────────────────────────────────── */
-.quote-card {
+/* ── Wall container ──────────────────────────────────────────────── */
+.graffiti-wall {
   position: relative;
-  background: var(--building-dark);
-  border: 1px solid var(--sky-teal);
-  border-top: none;
-  border-radius: 0 0 4px 4px;
-  padding: 24px 28px 28px;
-  box-shadow: 0 0 20px rgba(30, 95, 110, 0.2);
+  width: 100%;
   overflow: hidden;
+
+  /* Concrete base */
+  background:
+    /* Noise grain */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #0e1c28 0%, #0a1520 40%, #09141e 100%);
+
+  border: 2px solid rgba(30, 95, 110, 0.45);
+  box-shadow:
+    6px 6px 0 #000,
+    inset 0 0 80px rgba(0, 0, 0, 0.6);
+  padding: 0;
+  min-height: 420px;
 }
 
-/* Subtle scanlines */
-.quote-card::after {
+/* Concrete texture overlay — horizontal streaks */
+.graffiti-wall::before {
   content: "";
   position: absolute;
   inset: 0;
   background: repeating-linear-gradient(
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.05) 2px,
-    rgba(0, 0, 0, 0.05) 4px
+    180deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.07) 3px,
+    rgba(0, 0, 0, 0.07) 4px
   );
   pointer-events: none;
-  z-index: 1;
+  z-index: 0;
 }
 
-/* ── Pixel stars ─────────────────────────────────────────────────── */
-.quote-stars {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  position: relative;
-  z-index: 2;
+/* Vignette edges */
+.graffiti-wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  pointer-events: none;
+  z-index: 20;
 }
 
-.star {
-  width: 3px;
-  height: 3px;
-  background: var(--sky-gold);
-  image-rendering: pixelated;
-  box-shadow:
-    3px 0 0 var(--sky-gold),
-    0 3px 0 var(--sky-gold),
-    3px 3px 0 transparent;
-  animation: twinkle var(--twinkle-speed, 2s) ease-in-out infinite;
-}
-
-/* ── Quote mark ──────────────────────────────────────────────────── */
-.big-quote-mark {
-  display: block;
+/* ── Alley label — stencil spray on wall ─────────────────────────── */
+.graffiti-alley-label {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  z-index: 10;
   font-family: "VT323", monospace;
-  font-size: 64px;
-  color: var(--teal-shadow);
-  line-height: 0.5;
-  margin-bottom: 14px;
-  position: relative;
-  z-index: 2;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: rgba(96, 200, 208, 0.35);
+  text-transform: uppercase;
+  /* Stencil blur */
+  filter: blur(0.4px);
   user-select: none;
 }
 
-/* ── Quote text ──────────────────────────────────────────────────── */
-.quote-text {
-  font-family: "Space Mono", monospace;
-  font-style: italic;
-  font-size: clamp(13px, 1.8vw, 16px);
-  color: var(--star-blue);
-  text-align: center;
-  line-height: 1.85;
-  margin: 0 0 18px;
+/* ── Wall content area ────────────────────────────────────────────── */
+.graffiti-content {
   position: relative;
-  z-index: 2;
+  z-index: 5;
+  width: 100%;
+  padding: 2rem 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
 }
 
-.quote-word {
-  display: inline;
+/* ══════════════════════════════════════════════════════
+   FRAGMENT TYPES — each quote is a different artifact
+══════════════════════════════════════════════════════ */
+
+/* ── BASE fragment shell ─────────────────────────────────────────── */
+.gf {
+  position: relative;
+  width: 100%;
 }
 
-/* ── Attribution ─────────────────────────────────────────────────── */
-.quote-cite {
-  display: block;
+/* ── 1. SPRAY PAINT — big emotional statement ────────────────────── */
+.gf--spray {
+  padding: 1.2rem 1rem 1rem;
+}
+
+.gf--spray::before {
+  content: "";
+  position: absolute;
+  inset: -4px -6px;
+  /* Spray paint bleed */
+  background:
+    radial-gradient(
+      ellipse at 30% 50%,
+      rgba(240, 192, 96, 0.12) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 80% 40%,
+      rgba(96, 200, 208, 0.08) 0%,
+      transparent 60%
+    );
+  filter: blur(8px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gf-spray-text {
+  position: relative;
+  z-index: 1;
   font-family: "VT323", monospace;
-  font-size: 14px;
-  color: var(--sky-dusk);
-  letter-spacing: 3px;
+  font-size: clamp(2.2rem, 8vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  color: var(--sky-gold);
   text-transform: uppercase;
-  text-align: center;
+  /* Spray paint edge — multiple shadows simulate aerosol bleed */
+  text-shadow:
+    0 0 20px rgba(240, 192, 96, 0.6),
+    0 0 40px rgba(240, 192, 96, 0.25),
+    2px 2px 0 rgba(0, 0, 0, 0.5),
+    -1px -1px 0 rgba(240, 192, 96, 0.15);
+  filter: blur(0.3px);
+  word-break: break-word;
+}
+
+.gf-spray-author {
   position: relative;
+  z-index: 1;
+  margin-top: 0.4rem;
+  font-family: "VT323", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  color: rgba(240, 192, 96, 0.45);
+  text-transform: uppercase;
+  filter: blur(0.2px);
+}
+
+/* ── 2. POSTER — torn & taped paper pasted to wall ───────────────── */
+.gf--poster {
+  /* slight rotation */
+  transform: rotate(-1.2deg);
+  width: 92%;
+  max-width: 480px;
+  align-self: flex-end;
+  margin-right: 0.5rem;
+}
+
+/* Tape strips */
+.gf--poster::before,
+.gf--poster::after {
+  content: "";
+  position: absolute;
+  z-index: 10;
+  background: rgba(168, 200, 224, 0.18);
+  border: 1px solid rgba(168, 200, 224, 0.12);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+}
+.gf--poster::before {
+  top: -7px;
+  left: 18px;
+  width: 42px;
+  height: 14px;
+  transform: rotate(1deg);
+}
+.gf--poster::after {
+  top: -6px;
+  right: 22px;
+  width: 38px;
+  height: 13px;
+  transform: rotate(-0.8deg);
+}
+
+.gf-poster-inner {
+  position: relative;
+  background: linear-gradient(170deg, #e8e0d4 0%, #d8cfc0 60%, #ccc4b4 100%);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  box-shadow:
+    3px 4px 0 rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba(0, 0, 0, 0.08);
+  padding: 1.1rem 1.25rem 1.2rem;
+  overflow: hidden;
+}
+
+/* Torn bottom edge */
+.gf-poster-inner::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='8'%3E%3Cpath d='M0 0 Q5 8 10 3 Q15 0 20 6 Q25 8 30 2 Q35 0 40 7 Q45 8 50 3 Q55 0 60 6 Q65 8 70 2 Q75 0 80 7 Q85 8 90 3 Q95 0 100 5 L100 8 L0 8Z' fill='%23e8e0d4'/%3E%3C/svg%3E")
+    repeat-x bottom;
+  pointer-events: none;
+}
+
+/* Paper grain on poster */
+.gf-poster-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.015) 2px,
+    rgba(0, 0, 0, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gf-poster-header {
+  position: relative;
+  z-index: 1;
+  font-family: "VT323", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  color: #6a5a40;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  padding-bottom: 0.35rem;
+}
+
+.gf-poster-text {
+  position: relative;
+  z-index: 1;
+  font-family: "Space Mono", monospace;
+  font-size: clamp(11px, 1.4vw, 13px);
+  color: #2a1e10;
+  line-height: 1.85;
+  margin: 0;
+  font-style: italic;
+}
+
+.gf-poster-sig {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.6rem;
+  font-family: "VT323", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: #7a6040;
+  text-align: right;
+}
+
+/* ── 3. STICKER — glossy label ───────────────────────────────────── */
+.gf--sticker {
+  transform: rotate(1.8deg);
+  width: fit-content;
+  max-width: 320px;
+  /* bubble sticker feel */
+}
+
+.gf-sticker-inner {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(135deg, #0d2d3e 0%, #0a1e2e 100%);
+  border: 2.5px solid var(--sky-teal);
+  /* thick outline = sticker cut line */
+  outline: 4px solid var(--sky-deep);
+  outline-offset: -1px;
+  box-shadow:
+    3px 3px 0 #000,
+    0 0 0 5px rgba(30, 95, 110, 0.3);
+  padding: 0.7rem 1rem;
+  overflow: hidden;
+}
+
+/* Sticker gloss shine */
+.gf-sticker-inner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.06) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
   z-index: 2;
 }
 
-/* ── Keyframes ───────────────────────────────────────────────────── */
-@keyframes twinkle {
+.gf-sticker-text {
+  position: relative;
+  z-index: 1;
+  font-family: "VT323", monospace;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  letter-spacing: 0.06em;
+  color: var(--light-cyan);
+  line-height: 1.3;
+  text-shadow:
+    0 0 10px rgba(96, 200, 208, 0.7),
+    0 0 24px rgba(96, 200, 208, 0.3);
+}
+
+.gf-sticker-meta {
+  position: relative;
+  z-index: 1;
+  margin-top: 5px;
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  color: rgba(96, 200, 208, 0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── 4. CRT GLITCH PROJECTION ────────────────────────────────────── */
+.gf--crt {
+  position: relative;
+  padding: 0;
+}
+
+.gf-crt-frame {
+  position: relative;
+  background: #010a06;
+  border: 2px solid rgba(136, 192, 112, 0.5);
+  box-shadow:
+    0 0 0 1px #000,
+    3px 3px 0 #000,
+    0 0 24px rgba(136, 192, 112, 0.15),
+    inset 0 0 20px rgba(0, 0, 0, 0.8);
+  padding: 1rem 1.2rem 0.9rem;
+  overflow: hidden;
+}
+
+/* CRT scanlines */
+.gf-crt-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.2) 2px,
+    rgba(0, 0, 0, 0.2) 3px
+  );
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* CRT vignette */
+.gf-crt-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 50%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  pointer-events: none;
+  z-index: 4;
+}
+
+.gf-crt-label {
+  position: relative;
+  z-index: 6;
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: rgba(136, 192, 112, 0.5);
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.gf-crt-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--light-green);
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(136, 192, 112, 0.8);
+  animation: crtDotBlink 1.3s step-end infinite;
+  flex-shrink: 0;
+}
+
+@keyframes crtDotBlink {
   0%,
   100% {
     opacity: 1;
   }
   50% {
-    opacity: 0.2;
+    opacity: 0.1;
   }
 }
 
+.gf-crt-text {
+  position: relative;
+  z-index: 6;
+  font-family: "VT323", monospace;
+  font-size: clamp(1.1rem, 2.8vw, 1.5rem);
+  letter-spacing: 0.04em;
+  color: var(--light-green);
+  line-height: 1.4;
+  /* Glitch: chromatic aberration */
+  text-shadow:
+    -2px 0 rgba(224, 80, 80, 0.5),
+    2px 0 rgba(96, 200, 208, 0.5),
+    0 0 12px rgba(136, 192, 112, 0.7),
+    0 0 30px rgba(136, 192, 112, 0.25);
+  animation: crtGlitch 8s step-end infinite;
+}
+
+@keyframes crtGlitch {
+  0%,
+  90%,
+  100% {
+    text-shadow:
+      -2px 0 rgba(224, 80, 80, 0.5),
+      2px 0 rgba(96, 200, 208, 0.5),
+      0 0 12px rgba(136, 192, 112, 0.7),
+      0 0 30px rgba(136, 192, 112, 0.25);
+    transform: none;
+    opacity: 1;
+  }
+  91% {
+    text-shadow:
+      -4px 0 rgba(224, 80, 80, 0.8),
+      4px 0 rgba(96, 200, 208, 0.8),
+      0 0 12px rgba(136, 192, 112, 0.7);
+    transform: translateX(2px);
+    opacity: 0.9;
+  }
+  92% {
+    transform: translateX(-1px);
+    opacity: 0.85;
+  }
+  93% {
+    text-shadow:
+      -2px 0 rgba(224, 80, 80, 0.5),
+      2px 0 rgba(96, 200, 208, 0.5),
+      0 0 12px rgba(136, 192, 112, 0.7);
+    transform: none;
+    opacity: 1;
+  }
+}
+
+.gf-crt-author {
+  position: relative;
+  z-index: 6;
+  margin-top: 0.5rem;
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  color: rgba(136, 192, 112, 0.5);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── 5. HANDWRITTEN NOTE — taped scrap paper ─────────────────────── */
+.gf--note {
+  transform: rotate(0.6deg);
+  width: 88%;
+  max-width: 400px;
+}
+
+.gf-note-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 16px;
+  background: rgba(240, 192, 96, 0.22);
+  border: 1px solid rgba(240, 192, 96, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  z-index: 5;
+}
+
+.gf-note-inner {
+  position: relative;
+  background: linear-gradient(170deg, #f5f0e4 0%, #ede8d8 100%);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow:
+    2px 3px 0 rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  padding: 1rem 1.1rem 0.9rem;
+  overflow: hidden;
+}
+
+/* Lined paper effect */
+.gf-note-inner::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 22px,
+    rgba(96, 150, 200, 0.12) 22px,
+    rgba(96, 150, 200, 0.12) 23px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Left margin rule */
+.gf-note-inner::after {
+  content: "";
+  position: absolute;
+  left: 28px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(224, 100, 100, 0.25);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.gf-note-text {
+  position: relative;
+  z-index: 1;
+  font-family: "Space Mono", monospace;
+  font-size: clamp(10.5px, 1.6vw, 12px);
+  color: #1a120a;
+  line-height: 1.9;
+  font-style: italic;
+  padding-left: 20px;
+}
+
+.gf-note-sig {
+  position: relative;
+  z-index: 1;
+  margin-top: 0.5rem;
+  text-align: right;
+  font-family: "VT323", monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: #6a4a20;
+  padding-left: 20px;
+}
+
+/* ── RUST / CRACK overlays scattered on wall ─────────────────────── */
+.graffiti-rust {
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.18;
+  font-family: "VT323", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--sky-amber);
+  user-select: none;
+  filter: blur(0.3px);
+}
+
+/* ── WALL BOTTOM — street gutter line ────────────────────────────── */
+.graffiti-gutter {
+  position: relative;
+  z-index: 8;
+  border-top: 2px solid rgba(10, 21, 32, 0.9);
+  background: linear-gradient(180deg, #070f18 0%, #040c14 100%);
+  padding: 6px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.graffiti-gutter-text {
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  color: rgba(30, 95, 110, 0.4);
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.graffiti-gutter-pips {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.graffiti-gutter-pip {
+  width: 4px;
+  height: 4px;
+  background: rgba(30, 95, 110, 0.25);
+}
+
+/* ── DIVIDER between fragments — horizontal crack line ───────────── */
+.graffiti-crack {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(30, 95, 110, 0.2) 20%,
+    rgba(30, 95, 110, 0.4) 50%,
+    rgba(30, 95, 110, 0.2) 80%,
+    transparent
+  );
+  position: relative;
+  z-index: 1;
+}
+
+.graffiti-crack::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 0, 0, 0.5) 40%,
+    rgba(0, 0, 0, 0.5) 60%,
+    transparent
+  );
+}
+
+/* ── Hover shimmer on fragments ──────────────────────────────────── */
+.gf:hover .gf-spray-text {
+  text-shadow:
+    0 0 25px rgba(240, 192, 96, 0.85),
+    0 0 55px rgba(240, 192, 96, 0.35),
+    2px 2px 0 rgba(0, 0, 0, 0.5);
+  transition: text-shadow 0.4s ease;
+}
+
+.gf--sticker:hover {
+  transform: rotate(1.8deg) scale(1.02);
+  transition: transform 0.25s ease;
+}
+
+.gf--poster:hover {
+  transform: rotate(-0.8deg);
+  transition: transform 0.3s ease;
+}
+
 /* ── Responsive ──────────────────────────────────────────────────── */
-@media (max-width: 767px) {
-  .rooftop {
-    display: none;
+@media (max-width: 480px) {
+  .graffiti-content {
+    padding: 1.5rem 1rem 2rem;
+    gap: 1.4rem;
   }
 
-  .quote-card {
-    border-radius: 4px;
-    border-top: 1px solid var(--sky-teal);
-    padding: 16px;
+  .gf-spray-text {
+    font-size: clamp(1.9rem, 9vw, 2.8rem);
   }
 
-  .big-quote-mark {
-    font-size: 40px;
+  .gf--poster {
+    width: 100%;
+    margin-right: 0;
   }
 
-  .quote-text {
-    font-size: 12px;
-  }
-
-  .quote-label-strip {
-    display: none;
+  .gf--note {
+    width: 95%;
   }
 }

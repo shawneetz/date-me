@@ -7,6 +7,7 @@ import hobby3 from "../assets/hobby-3.png";
 import hobby4 from "../assets/hobby-4.png";
 import hobby5 from "../assets/hobby-5.png";
 import hobby6 from "../assets/hobby-6.png";
+import shawnPfp from "../assets/shawn-pfp.jpg";
 import { personalTakesCategories } from "./personalTakesCategories";
 
 export const shawnProfile = {
@@ -16,7 +17,7 @@ export const shawnProfile = {
   mbti: "INTP",
   sign: "Capricorn",
   tag: "CS Student",
-  photoUrl: "src/assets/shawn-pfp.jpg",
+  photoUrl: shawnPfp,
   photoCaption:
     "CS student. Builder. Occasional midnight chef.\n Somewhere in the Philippines.",
   funFact:
