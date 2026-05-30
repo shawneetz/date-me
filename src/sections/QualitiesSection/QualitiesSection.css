@@ -1,7 +1,708 @@
 @import "../shared/section-layout.css";
 
-.pxw-stack {
+/* ════════════════════════════════════════════════════════════════════
+   QUALITIES SECTION — CITY PERSONALITY TRANSIT BOARD
+   Retro transit operations panel. Each quality is a "line" with a
+   current status. CRT amber monochrome, scanlines, LED flicker.
+
+   Layout:
+   ┌─────────────────────────────────────────────────────────────────┐
+   │ ◈ CITY PERSONALITY TRANSIT       [clock] [SYSTEM ONLINE ●]     │  ← topbar
+   ├─────────────────────────────────────────────────────────────────┤
+   │ ┌──────────────────────────────────────────────────────────────┐│
+   │ │  LINE_01  EMPATHY LINE         ████████████  OPERATIONAL    ││  ← line row
+   │ │  LINE_02  CREATIVITY LINE      ██████████░░  OVERCLOCKED    ││
+   │ │  LINE_03  LOYALTY LINE         ███████████░  STABLE         ││
+   │ └──────────────────────────────────────────────────────────────┘│
+   ├──────────────────── ticker strip ──────────────────────────────┤
+   │  STATION LOG: hover any line to read diary entries              │  ← hover log
+   └─────────────────────────────────────────────────────────────────┘
+════════════════════════════════════════════════════════════════════ */
+
+/* ── BOARD SHELL ─────────────────────────────────────────────────── */
+
+.transit-board {
+  position: relative;
+  width: 100%;
+  background: #020806;
+  border: 2px solid #ff9d00;
+  box-shadow:
+    0 0 24px rgba(255, 150, 0, 0.18),
+    4px 4px 0 #000,
+    inset 0 0 60px rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+}
+
+/* CRT phosphor glow behind entire board */
+.transit-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    rgba(255, 150, 0, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scanline overlay — classic CRT effect */
+.transit-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    transparent 0px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.18) 2px,
+    rgba(0, 0, 0, 0.18) 3px
+  );
+  pointer-events: none;
+  z-index: 20;
+}
+
+/* Corner bolts */
+.transit-bolt {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #3a2200;
+  border: 1px solid #ff9d00;
+  box-shadow: 0 0 4px rgba(255, 150, 0, 0.4);
+  z-index: 25;
+  pointer-events: none;
+}
+.transit-bolt--tl {
+  top: 4px;
+  left: 4px;
+}
+.transit-bolt--tr {
+  top: 4px;
+  right: 4px;
+}
+.transit-bolt--bl {
+  bottom: 4px;
+  left: 4px;
+}
+.transit-bolt--br {
+  bottom: 4px;
+  right: 4px;
+}
+
+/* ── TOPBAR ─────────────────────────────────────────────────────── */
+
+.transit-topbar {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 14px 6px 12px;
+  background: linear-gradient(90deg, #0d0800 0%, #120a00 100%);
+  border-bottom: 2px solid #ff9d00;
+  box-shadow: 0 2px 0 rgba(255, 150, 0, 0.15);
+  gap: 0.5rem;
+}
+
+.transit-topbar-title {
+  font-family: "VT323", monospace;
+  font-size: 15px;
+  letter-spacing: 0.28em;
+  color: #ff9d00;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 8px rgba(255, 157, 0, 0.9),
+    0 0 20px rgba(255, 157, 0, 0.3);
+  line-height: 1;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.transit-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.transit-clock {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  color: rgba(255, 157, 0, 0.55);
+  font-variant-numeric: tabular-nums;
+}
+
+.transit-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 157, 0, 0.65);
+  text-transform: uppercase;
+}
+
+.transit-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #8dff8d;
+  box-shadow:
+    0 0 6px rgba(141, 255, 141, 0.9),
+    0 0 12px rgba(141, 255, 141, 0.4);
+  animation: systemBlink 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+@keyframes systemBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ── COLUMN HEADERS ─────────────────────────────────────────────── */
+
+.transit-col-headers {
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 56px 1fr 90px 108px;
+  align-items: center;
+  padding: 4px 14px 3px 12px;
+  background: #0a0500;
+  border-bottom: 1px solid rgba(255, 157, 0, 0.2);
+  gap: 0;
+}
+
+@media (max-width: 480px) {
+  .transit-col-headers {
+    grid-template-columns: 48px 1fr 80px;
+  }
+
+  .transit-col-headers .transit-col-hdr--status {
+    display: none;
+  }
+}
+
+.transit-col-hdr {
+  font-family: "VT323", monospace;
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: rgba(255, 157, 0, 0.4);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.transit-col-hdr--right {
+  text-align: right;
+}
+
+/* ── LINE ROWS ──────────────────────────────────────────────────── */
+
+.transit-lines {
+  position: relative;
+  z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+}
+
+.transit-line {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr 90px 108px;
+  align-items: center;
+  padding: 0;
+  gap: 0;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 157, 0, 0.1);
+  transition: background 0.1s ease;
+  overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .transit-line {
+    grid-template-columns: 48px 1fr 80px;
+  }
+
+  .transit-line .transit-line-meter {
+    display: none;
+  }
+}
+
+.transit-line:last-child {
+  border-bottom: none;
+}
+
+/* Hover amber glow */
+.transit-line:hover {
+  background: rgba(255, 157, 0, 0.04);
+}
+
+/* Active selection */
+.transit-line.is-active {
+  background: rgba(255, 157, 0, 0.06);
+}
+
+.transit-line.is-active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ff9d00;
+  box-shadow: 0 0 8px rgba(255, 157, 0, 0.8);
+}
+
+/* Horizontal scanline on every other row */
+.transit-line:nth-child(even) {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.transit-line:nth-child(even):hover {
+  background: rgba(255, 157, 0, 0.05);
+}
+
+/* ── Line Code (e.g. "L-01") ────────────────────────────────────── */
+
+.transit-line-code {
+  padding: 12px 0 12px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.transit-line-code span {
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 157, 0, 0.45);
+  white-space: nowrap;
+}
+
+/* ── Line Name ──────────────────────────────────────────────────── */
+
+.transit-line-name {
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.transit-line-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px currentColor;
+  transition: box-shadow 0.3s ease;
+}
+
+.transit-line:hover .transit-line-bullet {
+  box-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor;
+}
+
+/* Flicker on the bullet for "active" lines */
+.transit-line-bullet.flicker {
+  animation: ledFlicker 4s step-end infinite;
+}
+
+@keyframes ledFlicker {
+  0%,
+  95%,
+  100% {
+    opacity: 1;
+  }
+  96% {
+    opacity: 0.2;
+  }
+  97% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 0.4;
+  }
+  99% {
+    opacity: 1;
+  }
+}
+
+.transit-line-label {
+  font-family: "VT323", monospace;
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  color: #ffb347;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 0 8px rgba(255, 179, 71, 0.3);
+}
+
+/* ── Activity Meter (health-bar style) ──────────────────────────── */
+
+.transit-line-meter {
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.transit-meter-pip {
+  display: block;
+  width: 5px;
+  height: 8px;
+  background: rgba(255, 157, 0, 0.18);
+  border-radius: 1px 1px 0 0;
+  flex-shrink: 0;
+  transition: background 0.3s ease;
+}
+
+.transit-meter-pip.lit {
+  background: #ff9d00;
+  box-shadow: 0 0 4px rgba(255, 157, 0, 0.6);
+}
+
+/* Overclocked: green pips */
+.transit-line.status-overclocked .transit-meter-pip.lit {
+  background: #8dff8d;
+  box-shadow: 0 0 4px rgba(141, 255, 141, 0.6);
+}
+
+/* Delayed: red pips */
+.transit-line.status-delayed .transit-meter-pip.lit {
+  background: #ff6060;
+  box-shadow: 0 0 4px rgba(255, 96, 96, 0.6);
+}
+
+/* ── Status Badge ────────────────────────────────────────────────── */
+
+.transit-line-status {
+  padding: 0 12px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.transit-status-badge {
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Operational — teal/green */
+.transit-status-badge.operational {
+  color: #8dff8d;
+  border-color: rgba(141, 255, 141, 0.4);
+  background: rgba(141, 255, 141, 0.05);
+  text-shadow: 0 0 6px rgba(141, 255, 141, 0.7);
+}
+
+/* Overclocked — bright amber */
+.transit-status-badge.overclocked {
+  color: #ffe066;
+  border-color: rgba(255, 224, 102, 0.4);
+  background: rgba(255, 224, 102, 0.05);
+  text-shadow: 0 0 6px rgba(255, 224, 102, 0.7);
+  animation: overclockedPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes overclockedPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+/* Stable — dim amber */
+.transit-status-badge.stable {
+  color: #ff9d00;
+  border-color: rgba(255, 157, 0, 0.35);
+  background: rgba(255, 157, 0, 0.05);
+}
+
+/* Active — light orange */
+.transit-status-badge.active {
+  color: #ffb347;
+  border-color: rgba(255, 179, 71, 0.4);
+  background: rgba(255, 179, 71, 0.05);
+}
+
+/* Delayed — red */
+.transit-status-badge.delayed {
+  color: #ff6060;
+  border-color: rgba(255, 96, 96, 0.4);
+  background: rgba(255, 96, 96, 0.05);
+  animation: delayedBlink 1.1s step-end infinite;
+}
+
+@keyframes delayedBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── STATION LOG PANEL (hover reveal) ──────────────────────────── */
+
+.transit-log {
+  position: relative;
+  z-index: 5;
+  min-height: 80px;
+  background: #000a02;
+  border-top: 1px solid rgba(255, 157, 0, 0.3);
+  overflow: hidden;
+  transition: min-height 0.25s ease;
+}
+
+/* Log inner */
+.transit-log-inner {
+  position: relative;
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* CRT phosphor tint on log panel */
+.transit-log-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 30% 50%,
+    rgba(255, 157, 0, 0.04) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.transit-log-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: rgba(255, 157, 0, 0.45);
+  text-transform: uppercase;
+}
+
+.transit-log-cursor {
+  display: inline-block;
+  width: 6px;
+  height: 10px;
+  background: rgba(255, 157, 0, 0.6);
+  animation: logCursorBlink 1.1s step-end infinite;
+  flex-shrink: 0;
+}
+
+@keyframes logCursorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Individual log entries */
+.transit-log-entry {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.transit-log-ts {
+  font-family: "VT323", monospace;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(255, 157, 0, 0.5);
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-top: 1px;
+}
+
+.transit-log-text {
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  color: rgba(255, 179, 71, 0.82);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* Default state — no line selected */
+.transit-log-hint {
+  font-family: "VT323", monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: rgba(255, 157, 0, 0.3);
+  text-transform: uppercase;
+  padding: 18px 14px;
+  text-align: center;
+  animation: hintFlicker 3.5s step-end infinite;
+}
+
+@keyframes hintFlicker {
+  0%,
+  90%,
+  100% {
+    opacity: 1;
+  }
+  91% {
+    opacity: 0;
+  }
+  92% {
+    opacity: 1;
+  }
+  93% {
+    opacity: 0.3;
+  }
+  94% {
+    opacity: 1;
+  }
+}
+
+/* ── TICKER STRIP ────────────────────────────────────────────────── */
+
+.transit-ticker {
+  position: relative;
+  z-index: 5;
+  background: #0a0500;
+  border-top: 1px solid rgba(255, 157, 0, 0.25);
+  padding: 4px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.transit-ticker-inner {
+  display: inline-block;
+  animation: tickerScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.transit-ticker-inner span {
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: rgba(255, 157, 0, 0.5);
+  text-transform: uppercase;
+  padding: 0 2rem;
+}
+
+.transit-ticker-inner span.sep {
+  color: rgba(255, 157, 0, 0.2);
+  padding: 0 0.5rem;
+}
+
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── FOOTER STATUS BAR ──────────────────────────────────────────── */
+
+.transit-footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 14px;
+  background: #060300;
+  border-top: 1px solid rgba(255, 157, 0, 0.15);
+}
+
+.transit-footer-left,
+.transit-footer-right {
+  font-family: "Space Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  color: rgba(255, 157, 0, 0.28);
+  text-transform: uppercase;
+}
+
+.transit-footer-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.transit-footer-pip {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(255, 157, 0, 0.2);
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.transit-footer-pip.active {
+  background: #ff9d00;
+  box-shadow: 0 0 5px rgba(255, 157, 0, 0.7);
+}
+
+/* ── Chromatic aberration effect on topbar title (subtle) ───────── */
+@keyframes chromAberration {
+  0%,
+  100% {
+    text-shadow:
+      0 0 8px rgba(255, 157, 0, 0.9),
+      0 0 20px rgba(255, 157, 0, 0.3);
+  }
+  25% {
+    text-shadow:
+      -1px 0 rgba(255, 0, 0, 0.4),
+      1px 0 rgba(0, 200, 255, 0.4),
+      0 0 12px rgba(255, 157, 0, 0.6);
+  }
+  75% {
+    text-shadow:
+      1px 0 rgba(255, 0, 0, 0.3),
+      -1px 0 rgba(0, 200, 255, 0.3),
+      0 0 8px rgba(255, 157, 0, 0.8);
+  }
+}
+
+.transit-topbar-title {
+  animation: chromAberration 8s ease-in-out infinite;
+}
+
+/* ── Analog noise overlay ────────────────────────────────────────── */
+.transit-noise {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 15;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
 }

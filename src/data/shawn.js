@@ -105,39 +105,66 @@ export const shawnProfile = {
   },
 
   // ─────────────────────────────────────────────────────────────────
-  // Add these fields to your shawnProfile object in src/data/shawn.js
+  // Vending machine of experiences.
+  // Each slot dispensed is a moment, a vibe, an emotional dynamic.
+  // NOT a list of "benefits" — these are things you actually get to live.
+  //
+  // Fields:
+  //   id        — unique key
+  //   code      — vending machine slot code (e.g. "A1")
+  //   label     — short category label shown above the text
+  //   text      — the experience name (shown in slot list)
+  //   receipt   — longer description printed on the receipt when dispensed
+  //   soldOut   — (optional) boolean, greys out the slot
   // ─────────────────────────────────────────────────────────────────
-
   whatYoullGet: [
     {
-      id: "effort",
-      text: "Consistent effort — I show up, even on low-energy days",
-      color: "#60C8D0",
-      icon: "◈",
+      id: "ramen",
+      code: "A1",
+      label: "LATE NIGHT",
+      text: "2AM spontaneous ramen talks",
+      receipt:
+        "The kind of conversation that starts because neither of us can sleep — and ends somewhere we didn't expect. No agenda, just talking until the bowl is empty.",
+    },
+    {
+      id: "music",
+      code: "B3",
+      label: "FREQUENCY",
+      text: "oddly specific songs at 2AM",
+      receipt:
+        "Not a playlist. A single song, sent with no explanation, because it felt like you. You'll know exactly what I mean when it happens.",
+    },
+    {
+      id: "silence",
+      code: "C2",
+      label: "COEXISTENCE",
+      text: "parallel coding sessions in silence",
+      receipt:
+        "Both on our laptops, not saying much — just existing in the same space. Comfortable enough to not need words. That's a rare thing.",
+    },
+    {
+      id: "walks",
+      code: "D7",
+      label: "URBAN",
+      text: "existential walks under store lights",
+      receipt:
+        "3AM convenience store runs that turn into hour-long walks. The kind where you talk about everything and nothing, under fluorescent light and open sky.",
+    },
+    {
+      id: "cooking",
+      code: "E4",
+      label: "DOMESTIC",
+      text: "midnight cooking with no recipe",
+      receipt:
+        "I'll make something for you — improvised, probably a little chaotic, made with actual intention. Cooking is how I say I care about you.",
     },
     {
       id: "depth",
-      text: "Deep, real conversations that go past surface level",
-      color: "#F0C060",
-      icon: "◉",
-    },
-    {
-      id: "loyalty",
-      text: "Loyalty — when I'm in, I'm fully in",
-      color: "#88C070",
-      icon: "◆",
-    },
-    {
-      id: "memory",
-      text: "Someone who remembers the small things you mentioned in passing",
-      color: "#E05050",
-      icon: "◎",
-    },
-    {
-      id: "space",
-      text: "Room for you to be exactly who you are, no performance needed",
-      color: "#E8A44A",
-      icon: "◇",
+      code: "F1",
+      label: "CONNECTION",
+      text: "real conversations, no surface level",
+      receipt:
+        "I'll ask what you actually think. I'll tell you what I actually think. We'll get somewhere honest. That's the deal.",
     },
   ],
 

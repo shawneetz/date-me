@@ -101,16 +101,8 @@ export default function HobbiesSection({ items }) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="section hs-section"
     >
-      {/* The section-label lives outside the cabinet so it matches the rest
-          of the page's heading style, but we hide the default one and use
-          the marquee as the heading instead */}
-      <div
-        className="section-label"
-        aria-hidden="true"
-        style={{ display: "none" }}
-      >
-        Hobbies
-      </div>
+      {/* ── Section label — matches all other sections ── */}
+      <div className="section-label">Hobbies</div>
 
       {/* ╔══════════════════════════════════╗
           ║        ARCADE CABINET            ║
@@ -121,9 +113,9 @@ export default function HobbiesSection({ items }) {
         <span className="hs-cabinet-bolt-br" aria-hidden="true" />
 
         {/* ── MARQUEE ── */}
-        <div className="hs-marquee" role="heading" aria-level="2">
+        <div className="hs-marquee" role="heading" aria-level="3">
           <div className="hs-marquee-inner">
-            <span className="hs-marquee-title">★ HOBBIES ★</span>
+            <span className="hs-marquee-title">◉ INTERESTS.EXE ◉</span>
             <div className="hs-marquee-badge">
               <span className="hs-marquee-coin">COIN × 3</span>
               <span className="hs-marquee-credits">1P START</span>
