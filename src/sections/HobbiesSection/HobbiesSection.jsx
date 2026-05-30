@@ -12,7 +12,7 @@ const HOBBY_ACCENTS = [
   { hex: "#D4835A", rgb: "212,131,90", label: "H_06" },
 ];
 
-/* Fake HH:MM:SS clock for the screen HUD */
+/* Live clock for screen HUD */
 function useClock() {
   const [time, setTime] = useState(() => {
     const d = new Date();
@@ -35,8 +35,7 @@ function useClock() {
 }
 
 /**
- * Compute the shortest signed circular offset.
- * e.g. 6 items, index=5, selected=0 → -1 (wrap left rather than +5)
+ * Shortest circular offset between two indices.
  */
 function circularOffset(index, selected, length) {
   let offset = (index - selected) % length;
@@ -66,14 +65,17 @@ function SlotMedia({ imageUrl, imageAlt, accent, isSelected }) {
 /* ── Main component ──────────────────────────────────────────────── */
 export default function HobbiesSection({ items }) {
   const [selected, setSelected] = useState(0);
-  const [spacing, setSpacing] = useState(110);
+  const [spacing, setSpacing] = useState(150);
   const stageRef = useRef(null);
   const clock = useClock();
 
-  /* Measure the stage width to compute card spacing in real px */
+  /* Measure stage width → card spacing in real px */
   const measureSpacing = useCallback(() => {
     if (!stageRef.current) return;
-    setSpacing(Math.round(stageRef.current.offsetWidth * 0.54));
+    // Use ~55% of stage width as spacing between card centres
+    // This ensures adjacent cards are visible but not overlapping too much
+    const w = stageRef.current.offsetWidth;
+    setSpacing(Math.round(w * 0.52));
   }, []);
 
   useEffect(() => {
@@ -101,14 +103,10 @@ export default function HobbiesSection({ items }) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="section hs-section"
     >
-      {/* ── Section label — matches all other sections ── */}
       <div className="section-label">Hobbies</div>
 
-      {/* ╔══════════════════════════════════╗
-          ║        ARCADE CABINET            ║
-          ╚══════════════════════════════════╝ */}
       <div className="hs-cabinet" role="region" aria-label="Hobbies">
-        {/* Corner bolts (bottom two; top two are CSS ::before/::after) */}
+        {/* Corner bolts */}
         <span className="hs-cabinet-bolt-bl" aria-hidden="true" />
         <span className="hs-cabinet-bolt-br" aria-hidden="true" />
 
@@ -117,18 +115,15 @@ export default function HobbiesSection({ items }) {
           <div className="hs-marquee-inner">
             <span className="hs-marquee-title">◉ INTERESTS.EXE ◉</span>
             <div className="hs-marquee-badge">
-              <span className="hs-marquee-coin">COIN × 3</span>
-              <span className="hs-marquee-credits">1P START</span>
+              <span className="hs-marquee-coin">×3</span>
+              <span className="hs-marquee-credits">1P</span>
             </div>
           </div>
         </div>
 
         <div className="hs-layout">
-          {/* ══════════════════════════════════════
-              SCREEN — detail view
-          ══════════════════════════════════════ */}
+          {/* ── SCREEN — detail view ── */}
           <div className="hs-detail-container">
-            {/* HUD overlay — fake screen timestamp */}
             <div className="hs-screen-hud" aria-hidden="true">
               <div>{clock}</div>
               <div>SYS OK</div>
@@ -148,7 +143,6 @@ export default function HobbiesSection({ items }) {
                 }}
               >
                 <div className="hs-detail-body">
-                  {/* Small chip label */}
                   <div className="hs-detail-tag" aria-hidden="true">
                     <span className="hs-detail-tag-dot" />
                     {activeAccent.label} · SELECTED
@@ -180,17 +174,13 @@ export default function HobbiesSection({ items }) {
             <div className="hs-detail-scanlines" aria-hidden="true" />
           </div>
 
-          {/* ══════════════════════════════════════
-              CONTROL PANEL — carousel
-          ══════════════════════════════════════ */}
+          {/* ── CONTROL PANEL — carousel ── */}
           <div className="hs-carousel-wrapper">
-            {/* INSERT COIN prompt */}
             <div className="hs-insert-coin" aria-hidden="true">
               ▶ SELECT CHARACTER ◀
             </div>
 
             <div className="hs-carousel-controls">
-              {/* Joystick-style prev button */}
               <button
                 className="hs-nav-btn"
                 onClick={handlePrev}
@@ -218,7 +208,16 @@ export default function HobbiesSection({ items }) {
                   const absOffset = Math.abs(offset);
                   const isCenter = offset === 0;
 
+                  // Only render centre + 1 neighbour on each side
                   if (absOffset > 2) return null;
+
+                  // Scale and opacity fall off for non-centre cards
+                  const scale = isCenter
+                    ? 1
+                    : Math.max(0.62, 1 - absOffset * 0.2);
+                  const opacity = isCenter
+                    ? 1
+                    : Math.max(0.3, 1 - absOffset * 0.35);
 
                   return (
                     <motion.button
@@ -235,12 +234,8 @@ export default function HobbiesSection({ items }) {
                       }}
                       animate={{
                         x: offset * spacing,
-                        scale: isCenter
-                          ? 1
-                          : Math.max(0.6, 1 - absOffset * 0.18),
-                        opacity: isCenter
-                          ? 1
-                          : Math.max(0.3, 1 - absOffset * 0.32),
+                        scale,
+                        opacity,
                       }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                       onClick={() => setSelected(index)}
@@ -251,7 +246,6 @@ export default function HobbiesSection({ items }) {
                         accent={accent}
                         isSelected={isCenter}
                       />
-                      {/* HP-bar style name tag */}
                       <div className="hs-slot-footer">
                         <div className="hs-slot-name-bar">
                           <span className="hs-slot-channel">
@@ -265,7 +259,6 @@ export default function HobbiesSection({ items }) {
                 })}
               </div>
 
-              {/* Joystick-style next button */}
               <button
                 className="hs-nav-btn"
                 onClick={handleNext}
