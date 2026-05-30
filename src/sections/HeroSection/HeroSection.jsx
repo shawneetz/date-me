@@ -1,7 +1,15 @@
+/**
+ * src/sections/HeroSection/HeroSection.jsx
+ *
+ * Retro ID card hero section.
+ * The title bar text (`heroWindowTitle`) now comes from the profile prop
+ * so it can be edited in shawn.js without touching this file.
+ */
+
 import { motion } from "framer-motion";
 import "./HeroSection.css";
 
-/* ── Pixel cityscape SVG — bottom footer of the card ─────────────── */
+/* ── Pixel cityscape SVG ─────────────────────────────────────────── */
 function CityscapeSVG() {
   return (
     <svg
@@ -10,7 +18,6 @@ function CityscapeSVG() {
       preserveAspectRatio="none"
       aria-hidden="true"
     >
-      {/* Sky gradient */}
       <defs>
         <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#0a1520" />
@@ -19,7 +26,7 @@ function CityscapeSVG() {
       </defs>
       <rect width="680" height="36" fill="url(#skyGrad)" />
 
-      {/* Buildings — back layer (darker) */}
+      {/* Buildings — back layer */}
       <g fill="#0d1f2d" stroke="#1e4e5a" strokeWidth="0.5">
         <rect x="0" y="18" width="28" height="18" />
         <rect x="4" y="10" width="8" height="8" />
@@ -61,7 +68,7 @@ function CityscapeSVG() {
         <rect x="672" y="20" width="8" height="16" />
       </g>
 
-      {/* Buildings — front layer (slightly brighter) */}
+      {/* Buildings — front layer */}
       <g fill="#0a1520" stroke="#1e5f6e" strokeWidth="0.5">
         <rect x="0" y="24" width="18" height="12" />
         <rect x="22" y="20" width="14" height="16" />
@@ -97,7 +104,7 @@ function CityscapeSVG() {
         <rect x="664" y="22" width="16" height="14" />
       </g>
 
-      {/* Window lights — tiny glowing pixels */}
+      {/* Window lights — amber */}
       <g fill="#f0c060" opacity="0.55">
         <rect x="8" y="26" width="2" height="2" />
         <rect x="12" y="20" width="2" height="2" />
@@ -124,6 +131,7 @@ function CityscapeSVG() {
         <rect x="630" y="22" width="2" height="2" />
         <rect x="656" y="12" width="2" height="2" />
       </g>
+      {/* Window lights — cyan */}
       <g fill="#60c8d0" opacity="0.35">
         <rect x="6" y="30" width="2" height="2" />
         <rect x="44" y="28" width="2" height="2" />
@@ -139,7 +147,6 @@ function CityscapeSVG() {
         <rect x="668" y="24" width="2" height="2" />
       </g>
 
-      {/* Ground line */}
       <line
         x1="0"
         y1="35.5"
@@ -154,7 +161,17 @@ function CityscapeSVG() {
 }
 
 export default function HeroSection({ profile }) {
-  const { mbti, sign, tag, funFact, photoCaption, photoUrl, name } = profile;
+  const {
+    mbti,
+    sign,
+    tag,
+    funFact,
+    photoCaption,
+    photoUrl,
+    name,
+    // heroWindowTitle falls back gracefully if not provided
+    heroWindowTitle = "◈  SHAWNSCAPES  ◈",
+  } = profile;
 
   return (
     <motion.section
@@ -181,7 +198,7 @@ export default function HeroSection({ profile }) {
               style={{ background: "#88c070" }}
             />
           </div>
-          <span className="hero-topbar-title">◈ &nbsp;SHAWNSCAPES&nbsp; ◈</span>
+          <span className="hero-topbar-title">{heroWindowTitle}</span>
           <div className="hero-topbar-signal">
             <span className="hero-topbar-sigdot" aria-hidden="true" />
             ONLINE
@@ -195,26 +212,22 @@ export default function HeroSection({ profile }) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.2, duration: 0.6 }}
         >
-          {/* PLAYER 1 badge */}
           <div className="hero-player-badge" aria-hidden="true">
             PLAYER 1
           </div>
 
-          {/* Photo slot */}
           <div className="hero-photo-slot">
             {photoUrl ? (
               <img src={photoUrl} alt={name} />
             ) : (
               <div className="hero-photo-placeholder">[ PHOTO ]</div>
             )}
-            {/* Pixel corner brackets */}
             <span className="hero-corner hero-corner--tl" aria-hidden="true" />
             <span className="hero-corner hero-corner--tr" aria-hidden="true" />
             <span className="hero-corner hero-corner--bl" aria-hidden="true" />
             <span className="hero-corner hero-corner--br" aria-hidden="true" />
           </div>
 
-          {/* Stat block */}
           <div className="hero-stat-block">
             <div className="hero-stat-row">
               <span className="hero-stat-key">TYPE</span>
@@ -262,7 +275,7 @@ export default function HeroSection({ profile }) {
 
           {funFact && (
             <div className="hero-sysnote">
-              <span className="hero-sysnote-label">SYS NOTE</span>
+              <span className="hero-sysnote-label">SYSTEM FUN FACT</span>
               <p>{funFact}</p>
             </div>
           )}

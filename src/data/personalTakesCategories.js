@@ -11,7 +11,7 @@ export const personalTakesCategories = [
         id: "curiosity",
         title: "Structured learning vs. rabbit holes",
         answer:
-          "I'll always pick the rabbit hole. Structured learning is great for building a foundation, but honestly the moments where I learn the most are when I stumble into something at 2am and can't stop reading. It doesn't feel like studying — it feels like discovering. I think curiosity has to be a little uncontrolled to really work.",
+          "I'll always pick the rabbit hole. Structured learning is great for building a foundation, but honestly the moments where I learn the most are when I stumble into something at 2am and can't stop reading.",
       },
       {
         id: "school",

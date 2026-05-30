@@ -1,25 +1,24 @@
 /**
- * QuoteSection — Graffiti Alley
+ * src/sections/QuoteSection/QuoteSection.jsx
  *
- * Quotes appear as city artifacts left on a concrete wall:
- *   1. Spray paint — big emotional statement (VT323, gold)
- *   2. Torn poster — taped paper, handwritten italic feel (Space Mono, dark paper)
- *   3. Sticker — glossy LED-style bubble (VT323, cyan)
- *   4. CRT glitch projection — ironic/rational (VT323, green, chromatic aberration)
- *   5. Handwritten note — lined paper taped to wall (Space Mono, cream paper)
+ * GRAFFITI ALLEY
+ * The `quote` and all wall fragments now come from props (sourced from shawn.js).
+ * No personal content is hardcoded in this file.
  *
- * Each "author" font + treatment subconsciously signals a personality layer.
- * The `quote` prop from shawn.js populates slot 1 (spray paint).
- * Slots 2–5 are hardcoded city artifacts — fragments the alley already had.
- *
- * Props: quote { text, author }
+ * Props:
+ *   quote         — { text, author }
+ *   wallFragments — array of fragment objects:
+ *     { type: "poster",  header, text, signature }
+ *     { type: "sticker", lines: string[], meta }
+ *     { type: "crt",     label, lines: string[], author }
+ *     { type: "note",    text, signature }
  */
 
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import "./QuoteSection.css";
 
-/* ── Entrance animation variants ─────────────────────────────────── */
+/* ── Entrance animation helper ───────────────────────────────────── */
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 18 },
   whileInView: { opacity: 1, y: 0 },
@@ -36,97 +35,109 @@ const RUST_MARKS = [
   { top: "22%", left: "3%", text: "▓" },
 ];
 
-/* ── Fragment: Spray Paint ───────────────────────────────────────── */
-function SprayFragment({ quote }) {
+/* ── Fragment renderers ──────────────────────────────────────────── */
+
+function SprayFragment({ quote, delay = 0.1 }) {
   return (
-    <motion.div className="gf gf--spray" {...fadeUp(0.1)}>
+    <motion.div className="gf gf--spray" {...fadeUp(delay)}>
       <p className="gf-spray-text">{quote.text}</p>
       <span className="gf-spray-author">▸ {quote.author.toUpperCase()}</span>
     </motion.div>
   );
 }
 
-/* ── Fragment: Torn Poster ───────────────────────────────────────── */
-function PosterFragment() {
+function PosterFragment({ fragment, delay }) {
   return (
-    <motion.div className="gf gf--poster" {...fadeUp(0.2)}>
+    <motion.div className="gf gf--poster" {...fadeUp(delay)}>
       <div className="gf-poster-inner">
-        <div className="gf-poster-header">◈ MESSAGE FOUND IN ALLEY ◈</div>
-        <p className="gf-poster-text">
-          The best people are the ones who stay up too late talking about things
-          that don't have clean answers. Those conversations don't solve
-          anything — they just remind you that someone else is also losing sleep
-          over the same questions.
-        </p>
-        <span className="gf-poster-sig">— emotional thoughts, 02:14 AM</span>
+        <div className="gf-poster-header">{fragment.header}</div>
+        <p className="gf-poster-text">{fragment.text}</p>
+        <span className="gf-poster-sig">{fragment.signature}</span>
       </div>
     </motion.div>
   );
 }
 
-/* ── Fragment: Sticker ───────────────────────────────────────────── */
-function StickerFragment() {
+function StickerFragment({ fragment, delay }) {
   return (
-    <motion.div className="gf gf--sticker" {...fadeUp(0.28)}>
+    <motion.div className="gf gf--sticker" {...fadeUp(delay)}>
       <div className="gf-sticker-inner">
         <div className="gf-sticker-text">
-          "being perceived
-          <br />
-          is terrifying.
-          <br />
-          do it anyway."
+          {fragment.lines.map((line, i) => (
+            <span key={i}>
+              {line}
+              {i < fragment.lines.length - 1 && <br />}
+            </span>
+          ))}
         </div>
-        <div className="gf-sticker-meta">LED // ironic thoughts // ver 1.0</div>
+        <div className="gf-sticker-meta">{fragment.meta}</div>
       </div>
     </motion.div>
   );
 }
 
-/* ── Fragment: CRT Glitch Projection ─────────────────────────────── */
-function CRTFragment() {
+function CRTFragment({ fragment, delay }) {
   return (
-    <motion.div className="gf gf--crt" {...fadeUp(0.35)}>
+    <motion.div className="gf gf--crt" {...fadeUp(delay)}>
       <div className="gf-crt-frame">
         <div className="gf-crt-label">
           <span className="gf-crt-dot" aria-hidden="true" />
-          SYS_BROADCAST · RATIONAL.LOG
+          {fragment.label}
         </div>
         <div className="gf-crt-text">
-          "Statistically improbable things
-          <br />
-          happen all the time.
-          <br />
-          That's what 'improbable' means."
+          {fragment.lines.map((line, i) => (
+            <span key={i}>
+              {line}
+              {i < fragment.lines.length - 1 && <br />}
+            </span>
+          ))}
         </div>
-        <div className="gf-crt-author">
-          › rational thoughts // pixel font // SYS_NOTE
-        </div>
+        <div className="gf-crt-author">{fragment.author}</div>
       </div>
     </motion.div>
   );
 }
 
-/* ── Fragment: Handwritten Note ──────────────────────────────────── */
-function NoteFragment() {
+function NoteFragment({ fragment, delay }) {
   return (
-    <motion.div className="gf gf--note" {...fadeUp(0.42)}>
+    <motion.div className="gf gf--note" {...fadeUp(delay)}>
       <div className="gf-note-tape" aria-hidden="true" />
       <div className="gf-note-inner">
-        <p className="gf-note-text">
-          Cooking for someone without a reason is the most honest thing you can
-          do. No occasion, no performance — just: I thought about what you'd
-          like and I made it.
-        </p>
-        <span className="gf-note-sig">
-          — emotional thoughts, found on fridge
-        </span>
+        <p className="gf-note-text">{fragment.text}</p>
+        <span className="gf-note-sig">{fragment.signature}</span>
       </div>
     </motion.div>
   );
+}
+
+/* ── Fragment router ─────────────────────────────────────────────── */
+// Maps fragment.type → renderer component.
+// Delays are staggered automatically based on position in the array.
+const BASE_DELAY = 0.2;
+const DELAY_STEP = 0.08;
+
+function WallFragment({ fragment, index }) {
+  const delay = BASE_DELAY + index * DELAY_STEP;
+
+  switch (fragment.type) {
+    case "poster":
+      return <PosterFragment fragment={fragment} delay={delay} />;
+    case "sticker":
+      return <StickerFragment fragment={fragment} delay={delay} />;
+    case "crt":
+      return <CRTFragment fragment={fragment} delay={delay} />;
+    case "note":
+      return <NoteFragment fragment={fragment} delay={delay} />;
+    default:
+      return null;
+  }
 }
 
 /* ── Main component ──────────────────────────────────────────────── */
-export default function QuoteSection({ quote }) {
+// Props:
+//   quote         — profile.quote { text, author }
+//   wallFragments — profile.wallFragments array
+export default function QuoteSection({ quote, wallFragments = [] }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.08 });
 
@@ -141,9 +152,6 @@ export default function QuoteSection({ quote }) {
     >
       <div className="section-label">Quote</div>
 
-      {/* ╔═══════════════════════════════════╗
-          ║        GRAFFITI ALLEY WALL        ║
-          ╚═══════════════════════════════════╝ */}
       <div
         className="graffiti-wall"
         role="region"
@@ -168,19 +176,19 @@ export default function QuoteSection({ quote }) {
 
         {/* ── Wall fragments ── */}
         <div className="graffiti-content">
-          <SprayFragment quote={quote} />
+          {/* Spray paint is always first — it uses the main `quote` prop */}
+          <SprayFragment quote={quote} delay={0.1} />
 
           <div className="graffiti-crack" aria-hidden="true" />
 
-          <PosterFragment />
-
-          <StickerFragment />
-
-          <div className="graffiti-crack" aria-hidden="true" />
-
-          <CRTFragment />
-
-          <NoteFragment />
+          {/* Render the remaining fragments from wallFragments data */}
+          {wallFragments.map((fragment, index) => (
+            <WallFragment
+              key={`${fragment.type}-${index}`}
+              fragment={fragment}
+              index={index}
+            />
+          ))}
         </div>
 
         {/* ── Street gutter ── */}

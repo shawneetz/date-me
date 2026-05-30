@@ -1,9 +1,10 @@
 // src/pages/Landing.jsx
 // Entry landing page — shows the envelope experience.
-// Click the envelope → letter reveals → CTA navigates to /shawn.
+// Letter content is imported from shawn.js so it's easy to edit in one place.
 
 import EnvelopeLanding from "../components/EnvelopeLanding";
+import { letter } from "../data/shawn";
 
 export default function Landing() {
-  return <EnvelopeLanding />;
+  return <EnvelopeLanding letterData={letter} />;
 }

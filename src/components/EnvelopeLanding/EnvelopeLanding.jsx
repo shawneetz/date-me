@@ -1,6 +1,7 @@
 /**
  * EnvelopeLanding
  * Purpose: Full-page animated envelope that opens to reveal the letter stage.
+ * Now accepts a `letterData` prop and passes it to LetterSection.
  *
  * Stages:
  * 1. "envelope"  — pixel-art envelope with wax seal, hover lifts flap
@@ -28,7 +29,7 @@ function PixelHeart() {
       {HEART.map((row, r) =>
         row.map((cell, c) => (
           <div key={`${r}-${c}`} className={cell ? "ph" : "pn"} />
-        ))
+        )),
       )}
     </div>
   );
@@ -44,7 +45,7 @@ function StarField() {
       duration: `${(1.5 + Math.random() * 2.5).toFixed(2)}s`,
       delay: `${(Math.random() * 3).toFixed(2)}s`,
       opacity: (0.25 + Math.random() * 0.75).toFixed(2),
-    }))
+    })),
   );
 
   return (
@@ -67,19 +68,16 @@ function StarField() {
 }
 
 /* ── Main component ───────────────────────────────────────────────── */
-export default function EnvelopeLanding() {
+// Props:
+//   letterData — the `letter` export from shawn.js, forwarded to LetterSection
+export default function EnvelopeLanding({ letterData }) {
   const [stage, setStage] = useState("envelope"); // "envelope" | "opening" | "letter"
   const wrapRef = useRef(null);
 
   const handleOpen = () => {
     if (stage !== "envelope") return;
-
     setStage("opening");
-
-    // After shake + flap animation, transition to letter
-    setTimeout(() => {
-      setStage("letter");
-    }, 750);
+    setTimeout(() => setStage("letter"), 750);
   };
 
   return (
@@ -89,7 +87,6 @@ export default function EnvelopeLanding() {
 
       <div className="env-scene">
         <AnimatePresence mode="wait">
-
           {/* ── Stage: Envelope ─────────────────────────────────── */}
           {(stage === "envelope" || stage === "opening") && (
             <motion.div
@@ -98,11 +95,17 @@ export default function EnvelopeLanding() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -30, scale: 0.95 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem" }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                gap: "1.5rem",
+              }}
             >
-              <p className="env-pre-label">◈&nbsp;&nbsp;A message arrived for you&nbsp;&nbsp;◈</p>
+              <p className="env-pre-label">
+                ◈&nbsp;&nbsp;A message arrived for you&nbsp;&nbsp;◈
+              </p>
 
-              {/* Envelope */}
               <div
                 ref={wrapRef}
                 className={`env-wrap${stage === "opening" ? " is-opening is-open" : ""}`}
@@ -120,8 +123,6 @@ export default function EnvelopeLanding() {
                   <div className="env-seal" aria-hidden="true">
                     <PixelHeart />
                   </div>
-
-                  {/* Rising letter preview — only during opening */}
                   {stage === "opening" && (
                     <div className="env-letter-preview" aria-hidden="true" />
                   )}
@@ -145,10 +146,9 @@ export default function EnvelopeLanding() {
               transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               style={{ width: "100%" }}
             >
-              <LetterSection />
+              <LetterSection letterData={letterData} />
             </motion.div>
           )}
-
         </AnimatePresence>
       </div>
     </div>

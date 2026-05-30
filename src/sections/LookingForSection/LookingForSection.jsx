@@ -1,55 +1,14 @@
+/**
+ * src/sections/LookingForSection/LookingForSection.jsx
+ *
+ * NIGHT CITY RADIO
+ * All station data now comes from props (sourced from shawn.js).
+ * No personal content is hardcoded in this file.
+ */
+
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import "./LookingForSection.css";
-
-/* ── Frequency data ────────────────────────────────────────────
-   Each station = one trait, expressed as a broadcast signal.
-   "note" appears as a secondary callout beneath the message.
-──────────────────────────────────────────────────────────────── */
-const FREQUENCIES = [
-  {
-    freq: "87.3",
-    label: "SILENCE FM",
-    message: "people who know silence isn't awkward",
-    note: "comfortable coexistence",
-    signal: 8,
-  },
-  {
-    freq: "91.2",
-    label: "ODD FM",
-    message: "someone who sends strange songs at 2am with no explanation",
-    note: "no context needed",
-    signal: 7,
-  },
-  {
-    freq: "95.8",
-    label: "DEPTH FM",
-    message: "emotionally curious and openly weird — in the best way",
-    note: "surface-level conversation optional",
-    signal: 10,
-  },
-  {
-    freq: "98.6",
-    label: "CHAOS FM",
-    message: "soft-spoken with a very chaotic inner life",
-    note: "controlled entropy",
-    signal: 6,
-  },
-  {
-    freq: "101.4",
-    label: "ROAM FM",
-    message: "someone who romanticizes convenience stores at midnight",
-    note: "night market energy",
-    signal: 9,
-  },
-  {
-    freq: "104.9",
-    label: "SLOW FM",
-    message: "patient enough to let things grow at their own pace",
-    note: "no rushing required",
-    signal: 9,
-  },
-];
 
 const MIN_FREQ = 87.0;
 const MAX_FREQ = 107.9;
@@ -63,10 +22,9 @@ function percentToFreq(p) {
   return (MIN_FREQ + (p / 100) * (MAX_FREQ - MIN_FREQ)).toFixed(1);
 }
 
-/* ── Waveform equalizer bars ─────────────────────────────────── */
+/* ── Waveform equalizer bars ─────────────────────────────────────── */
 function Waveform({ active, accent = "#60C8D0" }) {
   const BARS = 32;
-  // Pre-generate stable heights
   const heights = useRef(
     Array.from(
       { length: BARS },
@@ -91,7 +49,7 @@ function Waveform({ active, accent = "#60C8D0" }) {
   );
 }
 
-/* ── Signal strength bars ────────────────────────────────────── */
+/* ── Signal strength bars ────────────────────────────────────────── */
 function SignalBars({ strength, accent = "#60C8D0" }) {
   const TOTAL = 9;
   return (
@@ -111,48 +69,53 @@ function SignalBars({ strength, accent = "#60C8D0" }) {
   );
 }
 
-/* ── Main component ─────────────────────────────────────────── */
-export default function LookingForSection({ lookingFor }) {
+/* ── Main component ─────────────────────────────────────────────── */
+// Props:
+//   stations    — profile.lookingForStations array
+//   lookingFor  — profile.lookingFor { headline, body }
+export default function LookingForSection({ stations = [], lookingFor }) {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.12 });
 
-  // tunerPct: 0–100 (position on the track)
-  const [tunerPct, setTunerPct] = useState(freqToPercent(87.3));
-  const [activeStation, setActiveStation] = useState(FREQUENCIES[0]);
+  const [tunerPct, setTunerPct] = useState(() =>
+    freqToPercent(stations[0]?.freq ?? 87.3),
+  );
+  const [activeStation, setActiveStation] = useState(stations[0] ?? null);
   const [isScanning, setIsScanning] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  // knob rotation in degrees
   const [knobAngle, setKnobAngle] = useState(-135);
 
   /* Snap to nearest station when close, else null */
-  const resolveStation = useCallback((pct) => {
-    const freq = parseFloat(percentToFreq(pct));
-    const nearest = FREQUENCIES.reduce((best, s) =>
-      Math.abs(parseFloat(s.freq) - freq) <
-      Math.abs(parseFloat(best.freq) - freq)
-        ? s
-        : best,
-    );
-    if (Math.abs(parseFloat(nearest.freq) - freq) <= SNAP_RANGE) {
-      const snappedPct = freqToPercent(nearest.freq);
-      setTunerPct(snappedPct);
-      setKnobAngle(-135 + (snappedPct / 100) * 270);
-      setActiveStation(nearest);
-    } else {
-      setActiveStation(null);
-      setKnobAngle(-135 + (pct / 100) * 270);
-    }
-  }, []);
+  const resolveStation = useCallback(
+    (pct) => {
+      if (!stations.length) return;
+      const freq = parseFloat(percentToFreq(pct));
+      const nearest = stations.reduce((best, s) =>
+        Math.abs(parseFloat(s.freq) - freq) <
+        Math.abs(parseFloat(best.freq) - freq)
+          ? s
+          : best,
+      );
+      if (Math.abs(parseFloat(nearest.freq) - freq) <= SNAP_RANGE) {
+        const snappedPct = freqToPercent(nearest.freq);
+        setTunerPct(snappedPct);
+        setKnobAngle(-135 + (snappedPct / 100) * 270);
+        setActiveStation(nearest);
+      } else {
+        setActiveStation(null);
+        setKnobAngle(-135 + (pct / 100) * 270);
+      }
+    },
+    [stations],
+  );
 
-  /* Pointer → pct conversion */
   const pctFromPointer = useCallback((clientX) => {
     if (!trackRef.current) return 0;
     const { left, width } = trackRef.current.getBoundingClientRect();
     return Math.min(100, Math.max(0, ((clientX - left) / width) * 100));
   }, []);
 
-  /* Mouse / touch down on track */
   const handlePointerDown = useCallback(
     (e) => {
       e.preventDefault();
@@ -165,7 +128,6 @@ export default function LookingForSection({ lookingFor }) {
     [pctFromPointer, resolveStation],
   );
 
-  /* Global move / up while dragging */
   useEffect(() => {
     if (!isDragging) return;
     const move = (e) => {
@@ -188,7 +150,6 @@ export default function LookingForSection({ lookingFor }) {
     };
   }, [isDragging, pctFromPointer, resolveStation]);
 
-  /* Keyboard nav on the track */
   const handleKeyDown = useCallback(
     (e) => {
       const step = e.shiftKey ? 2 : 0.5;
@@ -210,13 +171,14 @@ export default function LookingForSection({ lookingFor }) {
 
   /* Auto-scan animation on first mount */
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || !stations.length) return;
+    const targetFreq = stations[0].freq;
     let pct = freqToPercent(87.0);
     setIsScanning(true);
     const id = setInterval(() => {
       pct += 0.55;
-      if (pct >= freqToPercent(87.3)) {
-        pct = freqToPercent(87.3);
+      if (pct >= freqToPercent(targetFreq)) {
+        pct = freqToPercent(targetFreq);
         setTunerPct(pct);
         setKnobAngle(-135 + (pct / 100) * 270);
         resolveStation(pct);
@@ -228,10 +190,10 @@ export default function LookingForSection({ lookingFor }) {
       setKnobAngle(-135 + (pct / 100) * 270);
     }, 16);
     return () => clearInterval(id);
-  }, [isInView, resolveStation]);
+  }, [isInView, stations, resolveStation]);
 
   const currentFreq = percentToFreq(tunerPct);
-  const accent = "#60C8D0"; // light-cyan
+  const accent = "#60C8D0";
   const hasSignal = !!activeStation;
 
   return (
@@ -245,9 +207,6 @@ export default function LookingForSection({ lookingFor }) {
     >
       <div className="section-label">Looking for</div>
 
-      {/* ╔═══════════════════════════════════════╗
-          ║       NIGHT CITY RADIO CHASSIS        ║
-          ╚═══════════════════════════════════════╝ */}
       <div
         className="radio-chassis"
         role="region"
@@ -277,13 +236,11 @@ export default function LookingForSection({ lookingFor }) {
           </div>
         </div>
 
-        {/* ── MAIN DISPLAY (LCD + Dial) ── */}
+        {/* ── MAIN DISPLAY ── */}
         <div className="radio-main">
           {/* LCD Screen */}
           <div className="radio-lcd">
             <div className="radio-lcd-scanlines" aria-hidden="true" />
-
-            {/* Frequency readout */}
             <div className="radio-lcd-freq-row">
               <span className="radio-lcd-band">FM</span>
               <span
@@ -293,8 +250,6 @@ export default function LookingForSection({ lookingFor }) {
               </span>
               <span className="radio-lcd-mhz">MHz</span>
             </div>
-
-            {/* Station name */}
             <div
               className={`radio-lcd-station${hasSignal ? " found" : " searching"}`}
             >
@@ -304,14 +259,11 @@ export default function LookingForSection({ lookingFor }) {
                   ? "SCANNING..."
                   : "– – – – –"}
             </div>
-
-            {/* Equalizer waveform */}
             <Waveform active={hasSignal} accent={accent} />
           </div>
 
           {/* Dial column */}
           <div className="radio-dial-col">
-            {/* Rotary tuning knob */}
             <div
               className="radio-knob-wrap"
               onMouseDown={handlePointerDown}
@@ -333,8 +285,6 @@ export default function LookingForSection({ lookingFor }) {
               </div>
               <span className="radio-knob-label">TUNE</span>
             </div>
-
-            {/* Signal bars */}
             <div className="radio-sig-wrap">
               <span className="radio-sig-label">SIG</span>
               <SignalBars
@@ -347,27 +297,20 @@ export default function LookingForSection({ lookingFor }) {
 
         {/* ── TUNER STRIP ── */}
         <div className="radio-tuner-strip">
-          {/* Scale labels */}
           <div className="radio-scale-labels" aria-hidden="true">
             {[88, 92, 96, 100, 104, 108].map((f) => (
               <span key={f}>{f}</span>
             ))}
           </div>
-
-          {/* Station triangle markers */}
           <div className="radio-station-marks" aria-hidden="true">
-            {FREQUENCIES.map((s) => (
+            {stations.map((s) => (
               <span
                 key={s.freq}
-                className={`radio-station-mark${
-                  activeStation?.freq === s.freq ? " active-mark" : ""
-                }`}
+                className={`radio-station-mark${activeStation?.freq === s.freq ? " active-mark" : ""}`}
                 style={{ left: `${freqToPercent(s.freq)}%` }}
               />
             ))}
           </div>
-
-          {/* Draggable track */}
           <div
             ref={trackRef}
             className={`radio-track${isDragging ? " dragging" : ""}`}
@@ -385,8 +328,6 @@ export default function LookingForSection({ lookingFor }) {
               className="radio-track-fill"
               style={{ width: `${tunerPct}%` }}
             />
-
-            {/* Animated needle */}
             <motion.div
               className="radio-needle"
               animate={{ left: `${tunerPct}%` }}
@@ -450,7 +391,7 @@ export default function LookingForSection({ lookingFor }) {
           role="group"
           aria-label="Station presets"
         >
-          {FREQUENCIES.map((s) => (
+          {stations.map((s) => (
             <button
               key={s.freq}
               type="button"
@@ -475,22 +416,18 @@ export default function LookingForSection({ lookingFor }) {
         <div className="radio-footer" aria-hidden="true">
           <span className="radio-footer-left">◂ DRAG NEEDLE TO TUNE ▸</span>
           <div className="radio-footer-center">
-            {FREQUENCIES.map((s) => (
+            {stations.map((s) => (
               <span
                 key={s.freq}
-                className={`radio-footer-pip${
-                  activeStation?.freq === s.freq ? " active" : ""
-                }`}
+                className={`radio-footer-pip${activeStation?.freq === s.freq ? " active" : ""}`}
               />
             ))}
           </div>
-          <span className="radio-footer-right">
-            {FREQUENCIES.length} STATIONS
-          </span>
+          <span className="radio-footer-right">{stations.length} STATIONS</span>
         </div>
       </div>
 
-      {/* Closing prose from data */}
+      {/* Closing prose */}
       {lookingFor?.body && (
         <motion.p
           className="radio-prose"

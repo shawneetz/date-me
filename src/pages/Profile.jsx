@@ -1,3 +1,7 @@
+// src/pages/Profile.jsx
+// Passes all profile data down to each section.
+// Everything personal lives in src/data/shawn.js — edit there.
+
 import "./Profile.css";
 import { useParams } from "react-router-dom";
 import { shawnProfile } from "../data/shawn";
@@ -39,7 +43,10 @@ export default function Profile() {
         </RevealPanel>
 
         <RevealPanel delay={60}>
-          <QualitiesSection items={profile.qualities} />
+          <QualitiesSection
+            items={profile.qualities}
+            qualityConfig={profile.qualityConfig}
+          />
         </RevealPanel>
 
         <RevealPanel delay={100}>
@@ -51,7 +58,10 @@ export default function Profile() {
         </RevealPanel>
 
         <RevealPanel delay={180}>
-          <LookingForSection lookingFor={profile.lookingFor} />
+          <LookingForSection
+            stations={profile.lookingForStations}
+            lookingFor={profile.lookingFor}
+          />
         </RevealPanel>
 
         <RevealPanel delay={220}>
@@ -59,7 +69,10 @@ export default function Profile() {
         </RevealPanel>
 
         <RevealPanel delay={260}>
-          <QuoteSection quote={profile.quote} />
+          <QuoteSection
+            quote={profile.quote}
+            wallFragments={profile.wallFragments}
+          />
         </RevealPanel>
       </div>
     </div>

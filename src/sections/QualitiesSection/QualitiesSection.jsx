@@ -1,22 +1,11 @@
 /**
- * src/sections/QualitiesSection.jsx
+ * src/sections/QualitiesSection/QualitiesSection.jsx
  *
  * TRANSIT LINE STATUS BOARD
  * Each quality is a "line" currently operational on the City Personality Transit.
  *
- * Features:
- * - CRT amber monochrome aesthetic (consistent with project's retro theme)
- * - Per-line LED bullet with unique color
- * - Activity meter (health-bar style pips)
- * - Status badge (OPERATIONAL / OVERCLOCKED / STABLE / ACTIVE / etc.)
- * - Hover/click → "Station Log" panel with diary-like timestamps
- * - Periodic LED flicker animation
- * - Scrolling ticker strip
- * - Live clock in topbar
- * - Scanlines, chromatic aberration, analog noise
- *
- * Data source: profile.qualities[] from shawn.js
- * Each quality: { id, iconKey, title, preview, body }
+ * All content (quality data + per-line visual config) now comes from shawn.js
+ * via props: `items` (qualities array) and `qualityConfig` (visual/log config map).
  */
 
 import { useRef, useState, useEffect, useCallback } from "react";
@@ -25,83 +14,37 @@ import "./QualitiesSection.css";
 
 /* ── Per-line color palette (LED bullet colors) ─────────────────── */
 const LINE_COLORS = [
-  "#60C8D0", // cyan
-  "#ffe066", // bright yellow-amber
-  "#8dff8d", // signal green
-  "#F06E6E", // soft red
-  "#8B8FF0", // violet
-  "#ffb347", // orange-amber
+  "#60C8D0",
+  "#ffe066",
+  "#8dff8d",
+  "#F06E6E",
+  "#8B8FF0",
+  "#ffb347",
 ];
 
-/* ── Status config per quality ──────────────────────────────────── */
-// Maps quality id → { status, meter (0–10), logs[] }
-// These are hand-tuned to feel authentic for each trait.
-const QUALITY_CONFIG = {
-  spontaneous: {
-    status: "ACTIVE",
-    badgeClass: "active",
-    meter: 8,
-    flicker: true,
-    logs: [
-      {
-        ts: "01:47 AM",
-        text: "Decided to start building this website instead of sleeping.",
-      },
-      {
-        ts: "11:23 PM",
-        text: "Went for a midnight walk. No reason. Just felt like it.",
-      },
-    ],
-  },
-  listener: {
-    status: "OPERATIONAL",
-    badgeClass: "operational",
-    meter: 10,
-    flicker: false,
-    logs: [
-      {
-        ts: "02:14 AM",
-        text: "Stayed up helping a friend debug for 4 hours. Never checked the time.",
-      },
-      {
-        ts: "09:40 PM",
-        text: "Didn't say a word for 20 minutes. Just listened. That was enough.",
-      },
-    ],
-  },
-  direct: {
-    status: "STABLE",
-    badgeClass: "stable",
-    meter: 9,
-    flicker: false,
-    logs: [
-      {
-        ts: "03:55 PM",
-        text: "Said the uncomfortable thing. The conversation went better because of it.",
-      },
-      {
-        ts: "10:12 PM",
-        text: "Drafted the message three times. Sent the honest one.",
-      },
-    ],
-  },
-};
-
-/* ── Fallback config for any extra qualities added later ─────────── */
+/* ── Fallback config for any quality not found in qualityConfig ──── */
 const FALLBACK_CONFIGS = [
   {
     status: "OPERATIONAL",
     badgeClass: "operational",
     meter: 9,
     flicker: false,
+    logs: [],
   },
-  { status: "ACTIVE", badgeClass: "active", meter: 7, flicker: true },
-  { status: "STABLE", badgeClass: "stable", meter: 8, flicker: false },
+  { status: "ACTIVE", badgeClass: "active", meter: 7, flicker: true, logs: [] },
+  {
+    status: "STABLE",
+    badgeClass: "stable",
+    meter: 8,
+    flicker: false,
+    logs: [],
+  },
 ];
 
-function getConfig(item, index) {
+function getConfig(item, index, qualityConfig) {
   return (
-    QUALITY_CONFIG[item.id] ?? FALLBACK_CONFIGS[index % FALLBACK_CONFIGS.length]
+    qualityConfig?.[item.id] ??
+    FALLBACK_CONFIGS[index % FALLBACK_CONFIGS.length]
   );
 }
 
@@ -128,7 +71,7 @@ function useClock() {
 }
 
 /* ── Activity meter pips ────────────────────────────────────────── */
-function MeterPips({ value, statusClass }) {
+function MeterPips({ value }) {
   const TOTAL = 10;
   return (
     <div className="transit-line-meter" aria-hidden="true">
@@ -144,6 +87,7 @@ function MeterPips({ value, statusClass }) {
 
 /* ── Station Log panel ──────────────────────────────────────────── */
 function StationLog({ item, config }) {
+  // If no log entries defined, fall back to the quality's body text
   if (!config.logs?.length) {
     return (
       <div className="transit-log-inner">
@@ -202,7 +146,10 @@ function TickerContent() {
 }
 
 /* ── Main component ─────────────────────────────────────────────── */
-export default function QualitiesSection({ items }) {
+// Props:
+//   items         — profile.qualities array
+//   qualityConfig — profile.qualityConfig object (keyed by quality id)
+export default function QualitiesSection({ items, qualityConfig = {} }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.08 });
   const clock = useClock();
@@ -217,6 +164,7 @@ export default function QualitiesSection({ items }) {
     ? getConfig(
         activeItem,
         items.findIndex((it) => it.id === activeId),
+        qualityConfig,
       )
     : null;
 
@@ -229,22 +177,16 @@ export default function QualitiesSection({ items }) {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="section"
     >
-      {/* Section label — matches all other sections */}
       <div className="section-label">Qualities</div>
 
-      {/* ╔══════════════════════════════════════╗
-          ║    CITY PERSONALITY TRANSIT BOARD    ║
-          ╚══════════════════════════════════════╝ */}
       <div
         className="transit-board"
         role="region"
         aria-label="City Personality Transit — line status board"
       >
-        {/* Scanlines & noise overlays */}
         <div className="transit-scanlines" aria-hidden="true" />
         <div className="transit-noise" aria-hidden="true" />
 
-        {/* Corner bolts */}
         <span className="transit-bolt transit-bolt--tl" aria-hidden="true" />
         <span className="transit-bolt transit-bolt--tr" aria-hidden="true" />
         <span className="transit-bolt transit-bolt--bl" aria-hidden="true" />
@@ -283,7 +225,7 @@ export default function QualitiesSection({ items }) {
         {/* ── Line rows ── */}
         <div className="transit-lines" role="list" aria-label="Transit lines">
           {items.map((item, index) => {
-            const config = getConfig(item, index);
+            const config = getConfig(item, index, qualityConfig);
             const color = LINE_COLORS[index % LINE_COLORS.length];
             const isActive = activeId === item.id;
             const lineCode = `L-${String(index + 1).padStart(2, "0")}`;
@@ -309,12 +251,10 @@ export default function QualitiesSection({ items }) {
                 aria-pressed={isActive}
                 aria-label={`${item.title} line — ${config.status}. ${isActive ? "Station log open" : "Click to read station log"}`}
               >
-                {/* Line code */}
                 <div className="transit-line-code">
                   <span>{lineCode}</span>
                 </div>
 
-                {/* Line name + LED bullet */}
                 <div className="transit-line-name">
                   <span
                     className={`transit-line-bullet${config.flicker ? " flicker" : ""}`}
@@ -326,13 +266,8 @@ export default function QualitiesSection({ items }) {
                   </span>
                 </div>
 
-                {/* Activity meter */}
-                <MeterPips
-                  value={config.meter}
-                  statusClass={config.badgeClass}
-                />
+                <MeterPips value={config.meter} />
 
-                {/* Status badge */}
                 <div className="transit-line-status">
                   <span className={`transit-status-badge ${config.badgeClass}`}>
                     {config.status}
@@ -385,7 +320,7 @@ export default function QualitiesSection({ items }) {
         <div className="transit-footer" aria-hidden="true">
           <span className="transit-footer-left">◂ LIVE FEED ▸</span>
           <div className="transit-footer-dots">
-            {items.map((item, i) => (
+            {items.map((item) => (
               <span
                 key={item.id}
                 className={`transit-footer-pip${activeId === item.id ? " active" : ""}`}

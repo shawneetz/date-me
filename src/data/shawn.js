@@ -1,5 +1,8 @@
 // src/data/shawn.js
-// This is YOUR resume. Edit any field and it updates everywhere.
+// ─────────────────────────────────────────────────────────────────────────────
+// SINGLE SOURCE OF TRUTH — edit everything about the profile here.
+// Components read from this file; nothing personal is hardcoded in JSX.
+// ─────────────────────────────────────────────────────────────────────────────
 
 import hobby1 from "../assets/hobby-1.png";
 import hobby2 from "../assets/hobby-2.png";
@@ -10,44 +13,138 @@ import hobby6 from "../assets/hobby-6.png";
 import shawnPfp from "../assets/shawn-pfp.jpg";
 import { personalTakesCategories } from "./personalTakesCategories";
 
+// ─── LETTER (Landing envelope reveal) ────────────────────────────────────────
+
+export const letter = {
+  windowTitle: "✉  A letter for you  ✉",
+  city: "Quezon City, PH",
+  greeting: "Hey there, stranger. 🌹",
+  paragraphs: [
+    "I know this is a little unusual, getting a letter from someone you barely know. But I figured the usual approach of just sliding into wasn't really my style and not the way I wanted to introduce myself. I wanted to do something a bit more personal, something that gives you a glimpse of who I am beyond just a profile picture and a bio. Having watched a lot romance anime and movies might have just also got into me.",
+    "So instead, I made something. A proper introduction, the kind where you actually get to know who I am, and some little details about me. The things I care about, the things that make me, me. It's all in there, waiting for you to discover them. Well... only if you're curious enough to click and read through.",
+    "So, I'm Shawn. A CS student, occasional tinkerer, and a night owl that will never sleep until I figure out something that bugged me randomly. I love to do a lot of things — from reading manga, to watching anime, to cooking, to traveling, and a lot more. I find joy in the little things, the quiet moments, and the shared experiences that make life interesting and meaningful.",
+    "If you're curious about me, I hope you click through and explore my little profile I made for this moment.",
+  ],
+  signOff: "— Shawn Alfred",
+  ctaLabel: "◈  ready to meet me?  ◈",
+  ctaButtonText: "View My Full Profile",
+};
+
+// ─── PROFILE ──────────────────────────────────────────────────────────────────
+
 export const shawnProfile = {
+  // Used for route matching (/shawn) — keep this as-is
   username: "shawn",
+
+  // Used as the photo's alt text
   name: "Shawn Alfred Padilla",
-  heroGreeting: "Hi there, I'm Shawn!",
+
+  // Title bar text on the hero card
+  heroWindowTitle: "◈  SHAWNSCAPES  ◈",
+
+  // Hero stat block
   mbti: "INTP",
   sign: "Capricorn",
   tag: "CS Student",
   photoUrl: shawnPfp,
-  photoCaption:
-    "CS student. Builder. Occasional midnight chef.\n Somewhere in the Philippines.",
+
+  // Terminal output line in the hero info column
+  photoCaption: `Programmer | Tinkerer | Builder | Researcher
+  Midnight Chef | Reader | Writer | Adventurer`,
+
+  // ">> SYS NOTE" box at the bottom of the hero info column
   funFact:
     "I've been wanting to learn pixel art and just started the midnight I decided to create this website.",
+
+  // ─── QUALITIES ───────────────────────────────────────────────────────────
+  // Each entry is one transit line on the board.
+  //
+  //   id    — must match a key in qualityConfig below
+  //   title — displayed as "[TITLE] LINE" on the board
+  //   body  — fallback text in the station log if qualityConfig has no `logs`
 
   qualities: [
     {
       id: "spontaneous",
-      iconKey: "shootingStar",
       title: "Spontaneous",
-      preview: "Plans meet impulse — I live for both.",
       body: "I plan ahead most of the time, but there are moments when I drop everything to do something that just feels alive — a random road trip, cooking at midnight, or building something weird. Those moments matter to me as much as the careful ones.",
     },
     {
       id: "listener",
-      iconKey: "radio",
       title: "Active Listener",
-      preview: "People call me when they need to vent.",
       body: "I listen the way I'd want someone to listen to me — without interrupting, without judgment, without waiting for my turn to talk. Friends come to me with their worries, their stories, and their 2am spirals. I'm genuinely interested in people.",
     },
     {
       id: "direct",
-      iconKey: "compass",
       title: "Straightforward",
-      preview: "I say what I mean — respectfully.",
       body: "I don't do passive aggression or hints. I'd rather have an honest, slightly uncomfortable conversation than let things fester. That said, I always make room for the other person — directness isn't the same as bluntness.",
     },
   ],
 
+  // ─── QUALITY CONFIG ───────────────────────────────────────────────────────
+  // Visual and log data for each transit line. Keyed by quality `id`.
+  //
+  //   status     — badge text: "OPERATIONAL" | "OVERCLOCKED" | "STABLE" | "ACTIVE" | "DELAYED"
+  //   badgeClass — CSS modifier: "operational" | "overclocked" | "stable" | "active" | "delayed"
+  //   meter      — activity bar fill, 0–10
+  //   flicker    — LED bullet flicker animation (true for energetic traits)
+  //   logs       — diary entries shown in the station log panel
+  //                leave as [] to fall back to the quality's `body` text instead
+
+  qualityConfig: {
+    spontaneous: {
+      status: "ACTIVE",
+      badgeClass: "active",
+      meter: 8,
+      flicker: true,
+      logs: [
+        {
+          ts: "01:47 AM",
+          text: "Decided to start building this website instead of sleeping.",
+        },
+        {
+          ts: "11:23 PM",
+          text: "Went for a midnight walk. No reason. Just felt like it.",
+        },
+      ],
+    },
+    listener: {
+      status: "OPERATIONAL",
+      badgeClass: "operational",
+      meter: 10,
+      flicker: false,
+      logs: [
+        {
+          ts: "02:14 AM",
+          text: "Stayed up helping a friend debug for 4 hours. Never checked the time.",
+        },
+        {
+          ts: "09:40 PM",
+          text: "Didn't say a word for 20 minutes. Just listened. That was enough.",
+        },
+      ],
+    },
+    direct: {
+      status: "STABLE",
+      badgeClass: "stable",
+      meter: 9,
+      flicker: false,
+      logs: [
+        {
+          ts: "03:55 PM",
+          text: "Said the uncomfortable thing. The conversation went better because of it.",
+        },
+        {
+          ts: "10:12 PM",
+          text: "Drafted the message three times. Sent the honest one.",
+        },
+      ],
+    },
+  },
+
   personalTakesCategories,
+
+  // ─── HOBBIES ──────────────────────────────────────────────────────────────
 
   hobbies: [
     {
@@ -100,24 +197,68 @@ export const shawnProfile = {
     },
   ],
 
+  // ─── LOOKING FOR ──────────────────────────────────────────────────────────
+  // Each station is one trait. The tuner auto-scans to the first entry on load.
+  //
+  //   freq    — FM frequency string (unique key); must be between 87.0–107.9
+  //             keep stations spread out so the ±0.9 MHz snap-range doesn't overlap
+  //   label   — station name shown on LCD and preset buttons
+  //   message — quote shown in the readout area when tuned in
+  //   note    — secondary callout beneath the message
+  //   signal  — signal strength bar fill, 1–9
+
+  lookingForStations: [
+    {
+      freq: "87.3",
+      label: "SILENCE FM",
+      message: "people who know silence isn't awkward",
+      note: "comfortable coexistence",
+      signal: 8,
+    },
+    {
+      freq: "91.2",
+      label: "ODD FM",
+      message: "someone who sends strange songs at 2am with no explanation",
+      note: "no context needed",
+      signal: 7,
+    },
+    {
+      freq: "95.8",
+      label: "DEPTH FM",
+      message: "emotionally curious and openly weird — in the best way",
+      note: "surface-level conversation optional",
+      signal: 10,
+    },
+    {
+      freq: "98.6",
+      label: "CHAOS FM",
+      message: "soft-spoken with a very chaotic inner life",
+      note: "controlled entropy",
+      signal: 6,
+    },
+    {
+      freq: "101.4",
+      label: "ROAM FM",
+      message: "someone who romanticizes convenience stores at midnight",
+      note: "night market energy",
+      signal: 9,
+    },
+    {
+      freq: "104.9",
+      label: "SLOW FM",
+      message: "patient enough to let things grow at their own pace",
+      note: "no rushing required",
+      signal: 9,
+    },
+  ],
+
+  // Closing prose shown below the radio chassis
   lookingFor: {
-    headline: "Someone to share quiet and loud moments with.",
     body: "Someone who can sit in comfortable silence with me one night and drag me to a night market the next. I want genuine — not perfect. Someone curious about the world and about me, and patient enough to let things grow at their own pace.",
   },
 
-  // ─────────────────────────────────────────────────────────────────
-  // Vending machine of experiences.
-  // Each slot dispensed is a moment, a vibe, an emotional dynamic.
-  // NOT a list of "benefits" — these are things you actually get to live.
-  //
-  // Fields:
-  //   id        — unique key
-  //   code      — vending machine slot code (e.g. "A1")
-  //   label     — short category label shown above the text
-  //   text      — the experience name (shown in slot list)
-  //   receipt   — longer description printed on the receipt when dispensed
-  //   soldOut   — (optional) boolean, greys out the slot
-  // ─────────────────────────────────────────────────────────────────
+  // ─── WHAT YOU'LL GET ──────────────────────────────────────────────────────
+
   whatYoullGet: [
     {
       id: "ramen",
@@ -169,17 +310,43 @@ export const shawnProfile = {
     },
   ],
 
-  dealBreakers: [
-    "Dishonesty",
-    "Lack of effort",
-    "Closed-mindedness",
-    "Emotional unavailability",
-    "Zero ambition",
-    "Excessive dependency",
-  ],
+  // ─── QUOTE / GRAFFITI WALL ────────────────────────────────────────────────
+  // `quote` is the large spray-paint text at the top of the wall.
+  // `wallFragments` are the other artifacts. Remove entries to hide them.
+  //
+  // Types: "poster" | "sticker" | "crt" | "note"
 
   quote: {
     text: "Life is not measured by the number of breaths you take, but by the moments that take your breath away.",
     author: "My personal philosophy",
   },
+
+  wallFragments: [
+    {
+      type: "poster",
+      header: "◈ MESSAGE FOUND IN ALLEY ◈",
+      text: "The best people are the ones who stay up too late talking about things that don't have clean answers. Those conversations don't solve anything — they just remind you that someone else is also losing sleep over the same questions.",
+      signature: "— emotional thoughts, 02:14 AM",
+    },
+    {
+      type: "sticker",
+      lines: ["being perceived", "is terrifying.", "do it anyway."],
+      meta: "LED // ironic thoughts // ver 1.0",
+    },
+    {
+      type: "crt",
+      label: "SYS_BROADCAST · RATIONAL.LOG",
+      lines: [
+        '"Statistically improbable things',
+        "happen all the time.",
+        "That's what 'improbable' means.\"",
+      ],
+      author: "› rational thoughts // pixel font // SYS_NOTE",
+    },
+    {
+      type: "note",
+      text: "Cooking for someone without a reason is the most honest thing you can do. No occasion, no performance — just: I thought about what you'd like and I made it.",
+      signature: "— emotional thoughts, found on fridge",
+    },
+  ],
 };

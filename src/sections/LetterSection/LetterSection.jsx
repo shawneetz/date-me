@@ -1,10 +1,13 @@
 /**
- * LetterSection
- * Purpose: Pixel OS-window styled personal letter with CTA button to /shawn profile.
+ * src/sections/LetterSection/LetterSection.jsx
  *
- * Pipeline:
- * Render pixel title-bar → letter body (date, greeting, paragraphs, sign-off)
- * → divider → CTA button → navigate to /shawn
+ * Pixel OS-window styled personal letter with CTA button.
+ * All letter content now comes from props (sourced from shawn.js letter object).
+ *
+ * Props:
+ *   letterData — the `letter` export from shawn.js:
+ *     { windowTitle, city, greeting, paragraphs[], signOff, ctaLabel, ctaButtonText }
+ *   navigateTo — route to navigate to on CTA click (default: "/shawn")
  */
 
 import { useState } from "react";
@@ -29,7 +32,6 @@ const rowVariants = {
   },
 };
 
-/* ── Today's date formatted in the site style ─────────────────────── */
 function getLetterDate() {
   return new Date().toLocaleDateString("en-US", {
     year: "numeric",
@@ -38,16 +40,26 @@ function getLetterDate() {
   });
 }
 
-export default function LetterSection() {
+export default function LetterSection({
+  letterData = {},
+  navigateTo = "/shawn",
+}) {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
+  const {
+    windowTitle = "✉  A letter for you  ✉",
+    city = "",
+    greeting = "Hey there.",
+    paragraphs = [],
+    signOff = "— Shawn",
+    ctaLabel = "◈  ready to meet me?  ◈",
+    ctaButtonText = "View My Full Profile",
+  } = letterData;
+
   const handleViewProfile = () => {
     setLoading(true);
-    // Brief delay so the loading state registers visually before nav
-    setTimeout(() => {
-      navigate("/shawn");
-    }, 380);
+    setTimeout(() => navigate(navigateTo), 380);
   };
 
   return (
@@ -65,9 +77,11 @@ export default function LetterSection() {
             <div className="letter-bar-dot" style={{ background: "#f0c060" }} />
             <div className="letter-bar-dot" style={{ background: "#88c070" }} />
           </div>
-          <span className="letter-bar-title">✉&nbsp;&nbsp;Personal Letter&nbsp;&nbsp;✉</span>
+          <span className="letter-bar-title">{windowTitle}</span>
           <div className="letter-bar-grip" aria-hidden="true">
-            <span /><span /><span />
+            <span />
+            <span />
+            <span />
           </div>
         </div>
 
@@ -79,48 +93,28 @@ export default function LetterSection() {
           animate="visible"
         >
           <motion.div variants={rowVariants} className="letter-date">
-            {getLetterDate()} · Quezon City, PH
+            {getLetterDate()}
+            {city ? ` · ${city}` : ""}
           </motion.div>
 
           <motion.div variants={rowVariants} className="letter-greeting">
-            Hey there, stranger. 👾
+            {greeting}
           </motion.div>
 
           <motion.div variants={rowVariants} className="letter-text">
-            <p>
-              I know this is a little unusual — getting a letter from someone
-              you barely know. But I figured the usual approach (swiping left or
-              right on a blurry photo) wasn't really giving either of us a fair
-              shot.
-            </p>
-            <p>
-              So instead, I made something. A proper introduction. The kind
-              where you actually get to know who I am — the hobbies, the
-              opinions, the midnight cooking habits, and yes, the deal-breakers
-              too.
-            </p>
-            <p>
-              I'm Shawn. CS student, occasional tinkerer, person who will
-              absolutely cook for you without needing a reason. I think the best
-              connections start with honesty, so I put mine out there.
-            </p>
-            <p>
-              If you're curious, the full picture is one click away. No
-              pressure — just take a look.
-            </p>
+            {paragraphs.map((para, i) => (
+              <p key={i}>{para}</p>
+            ))}
           </motion.div>
 
           <motion.div variants={rowVariants} className="letter-sign">
-            — Shawn&nbsp;
-            <span className="letter-sign-sub">/ S.A.P.</span>
+            {signOff}
           </motion.div>
 
           <motion.div variants={rowVariants} className="letter-divider" />
 
           <motion.div variants={rowVariants} className="letter-cta">
-            <span className="letter-cta-label">
-              ◈&nbsp;&nbsp;ready to meet me?&nbsp;&nbsp;◈
-            </span>
+            <span className="letter-cta-label">{ctaLabel}</span>
             <button
               type="button"
               className={`letter-cta-btn${loading ? " is-loading" : ""}`}
@@ -128,7 +122,7 @@ export default function LetterSection() {
               disabled={loading}
             >
               <span aria-hidden="true">▶</span>
-              {loading ? "Loading..." : "View My Full Profile"}
+              {loading ? "Loading..." : ctaButtonText}
             </button>
           </motion.div>
         </motion.div>
