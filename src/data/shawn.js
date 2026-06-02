@@ -20,10 +20,10 @@ export const letter = {
   city: "Quezon City, PH",
   greeting: "Hey there, stranger. 🌹",
   paragraphs: [
-    "I know this is a little unusual, getting a letter from someone you barely know. But I figured the usual approach of just sliding into wasn't really my style and not the way I wanted to introduce myself. I wanted to do something a bit more personal, something that gives you a glimpse of who I am beyond just a profile picture and a bio. Having watched a lot romance anime and movies might have just also got into me.",
-    "So instead, I made something. A proper introduction, the kind where you actually get to know who I am, and some little details about me. The things I care about, the things that make me, me. It's all in there, waiting for you to discover them. Well... only if you're curious enough to click and read through.",
-    "So, I'm Shawn. A CS student, occasional tinkerer, and a night owl that will never sleep until I figure out something that bugged me randomly. I love to do a lot of things — from reading manga, to watching anime, to cooking, to traveling, and a lot more. I find joy in the little things, the quiet moments, and the shared experiences that make life interesting and meaningful.",
-    "If you're curious about me, I hope you click through and explore my little profile I made for this moment.",
+    "I know this is a bit unusual—getting a whole letter from someone you barely know. But sliding into your DMs felt a little too basic, and I wanted to actually introduce myself properly. Plus, watching way too much romance anime might have rubbed off on me.",
+    "So, I built this instead. It's a quick look into who I am, the stuff I actually care about, and the weird little details that usually don't make it onto a standard bio. Only if you're curious, of course.",
+    "A bit about me: I'm Shawn. A CS student, an occasional tinkerer, and a stubborn night owl who can't sleep if a random bug is bothering me. I'm into a lot of things—manga, anime, cooking, and traveling. I mostly just appreciate quiet moments and good, random conversations.",
+    "If you want to know more, go ahead and explore the rest of the profile.",
   ],
   signOff: "— Shawn Alfred",
   ctaLabel: "◈  ready to meet me?  ◈",
@@ -54,7 +54,7 @@ export const shawnProfile = {
 
   // ">> SYS NOTE" box at the bottom of the hero info column
   funFact:
-    "I've been wanting to learn pixel art and just started the midnight I decided to create this website.",
+    "I've been meaning to learn pixel art for ages, so I finally started the exact night I decided to build this site.",
 
   // ─── QUALITIES ───────────────────────────────────────────────────────────
   // Each entry is one transit line on the board.
@@ -67,17 +67,17 @@ export const shawnProfile = {
     {
       id: "spontaneous",
       title: "Spontaneous",
-      body: "I plan ahead most of the time, but there are moments when I drop everything to do something that just feels alive — a random road trip, cooking at midnight, or building something weird. Those moments matter to me as much as the careful ones.",
+      body: "I usually plan ahead, but I love dropping everything for a random midnight road trip, cooking experiment, or a weird side project. Those random moments keep things interesting.",
     },
     {
       id: "listener",
       title: "Active Listener",
-      body: "I listen the way I'd want someone to listen to me — without interrupting, without judgment, without waiting for my turn to talk. Friends come to me with their worries, their stories, and their 2am spirals. I'm genuinely interested in people.",
+      body: "I listen without just waiting for my turn to speak. My friends usually end up venting to me during their 2 a.m. spirals, mostly because I actually care about what people are going through.",
     },
     {
       id: "direct",
       title: "Straightforward",
-      body: "I don't do passive aggression or hints. I'd rather have an honest, slightly uncomfortable conversation than let things fester. That said, I always make room for the other person — directness isn't the same as bluntness.",
+      body: "I don't really do hints or passive-aggression. I'd rather have a slightly uncomfortable, honest conversation than let things drag out. But I always make sure it comes from a good place.",
     },
   ],
 
@@ -151,7 +151,7 @@ export const shawnProfile = {
       id: "manhwa",
       title: "Reading Manhwa & Manga",
       description:
-        "I love stories in general, but the visual medium of manhwa and manga makes them hit differently — I get lost in the art as much as the plot. Ask me for recommendations; I have opinions.",
+        "I love a good story, but manga and manhwa hit differently because of the art style. Let me know if you need recommendations—I have plenty of strong opinions.",
       imageUrl: hobby1,
       imageAlt: "Stack of manga volumes",
     },
@@ -159,7 +159,7 @@ export const shawnProfile = {
       id: "anime",
       title: "Watching Anime",
       description:
-        "It started as entertainment, became a love for storytelling craft. Some of my biggest inspirations come from anime — the way emotion is animated in this medium is unlike anything else.",
+        "What started as pure entertainment turned into a real appreciation for the medium. The way anime captures hyper-specific emotions is unmatched.",
       imageUrl: hobby2,
       imageAlt: "Anime-style city lights at night",
     },
@@ -167,7 +167,7 @@ export const shawnProfile = {
       id: "diy",
       title: "DIY & Electronics",
       description:
-        "Former robotics competitor. I love engineering things — making a microcontroller do something useful, 3D modeling parts, and figuring out how systems work by taking them apart (and hopefully putting them back together).",
+        "Former robotics kid. I love building things with my hands—messing with microcontrollers, 3D printing parts, or taking electronics apart just to see how they work.",
       imageUrl: hobby3,
       imageAlt: "Electronics workbench with tools",
     },
@@ -175,7 +175,7 @@ export const shawnProfile = {
       id: "programming",
       title: "Programming",
       description:
-        "CS student by study, builder by nature. I find something deeply satisfying about creating something from nothing — a working system, a tool, a small program that solves a real problem.",
+        "CS major by day, builder by night. There's a specific kind of satisfaction in writing a script or tool that solves a real, annoying problem from scratch.",
       imageUrl: hobby4,
       imageAlt: "Code on a laptop screen",
     },
@@ -183,7 +183,7 @@ export const shawnProfile = {
       id: "travel",
       title: "Travelling",
       description:
-        "I think the best version of yourself comes from exposure — new places, new food, new conversations. I'm the kind of person who says yes to things before thinking too hard about them.",
+        "I love going to new places, trying weird food, and getting out of my comfort zone. I'm usually the guy who says yes to a trip before even checking my calendar.",
       imageUrl: hobby5,
       imageAlt: "Travel map and camera on a table",
     },
@@ -191,7 +191,7 @@ export const shawnProfile = {
       id: "cooking",
       title: "Cooking",
       description:
-        "Cooking is one of the ways I take care of people. I experiment more than I follow recipes and I'll happily cook for you — no occasion needed.",
+        "It's how I show people I care. I rarely follow recipes and prefer to just experiment. If you're around, I'll happily whip something up for you.",
       imageUrl: hobby6,
       imageAlt: "Home cooking in a pan",
     },
@@ -254,7 +254,7 @@ export const shawnProfile = {
 
   // Closing prose shown below the radio chassis
   lookingFor: {
-    body: "Someone who can sit in comfortable silence with me one night and drag me to a night market the next. I want genuine — not perfect. Someone curious about the world and about me, and patient enough to let things grow at their own pace.",
+    body: "Someone who's down to sit in comfortable silence one night and explore a midnight street market the next. Just looking for someone genuine, curious, and patient enough to let things develop naturally.",
   },
 
   // ─── WHAT YOU'LL GET ──────────────────────────────────────────────────────
@@ -266,7 +266,7 @@ export const shawnProfile = {
       label: "LATE NIGHT",
       text: "2AM spontaneous ramen talks",
       receipt:
-        "The kind of conversation that starts because neither of us can sleep — and ends somewhere we didn't expect. No agenda, just talking until the bowl is empty.",
+        "The kind of talk that happens purely because neither of us can sleep, ending up in some weird philosophical territory by the time the bowls are empty.",
     },
     {
       id: "music",
@@ -274,7 +274,7 @@ export const shawnProfile = {
       label: "FREQUENCY",
       text: "oddly specific songs at 2AM",
       receipt:
-        "Not a playlist. A single song, sent with no explanation, because it felt like you. You'll know exactly what I mean when it happens.",
+        "Not a generic playlist. Just a single song sent out of nowhere because it reminded me of you. You'll get it when it happens.",
     },
     {
       id: "silence",
@@ -282,7 +282,7 @@ export const shawnProfile = {
       label: "COEXISTENCE",
       text: "parallel coding sessions in silence",
       receipt:
-        "Both on our laptops, not saying much — just existing in the same space. Comfortable enough to not need words. That's a rare thing.",
+        "Both of us on our laptops, doing our own thing without feeling any pressure to fill the silence. It's rare, but it's the best.",
     },
     {
       id: "walks",
@@ -290,7 +290,7 @@ export const shawnProfile = {
       label: "URBAN",
       text: "existential walks under store lights",
       receipt:
-        "3AM convenience store runs that turn into hour-long walks. The kind where you talk about everything and nothing, under fluorescent light and open sky.",
+        "A quick convenience store run that accidentally turns into an hour-long walk talking about everything under the sun.",
     },
     {
       id: "cooking",
@@ -298,7 +298,7 @@ export const shawnProfile = {
       label: "DOMESTIC",
       text: "midnight cooking with no recipe",
       receipt:
-        "I'll make something for you — improvised, probably a little chaotic, made with actual intention. Cooking is how I say I care about you.",
+        "An improvised, slightly chaotic meal made entirely for you. It's my default way of saying I'm glad you're around.",
     },
     {
       id: "depth",
@@ -306,7 +306,7 @@ export const shawnProfile = {
       label: "CONNECTION",
       text: "real conversations, no surface level",
       receipt:
-        "I'll ask what you actually think. I'll tell you what I actually think. We'll get somewhere honest. That's the deal.",
+        "No boring small talk. I'll ask what you actually think, give you my real thoughts, and we'll keep it completely honest.",
     },
   ],
 
@@ -317,7 +317,7 @@ export const shawnProfile = {
   // Types: "poster" | "sticker" | "crt" | "note"
 
   quote: {
-    text: "Life is not measured by the number of breaths you take, but by the moments that take your breath away.",
+    text: "We're all just looking for someone who makes the world feel a little less loud.",
     author: "My personal philosophy",
   },
 
@@ -325,7 +325,7 @@ export const shawnProfile = {
     {
       type: "poster",
       header: "◈ MESSAGE FOUND IN ALLEY ◈",
-      text: "The best people are the ones who stay up too late talking about things that don't have clean answers. Those conversations don't solve anything — they just remind you that someone else is also losing sleep over the same questions.",
+      text: "The best people are the ones you can stay up way too late with, talking about things that don't have clean answers. It doesn't solve anything—it just makes you feel less alone in the dark.",
       signature: "— emotional thoughts, 02:14 AM",
     },
     {

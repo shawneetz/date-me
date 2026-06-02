@@ -11,31 +11,31 @@ export const personalTakesCategories = [
         id: "curiosity",
         title: "Structured learning vs. rabbit holes",
         answer:
-          "I'll always pick the rabbit hole. Structured learning is great for building a foundation, but honestly the moments where I learn the most are when I stumble into something at 2am and can't stop reading.",
+          "Definitely the rabbit hole. Structure is great for a foundation, but I always learn the most when I stumble into a random topic at 2 a.m. and spend hours reading about it.",
       },
       {
         id: "school",
         title: "Classroom learning vs. self-teaching",
         answer:
-          "Both, but they serve different purposes for me. Class gives structure and forces me to show up even when I don't feel like it — and sometimes that discipline is what I need. But self-teaching is where I actually build things. The real learning happens when I break something and have to figure out why. No lecture can replicate that.",
+          "Both, but for different things. Classes give me the discipline to show up when I don't feel like it. But self-teaching is where I actually build things. You learn way more from breaking code and having to fix it yourself than from sitting through any lecture.",
       },
       {
         id: "self-learning",
         title: "Reading docs vs. just trying it",
         answer:
-          "I try it first, almost always. I skim the docs, get the rough shape of what I'm dealing with, and then just jump in. I learn more from a broken build than from reading perfectly clean documentation. That said, I do eventually read the docs — usually after I've made every mistake listed in the troubleshooting section.",
+          "I just try it first. I'll skim the docs to get the general shape of things, then jump right in. Breaking things teaches me faster than reading a pristine guide. I usually only look at the actual documentation after making every single mistake in the troubleshooting guide.",
       },
       {
         id: "failure",
         title: "Failing fast vs. planning carefully",
         answer:
-          "Failing fast, without a doubt. I'd rather ship something imperfect and learn from real feedback than spend weeks planning in a vacuum. Some of my best ideas only came because I started wrong and had to rethink. The plan is usually wrong anyway — the execution is what teaches you.",
+          "Failing fast. I'd rather ship something imperfect and fix it based on real feedback than spend weeks planning in a vacuum. Most plans end up changing anyway, so the execution is where you actually learn.",
       },
       {
         id: "intelligence",
         title: "Raw intelligence vs. consistency",
         answer:
-          "Consistency wins every time, in my opinion. I've met brilliant people who never finish anything, and people who seemed ordinary at first but just kept showing up, kept building, kept learning — and they ended up building something remarkable. I'd rather be the second kind. Showing up is underrated.",
+          "Consistency wins every time. I've seen brilliant people who never finish a single project, and average people who just keep showing up and end up building something incredible. I'd much rather be the person who gets things done.",
       },
     ],
   },
@@ -48,31 +48,31 @@ export const personalTakesCategories = [
         id: "communication",
         title: "Honest conversations vs. keeping the peace",
         answer:
-          "I will always choose the honest conversation, even when it's uncomfortable. Keeping the peace by staying quiet feels like a slow leak — things don't get resolved, they just get buried. I'd rather say something awkward and true than let something fester for weeks. Honesty is how I show I respect someone enough to be real with them.",
+          "Honest conversations, even if they're uncomfortable. Staying quiet just to keep the peace means things get buried and turn into resentment. I'd rather clear the air with an awkward truth because being real with someone is the highest form of respect.",
       },
       {
         id: "loyalty",
         title: "Grand gestures vs. small consistent effort",
         answer:
-          "Small consistent effort, no question. Grand gestures are nice once in a while, but they don't tell me much about a person. What tells me everything is who checks in when things are quiet. Who shows up without being asked. I try to be that person, and it's what I look for in return.",
+          "Small, consistent effort. Grand gestures are cool, but they don't say much about a person's day-to-day character. What matters is who checks in when things are quiet or shows up without being asked. That's what I try to do and what I value most.",
       },
       {
         id: "affection",
         title: "Words of affirmation vs. acts of service",
         answer:
-          "I lean heavily toward acts of service. Not because words don't matter — they do — but because actions are harder to fake and easier to remember. If I care about you, I'll cook for you, fix something, show up early. That's my native language for 'I'm thinking about you.' I appreciate words, but I trust actions more.",
+          "Acts of service. Words are great, but actions are harder to fake. If I care about you, I'll cook a meal, fix a broken device, or show up early. That's just how I show I'm thinking of you. I appreciate words, but I trust what people do.",
       },
       {
         id: "boundaries",
         title: "Needing space vs. constant closeness",
         answer:
-          "I need space sometimes, and I don't think that's a bad thing. It's not about pulling away — it's about being able to come back as the best version of myself. I genuinely respect when someone else needs the same. What matters to me is that it's communicated, not used as a test or a punishment.",
+          "Needing space. It's not about pulling away, it's just about recharging so I can bring my best self to the table. I respect when others need the same, as long as we talk about it instead of using silence as a weird test.",
       },
       {
         id: "green-flags",
         title: "Compatibility vs. chemistry",
         answer:
-          "Chemistry gets you in the door, but compatibility is what keeps you. I've felt strong chemistry with people I didn't actually work with long-term, and I've watched compatibility grow slowly into something that felt way more real. Ideally both, but if I had to choose, I'll take the person who remembers what I said in passing over the one who gives me butterflies on day one.",
+          "Compatibility. Chemistry gets you through the door, but compatibility keeps you there. If I had to pick, I'd choose the person who remembers a random thing I said in passing over someone who just gives me immediate butterflies.",
       },
     ],
   },
@@ -85,31 +85,31 @@ export const personalTakesCategories = [
         id: "routine",
         title: "Strict routine vs. going with the flow",
         answer:
-          "I keep a loose routine on weekdays because without it I just drift. Morning coffee is non-negotiable — everything else arranges itself around that. But weekends? I like them unstructured. Controlled chaos, I guess. I need the weekday anchor so weekends feel like an actual break instead of just more unstructured time.",
+          "A loose routine. Weekdays need some structure or I'll just drift, and morning coffee is non-negotiable. But I keep weekends completely unstructured. I need that weekday anchor so the weekend actually feels like a break.",
       },
       {
         id: "productivity",
         title: "Intense short sprints vs. slow steady work",
         answer:
-          "Short sprints, definitely. One really focused hour where my phone is in another room beats four hours of half-distracted work. I've tried to romanticize slow and steady, but honestly when I'm locked in, I can feel it — and when I'm not, I know it. Better to stop, reset, and come back than to produce mediocre work for longer.",
+          "Intense short sprints. One highly focused hour with my phone in another room beats four hours of half-distracted scrolling. If I'm not in the zone, I'd rather step away, reset, and come back later instead of forcing mediocre results.",
       },
       {
         id: "rest",
         title: "Powering through vs. actually resting",
         answer:
-          "Rest. Genuinely. I used to think grinding through tired days was a personality trait, but burnout isn't sustainable and I've learned that. A good nap changes everything. Taking a real break — not scrolling, not half-watching something — actually helps me come back to things faster. Rest is productive. I believe that now.",
+          "Actually resting. I used to think grinding through exhaustion was a flex, but burnout cured me of that. A proper break, meaning no screens or passive scrolling, helps me reset way faster. Rest is part of the process.",
       },
       {
         id: "staying-in",
         title: "Staying in vs. going out",
         answer:
-          "My default is staying in, but the right people can flip that completely. A perfect Friday for me is good food, a show, maybe building something random at midnight. But if someone I actually want to spend time with invites me out, I'm in. It's less about the activity and more about the company. The right people make anywhere worth it.",
+          "I default to staying in, but the right people can change that instantly. A great Friday night is usually good food, a show, or coding something random at midnight. But if someone I genuinely vibe with wants to go out, I'm down. It's always about the company anyway.",
       },
       {
         id: "work-life",
         title: "Grind culture vs. sustainable pace",
         answer:
-          "I'll grind when it actually matters — deadlines, passion projects, things that deserve it. But I don't buy into the idea that being tired all the time is a badge of honor. Hobbies aren't extras — they're how I stay interesting, stay sane, and come back to work with a fresh head. The grind should have a point.",
+          "A sustainable pace. I'll grind for major deadlines or passion projects that deserve it, but being permanently exhausted isn't a badge of honor. Hobbies aren't just extras, they keep me sane and refreshed. The hard work needs a clear purpose.",
       },
     ],
   },
@@ -122,31 +122,31 @@ export const personalTakesCategories = [
         id: "music",
         title: "Playlist shuffle vs. full albums on repeat",
         answer:
-          "Full albums on repeat, all the way. When I find something that resonates, I play it until it becomes part of how I think. Shuffle is fine for background noise, but albums have intention — the order matters, the transitions matter. I take music seriously enough that I want to hear it the way the artist meant it to be heard.",
+          "Full albums on repeat. Shuffle is fine for background noise, but good albums have a specific flow and intention behind them. When a record clicks with me, I'll play it until I know every transition by heart.",
       },
       {
         id: "movies",
         title: "Big spectacle films vs. slow burns",
         answer:
-          "Slow burns, honestly. I respect a film that trusts its audience enough not to explain everything. A quiet scene with good acting can hit harder than any explosion. That said, I'm not a snob — if the spectacle has actual lore behind it, I'm there. I just want the movie to have something to say beyond the visual.",
+          "Slow burns. I appreciate movies that trust the audience enough not to over-explain things. A quiet, well-acted scene usually hits harder than massive explosions. But if a big-budget blockbuster actually has great lore, I'm all over it.",
       },
       {
         id: "games",
         title: "Story-driven games vs. competitive multiplayer",
         answer:
-          "Story games, no contest. I want to be somewhere else for a few hours — I want a world, characters I care about, decisions that feel like they matter. Competitive multiplayer stresses me out in a way that isn't fun. Co-op is the exception: playing through something with a friend is one of my favorite things. I play to vibe, not to win.",
+          "Story-driven games. I want an immersive world, characters I care about, and choices that actually matter. Competitive multiplayer feels more like stress than fun. Co-op is the major exception because running through a campaign with a friend is unmatched. I play to relax, not to compete.",
       },
       {
         id: "internet-culture",
         title: "Staying current online vs. selective disconnection",
         answer:
-          "I'm online enough to know the references, but I've gotten better at stepping back. I care about internet culture — memes genuinely feel like modern folklore to me — but constant consumption without filtering just makes everything blur together. I'd rather be a bit behind and actually think about what I'm consuming than always be in the stream.",
+          "Selective disconnection. I know the references and memes, but I've learned to step back. Constant consumption just turns everything into a blur. I'd rather miss out on a few trends if it means keeping my attention span intact.",
       },
       {
         id: "nostalgia",
         title: "New releases vs. revisiting old favorites",
         answer:
-          "Both, but in different moods. When I want to discover something, I go new. When I want to feel grounded, I go back. Old anime openings are like time travel — they take me back to a specific version of myself. I don't think nostalgia is unhealthy if you're not hiding in it. Sometimes you just need to revisit something that made you feel something real.",
+          "Revisiting old favorites. New stuff is great when I want to explore, but going back to old media keeps me grounded. Hearing an old anime opening feels like instant time travel to a different era of my life. It's a nice reset when things get too hectic.",
       },
     ],
   },
@@ -159,31 +159,31 @@ export const personalTakesCategories = [
         id: "hot-vs-cold",
         title: "Hot beverages vs. cold drinks",
         answer:
-          "Hot, almost always. There's something about wrapping your hands around a warm cup that just settles me — it's less about the drink itself and more about the ritual. Cold drinks are fine and I enjoy them, but hot coffee or tea first thing in the morning is less a preference and more a requirement. The warmth is part of the experience.",
+          "Hot drinks. There's something about holding a warm mug that just clears my head. Cold drinks are fine, but hot coffee or tea in the morning is a mandatory ritual for me. The routine of it is the best part.",
       },
       {
         id: "coffee",
         title: "Coffee vs. milk",
         answer:
-          "I prefer milk if we're talking pure taste — it's gentler and I could drink it anytime. But I drink coffee far more often, and honestly that says a lot. Coffee is functional and ritualistic at once. I'm not chasing flavors, I'm chasing the feeling of sitting down with something warm before the day starts. Afternoon coffee is a risk I take willingly.",
+          "Coffee. Milk tastes great, but I drink way more coffee. It's entirely about the utility and the ritual of having a warm drink before the chaos of the day starts. Taking a gamble on an afternoon coffee run is a risk I always take willingly.",
       },
       {
         id: "comfort-food",
         title: "Fancy restaurant meals vs. comfort food at home",
         answer:
-          "Comfort food wins every time for me emotionally. Sinigang on a cold day fixes things that nothing else can — it's not just flavor, it's memory, warmth, the smell of the kitchen. I appreciate a good restaurant experience, but I'm not chasing Michelin stars. I'm chasing the feeling of food that was made with actual intention for the person eating it.",
+          "Comfort food at home. Sinigang on a rainy day fixes things that logic can't explain. Fine dining is cool, but I'm not chasing Michelin stars. I prefer simple food made by someone who actually cares about the person eating it.",
       },
       {
         id: "cooking",
         title: "Following recipes precisely vs. improvising",
         answer:
-          "I improvise almost every time. Recipes are starting points — they tell me the shape of what I'm making, not the rules I have to follow. I'll swap ingredients, taste as I go, and trust my instincts. Cooking for someone else is how I show I care, and that feels more real when I'm actually making decisions instead of just executing instructions.",
+          "Improvising. Recipes are just general guidelines, not strict rules. I'll swap ingredients on the fly and trust my instincts. Cooking for people is how I show I value them, and it feels more authentic when I'm experimenting rather than just blindly following instructions.",
       },
       {
         id: "street-food",
         title: "Street food vs. sit-down restaurants",
         answer:
-          "Street food. The best meals I've had were eaten standing up, slightly sweaty, fully happy. If there's a line of locals who clearly know something I don't, I'm joining it — that's the real algorithm. There's no pretension, no waiting for the waiter, no performance. Just food, and whoever you're with. I love that.",
+          "Street food. The absolute best meals are eaten standing up on a humid evening. If there's a long line of locals, I'm jumping straight into it. There's no pretension or performance, just good food and great company.",
       },
     ],
   },
@@ -196,31 +196,31 @@ export const personalTakesCategories = [
         id: "rain",
         title: "Rainy days vs. sunny days",
         answer:
-          "Rainy days, genuinely. Something about the sound of rain makes everything feel more contained — like the world got quieter so I could think better. I put on a playlist, make something warm to drink, and I'm in my element. Sunny days are great for going out, but rainy days are great for being in, and being in is where I do my best thinking.",
+          "Rainy days. The sound of rain makes the outside world feel a lot quieter and more contained. I'll throw on a playlist, grab a warm drink, and get to work. Sunny days are fine for going out, but rain is perfect for staying in and focusing.",
       },
       {
         id: "late-night",
         title: "Night owl vs. early bird",
         answer:
-          "Night owl, without shame. Something shifts after midnight — I get philosophical, I get creative, I get ideas I would never have thought of at 10am. The morning version of me pretends that person doesn't exist, but 3am me is genuinely onto something half the time. I've made peace with the fact that I work differently at night, and I've stopped fighting it.",
+          "Night owl. Something shifts after midnight where my brain gets way more creative and hyper-focused. Morning me has to deal with the consequences, but 3 a.m. me usually gets things done. I've stopped fighting my natural sleep schedule.",
       },
       {
         id: "aliens",
         title: "We're alone in the universe vs. they're out there",
         answer:
-          "They're out there — statistically it would be stranger if they weren't. But I'm emotionally not ready for that conversation. I hope they have music. If I had to pitch humanity to an alien civilization, music would be the first thing I'd play. That, or sinigang. Both are strong arguments.",
+          "They're out there. Mathematically, it would be weirder if we were completely alone. I just hope they have a concept of music. If we ever have to introduce humanity to them, a good track or a hot bowl of sinigang would be our best arguments.",
       },
       {
         id: "voice-notes",
         title: "Voice notes vs. text messages",
         answer:
-          "I send voice notes when I trust someone. It's more effort, more personal — you can hear tone, you can hear that someone actually sat with their thoughts for a second. A two-minute voice note to me means I cared enough to talk it through properly. Texting is efficient. Voice notes are intimate. They're for different things.",
+          "Voice notes. I only send them to people I'm close with. Hearing someone's actual tone and cadence makes it feel way more personal. Texting is fine for quick logistics, but a long voice note means someone actually took the time to talk to you properly.",
       },
       {
         id: "existential",
         title: "Finding meaning vs. creating it",
         answer:
-          "Creating it, I think. I don't believe meaning is hiding somewhere waiting to be found — I think you build it out of small good moments, out of the things you choose to show up for. We're all basically stardust with imposter syndrome, trying to make something worth the brief time we're here. Might as well build something real.",
+          "Creating it. Meaning isn't hiding somewhere waiting to be discovered, you build it out of small moments and the things you choose to care about. We're all just stardust with imposter syndrome trying to make sense of things, so we might as well build something real.",
       },
     ],
   },
