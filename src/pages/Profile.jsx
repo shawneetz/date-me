@@ -1,11 +1,13 @@
 // src/pages/Profile.jsx
-// Passes all profile data down to each section.
-// Everything personal lives in src/data/shawn.js — edit there.
+// The CityBackdrop lives fixed behind everything.
+// Its sky shifts from midnight → dawn as the visitor scrolls from top → bottom.
+// SunriseFooter is the last section — the payoff of the whole journey.
 
 import "./Profile.css";
 import { useParams } from "react-router-dom";
 import { shawnProfile } from "../data/shawn";
 
+import CityBackdrop from "../components/CityBackdrop";
 import HeroSection from "../sections/HeroSection";
 import QualitiesSection from "../sections/QualitiesSection";
 import PersonalTakesSection from "../sections/PersonalTakesSection";
@@ -13,6 +15,7 @@ import HobbiesSection from "../sections/HobbiesSection";
 import LookingForSection from "../sections/LookingForSection";
 import WhatYoullGetSection from "../sections/WhatYoullGetSection";
 import QuoteSection from "../sections/QuoteSection";
+import SunriseFooter from "../sections/SunriseFooter";
 import SectionDots from "../components/SectionDots";
 import RevealPanel from "../components/RevealPanel";
 
@@ -34,7 +37,10 @@ export default function Profile() {
   }
 
   return (
-    <div className="profile-page" style={{ backgroundColor: "var(--bg)" }}>
+    <div className="profile-page">
+      {/* Fixed pixel cityscape — behind everything */}
+      <CityBackdrop />
+
       <SectionDots />
 
       <div className="app">
@@ -74,6 +80,9 @@ export default function Profile() {
             wallFragments={profile.wallFragments}
           />
         </RevealPanel>
+
+        {/* Dawn breaks — no RevealPanel; fades in via its own useInView */}
+        <SunriseFooter />
       </div>
     </div>
   );

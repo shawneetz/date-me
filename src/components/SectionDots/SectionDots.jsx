@@ -8,6 +8,7 @@ const SECTIONS = [
   { id: "looking", label: "Looking For" },
   { id: "what-youll-get", label: "What You'll Get" },
   { id: "quote", label: "Quote" },
+  { id: "sunrise-footer", label: "Contact" },
 ];
 
 export default function SectionDots() {

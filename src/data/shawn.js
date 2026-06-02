@@ -20,13 +20,16 @@ export const letter = {
   city: "Quezon City, PH",
   greeting: "Hey there, stranger. 🌹",
   paragraphs: [
-    "I know this is a bit unusual—getting a whole letter from someone you barely know. But sliding into your DMs felt a little too basic, and I wanted to actually introduce myself properly. Plus, watching way too much romance anime might have rubbed off on me.",
-    "So, I built this instead. It's a quick look into who I am, the stuff I actually care about, and the weird little details that usually don't make it onto a standard bio. Only if you're curious, of course.",
-    "A bit about me: I'm Shawn. A CS student, an occasional tinkerer, and a stubborn night owl who can't sleep if a random bug is bothering me. I'm into a lot of things—manga, anime, cooking, and traveling. I mostly just appreciate quiet moments and good, random conversations.",
-    "If you want to know more, go ahead and explore the rest of the profile.",
+    "I know this is a little unusual, getting a digital letter in form of a website from someone you barely know. But I figured the usual approach of just sliding into your messages wasn't really my style and not the way I wanted to introduce myself. I wanted to do something a bit more silly so I made this and whatever that comes with it, to give you a glimpse of who I am beyond just an instagram profile picture and a bio. Having watched a lot romance anime and movies might have just also got into me.",
+
+    "Anyways, I made this to be a proper (?) introduction, the kind where you actually get to know who I am, and some little details about me. The things I care about, the things that the person I am is composed of. It's all in there, waiting for you to discover them. Well... only if you're curious enough to click and read through.",
+
+    "To give a little bit of details, my name is Shawn. A CS student, occasional tinkerer, and a night owl that will never sleep until I figure out something that bugged me randomly. I kinda like to do a lot of other things, such as reading manga, watching anime, cooking, traveling, and a lot more. I'm the type of person to find joy in the little things, and the quiet and shared moments, but I also kinda love real world grand adventures that make life interesting and meaningful.",
+
+    "If you're curious about me, I hope you click through and explore my little profile I made for this moment.",
   ],
   signOff: "— Shawn Alfred",
-  ctaLabel: "◈  ready to meet me?  ◈",
+  ctaLabel: "◈  wanna read a silly intro?  ◈",
   ctaButtonText: "View My Full Profile",
 };
 
@@ -67,12 +70,12 @@ export const shawnProfile = {
     {
       id: "spontaneous",
       title: "Spontaneous",
-      body: "I usually plan ahead, but I love dropping everything for a random midnight road trip, cooking experiment, or a weird side project. Those random moments keep things interesting.",
+      body: "I usually plan ahead, but I love dropping everything for a random midnight road trip, cooking experiment, or a weird side project. Those random moments keep life interesting for me.",
     },
     {
       id: "listener",
       title: "Active Listener",
-      body: "I listen without just waiting for my turn to speak. My friends usually end up venting to me during their 2 a.m. spirals, mostly because I actually care about what people are going through.",
+      body: "I listen without just waiting for my turn to speak. My friends usually end up venting to me at 2 a.m. about their world-ending circumstances. I do this because I am there for the laughs or to assist them in carrying the weight of their world",
     },
     {
       id: "direct",
@@ -104,7 +107,7 @@ export const shawnProfile = {
         },
         {
           ts: "11:23 PM",
-          text: "Went for a midnight walk. No reason. Just felt like it.",
+          text: "Went for a midnight walk. The reason? Searching for batman.",
         },
       ],
     },
@@ -116,11 +119,11 @@ export const shawnProfile = {
       logs: [
         {
           ts: "02:14 AM",
-          text: "Stayed up helping a friend debug for 4 hours. Never checked the time.",
+          text: "Stayed up listening to a friend debugging his life for 4 hours.",
         },
         {
           ts: "09:40 PM",
-          text: "Didn't say a word for 20 minutes. Just listened. That was enough.",
+          text: "Took a call only for me to not talk and just take some burden for them.",
         },
       ],
     },
@@ -132,11 +135,11 @@ export const shawnProfile = {
       logs: [
         {
           ts: "03:55 PM",
-          text: "Said the uncomfortable thing. The conversation went better because of it.",
+          text: "Said an uncomfortable thing. The conversation went better because of it.",
         },
         {
           ts: "10:12 PM",
-          text: "Drafted the message three times. Sent the honest one.",
+          text: "Drafted the message three times. Sent the honest and silly one.",
         },
       ],
     },
@@ -151,7 +154,7 @@ export const shawnProfile = {
       id: "manhwa",
       title: "Reading Manhwa & Manga",
       description:
-        "I love a good story, but manga and manhwa hit differently because of the art style. Let me know if you need recommendations—I have plenty of strong opinions.",
+        "I love a good story, but manga and manhwa hit differently because of the art style, and the graphics that tell me a story with more emotion",
       imageUrl: hobby1,
       imageAlt: "Stack of manga volumes",
     },
@@ -159,7 +162,7 @@ export const shawnProfile = {
       id: "anime",
       title: "Watching Anime",
       description:
-        "What started as pure entertainment turned into a real appreciation for the medium. The way anime captures hyper-specific emotions is unmatched.",
+        "What started as pure entertainment turned into a real appreciation for the medium. I love its unmatched way of capturing hyper-specific emotions.",
       imageUrl: hobby2,
       imageAlt: "Anime-style city lights at night",
     },
@@ -167,7 +170,7 @@ export const shawnProfile = {
       id: "diy",
       title: "DIY & Electronics",
       description:
-        "Former robotics kid. I love building things with my hands—messing with microcontrollers, 3D printing parts, or taking electronics apart just to see how they work.",
+        "Former robotics kid. I love building things with my hands and messing with microcontrollers, 3D printing parts, or taking electronics apart just to see how they work.",
       imageUrl: hobby3,
       imageAlt: "Electronics workbench with tools",
     },
@@ -175,7 +178,7 @@ export const shawnProfile = {
       id: "programming",
       title: "Programming",
       description:
-        "CS major by day, builder by night. There's a specific kind of satisfaction in writing a script or tool that solves a real, annoying problem from scratch.",
+        "CS major by day, builder by night. There's this specific kind of satisfaction in writing a script or tool that solves a real, annoying problem from scratch.",
       imageUrl: hobby4,
       imageAlt: "Code on a laptop screen",
     },
@@ -191,7 +194,7 @@ export const shawnProfile = {
       id: "cooking",
       title: "Cooking",
       description:
-        "It's how I show people I care. I rarely follow recipes and prefer to just experiment. If you're around, I'll happily whip something up for you.",
+        "Aside from listening and giving some life wrecking advice, cooking is also my way of lifting spirits up. It ended up being a thing that I love to do at some point",
       imageUrl: hobby6,
       imageAlt: "Home cooking in a pan",
     },
@@ -218,21 +221,22 @@ export const shawnProfile = {
     {
       freq: "91.2",
       label: "ODD FM",
-      message: "someone who sends strange songs at 2am with no explanation",
+      message:
+        "someone who sends strange songs or reels at 2am with no explanation",
       note: "no context needed",
       signal: 7,
     },
     {
       freq: "95.8",
       label: "DEPTH FM",
-      message: "emotionally curious and openly weird — in the best way",
+      message: "emotionally curious and openly weird, but in the best way",
       note: "surface-level conversation optional",
       signal: 10,
     },
     {
       freq: "98.6",
       label: "CHAOS FM",
-      message: "soft-spoken with a very chaotic inner life",
+      message: "a kind person with a very chaotic inner life",
       note: "controlled entropy",
       signal: 6,
     },
@@ -254,7 +258,7 @@ export const shawnProfile = {
 
   // Closing prose shown below the radio chassis
   lookingFor: {
-    body: "Someone who's down to sit in comfortable silence one night and explore a midnight street market the next. Just looking for someone genuine, curious, and patient enough to let things develop naturally.",
+    body: "Someone who's down to sit in comfortable silence one night and explore a midnight street market the next. Someone genuine, curious, and patient enough to let things develop naturally.",
   },
 
   // ─── WHAT YOU'LL GET ──────────────────────────────────────────────────────
@@ -264,9 +268,9 @@ export const shawnProfile = {
       id: "ramen",
       code: "A1",
       label: "LATE NIGHT",
-      text: "2AM spontaneous ramen talks",
+      text: "midnight spontaneous random talks",
       receipt:
-        "The kind of talk that happens purely because neither of us can sleep, ending up in some weird philosophical territory by the time the bowls are empty.",
+        "The kind of talk that happens purely because neither of us can sleep, ending up in some weird philosophical territory by the time we're late for school tomorrow.",
     },
     {
       id: "music",
@@ -290,13 +294,13 @@ export const shawnProfile = {
       label: "URBAN",
       text: "existential walks under store lights",
       receipt:
-        "A quick convenience store run that accidentally turns into an hour-long walk talking about everything under the sun.",
+        "A quick convenience store run that accidentally turns into an hour-long walk talking about everything under the moonlight.",
     },
     {
       id: "cooking",
       code: "E4",
       label: "DOMESTIC",
-      text: "midnight cooking with no recipe",
+      text: "random cooking with no recipe",
       receipt:
         "An improvised, slightly chaotic meal made entirely for you. It's my default way of saying I'm glad you're around.",
     },
@@ -304,9 +308,9 @@ export const shawnProfile = {
       id: "depth",
       code: "F1",
       label: "CONNECTION",
-      text: "real conversations, no surface level",
+      text: "maybe silly or locked in conversations",
       receipt:
-        "No boring small talk. I'll ask what you actually think, give you my real thoughts, and we'll keep it completely honest.",
+        "An offering of completely useless information that may or may not help you life whatsoever.",
     },
   ],
 
@@ -317,16 +321,15 @@ export const shawnProfile = {
   // Types: "poster" | "sticker" | "crt" | "note"
 
   quote: {
-    text: "We're all just looking for someone who makes the world feel a little less loud.",
-    author: "My personal philosophy",
+    text: "Life is not measured by the number of breath you take, but by the number of moments that take your breath away.",
+    author: "Some random cool human",
   },
-
   wallFragments: [
     {
       type: "poster",
       header: "◈ MESSAGE FOUND IN ALLEY ◈",
-      text: "The best people are the ones you can stay up way too late with, talking about things that don't have clean answers. It doesn't solve anything—it just makes you feel less alone in the dark.",
-      signature: "— emotional thoughts, 02:14 AM",
+      text: "We're all just looking for someone who makes the world feel a little less loud.",
+      signature: "— existential thoughts, 02:14 AM",
     },
     {
       type: "sticker",
@@ -345,8 +348,8 @@ export const shawnProfile = {
     },
     {
       type: "note",
-      text: "Cooking for someone without a reason is the most honest thing you can do. No occasion, no performance — just: I thought about what you'd like and I made it.",
-      signature: "— emotional thoughts, found on fridge",
+      text: "Cooking is not just about making food for someone, but also to heal those that are cooked and burnt to the crisp by life",
+      signature: "— backburner thoughts, found on the kitchen",
     },
   ],
 };

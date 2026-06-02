@@ -1,0 +1,636 @@
+/* ═══════════════════════════════════════════════════════════════════
+   SUNRISE FOOTER — The city's morning section.
+   Palette: burnt amber / gold replaces the night teal / cyan.
+   Background is intentionally semi-transparent so the CityBackdrop
+   dawn sky shows through subtly behind it.
+═══════════════════════════════════════════════════════════════════ */
+
+:root {
+  --dawn-amber: #f0a040;
+  --dawn-gold: #f0c060;
+  --dawn-bg: #0e0804;
+  --dawn-mid: #1a0e06;
+  --dawn-border: #4a2810;
+  --dawn-text: #e0a060;
+  --dawn-soft: #9a5828;
+}
+
+/* ── Section shell ────────────────────────────────────────────────── */
+.sunrise-footer {
+  position: relative;
+  width: 100%;
+  background: rgba(14, 8, 4, 0.88);
+  border: 2px solid var(--dawn-border);
+  box-shadow:
+    0 0 40px rgba(200, 80, 14, 0.14),
+    4px 4px 0 #000;
+  overflow: hidden;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* ── Cityscape header strip ────────────────────────────────────────── */
+.sf-city-header {
+  width: 100%;
+  height: 52px;
+  overflow: hidden;
+  border-bottom: 2px solid #c04018;
+  box-shadow: 0 2px 0 rgba(240, 140, 40, 0.28);
+}
+
+.sf-city-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Ticker ─────────────────────────────────────────────────────────── */
+.sf-ticker {
+  background: #080401;
+  border-bottom: 1px solid rgba(180, 80, 16, 0.25);
+  padding: 4px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sf-ticker-inner {
+  display: inline-block;
+  animation: sfTicker 30s linear infinite;
+}
+
+.sf-ticker-inner span {
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(240, 140, 40, 0.58);
+  text-transform: uppercase;
+  padding: 0 1.5rem;
+}
+
+.sf-ticker-sep {
+  color: rgba(240, 140, 40, 0.22) !important;
+  padding: 0 0.5rem !important;
+}
+
+@keyframes sfTicker {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* ── Body ───────────────────────────────────────────────────────────── */
+.sf-body {
+  position: relative;
+  padding: 1.5rem 1.25rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-image:
+    linear-gradient(rgba(110, 50, 14, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 50, 14, 0.04) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.sf-body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    rgba(240, 110, 16, 0.05) 0%,
+    transparent 60%
+  );
+  pointer-events: none;
+}
+
+/* ── Morning heading window ─────────────────────────────────────────── */
+.sf-heading {
+  width: 100%;
+  background: var(--dawn-mid);
+  border: 2px solid var(--dawn-border);
+  box-shadow: 3px 3px 0 #000;
+  overflow: hidden;
+}
+
+.sf-heading-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 10px;
+  background: #241004;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+.sf-heading-dots {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.sf-heading-dots span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.sf-heading-title {
+  flex: 1;
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  color: var(--dawn-gold);
+  text-shadow: 0 0 10px rgba(240, 192, 80, 0.5);
+  text-transform: uppercase;
+}
+
+.sf-heading-grip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sf-heading-grip span {
+  display: block;
+  width: 10px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sf-heading-body {
+  padding: 1rem 1.2rem 1.1rem;
+  background-image:
+    linear-gradient(rgba(110, 50, 14, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 50, 14, 0.04) 1px, transparent 1px);
+  background-size: 16px 16px;
+  position: relative;
+}
+
+.sf-heading-body::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--dawn-amber) 0%, transparent 100%);
+}
+
+.sf-heading-text {
+  font-family: "Space Mono", monospace;
+  font-size: 11.5px;
+  color: var(--dawn-text);
+  line-height: 1.8;
+  margin: 0 0 0.5rem;
+}
+
+.sf-heading-sub {
+  font-family: "Space Mono", monospace;
+  font-size: 10.5px;
+  color: var(--dawn-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Socials label ──────────────────────────────────────────────────── */
+.sf-socials-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "VT323", monospace;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--dawn-soft);
+  text-transform: uppercase;
+}
+
+.sf-socials-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(180, 90, 16, 0.4), transparent);
+}
+
+/* ── Socials grid ───────────────────────────────────────────────────── */
+.sf-socials-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+
+@media (min-width: 480px) {
+  .sf-socials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.sf-social-window {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  background: var(--dawn-mid);
+  border: 2px solid var(--dawn-border);
+  box-shadow: 2px 2px 0 #000;
+  overflow: hidden;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.sf-social-window:hover {
+  border-color: rgba(240, 140, 40, 0.6);
+  box-shadow:
+    4px 4px 0 #000,
+    0 0 14px rgba(240, 110, 16, 0.14);
+}
+
+.sf-sw-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 5px 8px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.45);
+  user-select: none;
+}
+
+.sf-sw-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.sf-sw-dots span {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.sf-sw-title {
+  flex: 1;
+  font-family: "VT323", monospace;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1;
+}
+
+.sf-sw-grip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sf-sw-grip span {
+  display: block;
+  width: 8px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sf-sw-body {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  background-image:
+    linear-gradient(rgba(110, 50, 14, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 50, 14, 0.04) 1px, transparent 1px);
+  background-size: 14px 14px;
+}
+
+.sf-sw-icon {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-sw-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.sf-sw-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.sf-sw-label {
+  font-family: "VT323", monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(180, 90, 30, 0.6);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.sf-sw-handle {
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sf-sw-cta {
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(180, 90, 30, 0.5);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: 2px;
+  transition: color 0.2s ease;
+}
+
+.sf-social-window:hover .sf-sw-cta {
+  color: var(--dawn-amber);
+}
+
+/* ── COMPOSE.MSG terminal ────────────────────────────────────────────── */
+.sf-compose {
+  width: 100%;
+  background: #030608;
+  border: 2px solid var(--dawn-border);
+  box-shadow:
+    3px 3px 0 #000,
+    0 0 20px rgba(240, 110, 16, 0.07);
+  overflow: hidden;
+}
+
+.sf-compose-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 5px 10px;
+  background: #241004;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+.sf-compose-bar-dots {
+  display: flex;
+  gap: 4px;
+}
+
+.sf-compose-bar-dots span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.sf-compose-title {
+  flex: 1;
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  color: var(--dawn-amber);
+  text-shadow: 0 0 8px rgba(240, 140, 40, 0.6);
+  text-transform: uppercase;
+}
+
+.sf-compose-bar-grip {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sf-compose-bar-grip span {
+  display: block;
+  width: 10px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.sf-compose-body {
+  padding: 1rem 1.1rem 1.1rem;
+  background-image:
+    linear-gradient(rgba(110, 50, 14, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(110, 50, 14, 0.06) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+.sf-compose-prompt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.85rem;
+  padding: 6px 8px;
+  background: rgba(240, 110, 16, 0.05);
+  border: 1px solid rgba(240, 110, 16, 0.1);
+}
+
+.sf-prompt-marker {
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  color: var(--dawn-amber);
+  flex-shrink: 0;
+}
+
+.sf-prompt-text {
+  font-family: "Space Mono", monospace;
+  font-size: 10px;
+  color: rgba(190, 110, 50, 0.7);
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sf-compose-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 0.9rem;
+}
+
+.sf-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sf-field-label {
+  font-family: "VT323", monospace;
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  color: var(--dawn-soft);
+  flex-shrink: 0;
+  padding-top: 6px;
+  min-width: 36px;
+  text-transform: uppercase;
+}
+
+.sf-field-input {
+  flex: 1;
+  background: #020507;
+  border: 1px solid rgba(180, 90, 24, 0.32);
+  color: var(--dawn-amber);
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  padding: 6px 8px;
+  outline: none;
+  caret-color: var(--dawn-amber);
+  border-radius: 0;
+  resize: none;
+  line-height: 1.6;
+  transition: border-color 0.2s ease;
+}
+
+.sf-field-input::placeholder {
+  color: rgba(180, 90, 24, 0.32);
+}
+
+.sf-field-input:focus {
+  border-color: rgba(240, 140, 40, 0.58);
+  box-shadow: 0 0 8px rgba(240, 110, 16, 0.1);
+}
+
+.sf-field-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.sf-field-textarea {
+  min-height: 80px;
+}
+
+.sf-compose-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sf-send-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #040810;
+  background: var(--dawn-amber);
+  border: 2px solid rgba(0, 0, 0, 0.5);
+  box-shadow: 3px 3px 0 #000;
+  padding: 0.45rem 1.2rem;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.sf-send-btn:hover:not(:disabled) {
+  background: var(--dawn-gold);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.sf-send-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 0 0 0 #000;
+}
+
+.sf-send-btn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.sf-send-btn.is-sending {
+  background: #d87828;
+  cursor: wait;
+}
+
+.sf-send-cursor {
+  font-size: 0.85rem;
+  animation: sfCursorBlink 0.8s step-end infinite;
+}
+
+.sf-send-btn.is-sending .sf-send-cursor {
+  animation: none;
+}
+
+@keyframes sfCursorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.sf-sent-msg {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  letter-spacing: 0.18em;
+  color: #88c070;
+  text-transform: uppercase;
+}
+
+.sf-sent-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #88c070;
+  box-shadow: 0 0 8px rgba(136, 192, 112, 0.8);
+  flex-shrink: 0;
+}
+
+.sf-compose-hint {
+  font-family: "Space Mono", monospace;
+  font-size: 9px;
+  color: rgba(180, 90, 24, 0.38);
+  letter-spacing: 0.08em;
+  font-style: italic;
+  white-space: nowrap;
+}
+
+/* ── Sign-off ─────────────────────────────────────────────────────── */
+.sf-signoff {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 0.5rem;
+}
+
+.sf-signoff-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(180, 90, 16, 0.28));
+}
+
+.sf-signoff-line:last-child {
+  background: linear-gradient(270deg, transparent, rgba(180, 90, 16, 0.28));
+}
+
+.sf-signoff-text {
+  font-family: "VT323", monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(190, 90, 24, 0.42);
+  text-transform: uppercase;
+  white-space: nowrap;
+  text-align: center;
+  flex-shrink: 0;
+}

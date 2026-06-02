@@ -1,0 +1,123 @@
+/* ═══════════════════════════════════════════════════════════════════
+   CityBackdrop — fixed pixel cityscape behind the entire Profile page.
+   The sky color is driven inline via JS. Everything else is CSS.
+═══════════════════════════════════════════════════════════════════ */
+
+.city-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  /* background set inline via JS */
+  overflow: hidden;
+  pointer-events: none;
+  will-change: background;
+}
+
+/* ── Horizon glow ─────────────────────────────────────────────────── */
+.cb-horizon-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: radial-gradient(
+    ellipse at 50% 100%,
+    rgba(220, 88, 14, 0.55) 0%,
+    rgba(190, 70, 12, 0.22) 38%,
+    transparent 70%
+  );
+  pointer-events: none;
+  transition: opacity 0.1s linear;
+}
+
+/* ── Stars ────────────────────────────────────────────────────────── */
+.cb-star {
+  position: absolute;
+  background: #e8f0ff;
+  border-radius: 0;
+  image-rendering: pixelated;
+  animation: cbStarTwinkle 2s ease-in-out infinite;
+  transition: opacity 0.2s linear;
+}
+
+@keyframes cbStarTwinkle {
+  0%,
+  100% {
+    opacity: inherit;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ── Sun ──────────────────────────────────────────────────────────── */
+.cb-sun {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 42px;
+  background: radial-gradient(
+    circle,
+    #fff8e0 0%,
+    #f5c850 30%,
+    #e87828 58%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 28px 14px rgba(235, 130, 30, 0.55),
+    0 0 72px 28px rgba(215, 90, 16, 0.28),
+    0 0 140px 52px rgba(195, 70, 10, 0.14);
+  border-radius: 50%;
+  transition:
+    opacity 0.1s linear,
+    bottom 0.1s linear;
+}
+
+/* ── Back buildings ───────────────────────────────────────────────── */
+.cb-buildings-back {
+  position: absolute;
+  bottom: 28px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 130px;
+  z-index: 2;
+}
+
+/* ── Front buildings ──────────────────────────────────────────────── */
+.cb-buildings-front {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 90px;
+  z-index: 4;
+}
+
+/* ── Window lights ────────────────────────────────────────────────── */
+.cb-window {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  image-rendering: pixelated;
+  z-index: 3;
+  transition:
+    opacity 0.35s ease,
+    background 0.5s ease;
+}
+
+/* ── Ground strip ─────────────────────────────────────────────────── */
+.cb-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(180deg, #050c14 0%, #030810 100%);
+  border-top: 1px solid rgba(30, 95, 110, 0.3);
+  z-index: 5;
+}

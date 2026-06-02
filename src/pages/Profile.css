@@ -1,5 +1,17 @@
 /* Profile page — scroll reveal panels */
 
+/* ── The profile-page root must be transparent so CityBackdrop shows ── */
+.profile-page {
+  background: transparent !important;
+  min-height: 100vh;
+}
+
+/* ── Make body background transparent too ────────────────────────── */
+body {
+  background: transparent !important;
+}
+
+/* ── Reveal animation ────────────────────────────────────────────── */
 .reveal {
   opacity: 0;
   transform: translateY(18px) scale(0.99);
@@ -11,4 +23,38 @@
 .reveal.visible {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+/* ── Section cards sit above the backdrop with a deep translucent base ── */
+/* This lets the sky glow subtly "through" the edges of each panel. */
+.profile-page .section,
+.profile-page .hero-card,
+.profile-page .transit-board,
+.profile-page .radio-chassis,
+.profile-page .hs-cabinet,
+.profile-page .vend-machine,
+.profile-page .graffiti-wall {
+  position: relative;
+  z-index: 1;
+}
+
+/* Panels inside RevealPanel need their own stacking context above backdrop */
+.profile-panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.profile-panel > * {
+  width: 100%;
+}
+
+/* ── App container — must be above backdrop ───────────────────────── */
+.profile-page .app {
+  position: relative;
+  z-index: 1;
 }
