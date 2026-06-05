@@ -282,13 +282,13 @@ export default function SunriseFooter() {
           </div>
           <div className="sf-heading-body">
             <p className="sf-heading-text">
-              You scrolled all the way here. The city walked you through the
-              night — the transit board, the arcade, the radio tower, the
-              vending machine, the graffiti alley. And now it&apos;s morning.
+              Hey! You scrolled all the way here. You walked the city through
+              the night from the transit board, the arcade, the radio tower, the
+              vending machine, up to the graffiti alley. And now, it&apos;s
+              morning.
             </p>
             <p className="sf-heading-sub">
-              If something made you feel something, I&apos;d love to hear from
-              you.
+              If this made you feel something, I&apos;d love to hear from you.
             </p>
           </div>
         </motion.div>
@@ -382,7 +382,7 @@ export default function SunriseFooter() {
             <div className="sf-compose-prompt">
               <span className="sf-prompt-marker">$</span>
               <span className="sf-prompt-text">
-                NEW_MESSAGE --to=shawn@shawnscapes.city
+                NEW_MESSAGE --to=shawnalfred0505@gmail.com
               </span>
             </div>
 

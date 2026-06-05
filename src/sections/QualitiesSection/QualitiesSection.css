@@ -2,21 +2,6 @@
 
 /* ════════════════════════════════════════════════════════════════════
    QUALITIES SECTION — CITY PERSONALITY TRANSIT BOARD
-   Retro transit operations panel. Each quality is a "line" with a
-   current status. CRT amber monochrome, scanlines, LED flicker.
-
-   Layout:
-   ┌─────────────────────────────────────────────────────────────────┐
-   │ ◈ CITY PERSONALITY TRANSIT       [clock] [SYSTEM ONLINE ●]     │  ← topbar
-   ├─────────────────────────────────────────────────────────────────┤
-   │ ┌──────────────────────────────────────────────────────────────┐│
-   │ │  LINE_01  EMPATHY LINE         ████████████  OPERATIONAL    ││  ← line row
-   │ │  LINE_02  CREATIVITY LINE      ██████████░░  OVERCLOCKED    ││
-   │ │  LINE_03  LOYALTY LINE         ███████████░  STABLE         ││
-   │ └──────────────────────────────────────────────────────────────┘│
-   ├──────────────────── ticker strip ──────────────────────────────┤
-   │  STATION LOG: hover any line to read diary entries              │  ← hover log
-   └─────────────────────────────────────────────────────────────────┘
 ════════════════════════════════════════════════════════════════════ */
 
 /* ── BOARD SHELL ─────────────────────────────────────────────────── */
@@ -33,7 +18,6 @@
   overflow: hidden;
 }
 
-/* CRT phosphor glow behind entire board */
 .transit-board::before {
   content: "";
   position: absolute;
@@ -47,7 +31,6 @@
   z-index: 0;
 }
 
-/* Scanline overlay — classic CRT effect */
 .transit-scanlines {
   position: absolute;
   inset: 0;
@@ -61,7 +44,6 @@
   z-index: 20;
 }
 
-/* Corner bolts */
 .transit-bolt {
   position: absolute;
   width: 7px;
@@ -104,6 +86,21 @@
   gap: 0.5rem;
 }
 
+.transit-topbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 157, 0, 0.2),
+    transparent
+  );
+}
+
 .transit-topbar-title {
   font-family: "VT323", monospace;
   font-size: 15px;
@@ -116,6 +113,7 @@
   line-height: 1;
   white-space: nowrap;
   flex-shrink: 0;
+  animation: chromAberration 8s ease-in-out infinite;
 }
 
 .transit-topbar-right {
@@ -184,7 +182,6 @@
   .transit-col-headers {
     grid-template-columns: 48px 1fr 80px;
   }
-
   .transit-col-headers .transit-col-hdr--status {
     display: none;
   }
@@ -229,7 +226,6 @@
   .transit-line {
     grid-template-columns: 48px 1fr 80px;
   }
-
   .transit-line .transit-line-meter {
     display: none;
   }
@@ -238,13 +234,9 @@
 .transit-line:last-child {
   border-bottom: none;
 }
-
-/* Hover amber glow */
 .transit-line:hover {
   background: rgba(255, 157, 0, 0.04);
 }
-
-/* Active selection */
 .transit-line.is-active {
   background: rgba(255, 157, 0, 0.06);
 }
@@ -260,17 +252,14 @@
   box-shadow: 0 0 8px rgba(255, 157, 0, 0.8);
 }
 
-/* Horizontal scanline on every other row */
 .transit-line:nth-child(even) {
   background: rgba(0, 0, 0, 0.3);
 }
-
 .transit-line:nth-child(even):hover {
   background: rgba(255, 157, 0, 0.05);
 }
 
-/* ── Line Code (e.g. "L-01") ────────────────────────────────────── */
-
+/* ── Line Code ──────────────────────────────────────────────────── */
 .transit-line-code {
   padding: 12px 0 12px 12px;
   display: flex;
@@ -287,7 +276,6 @@
 }
 
 /* ── Line Name ──────────────────────────────────────────────────── */
-
 .transit-line-name {
   padding: 0 8px;
   display: flex;
@@ -311,7 +299,6 @@
     0 0 20px currentColor;
 }
 
-/* Flicker on the bullet for "active" lines */
 .transit-line-bullet.flicker {
   animation: ledFlicker 4s step-end infinite;
 }
@@ -349,8 +336,7 @@
   text-shadow: 0 0 8px rgba(255, 179, 71, 0.3);
 }
 
-/* ── Activity Meter (health-bar style) ──────────────────────────── */
-
+/* ── Activity Meter ─────────────────────────────────────────────── */
 .transit-line-meter {
   padding: 0 8px;
   display: flex;
@@ -373,20 +359,17 @@
   box-shadow: 0 0 4px rgba(255, 157, 0, 0.6);
 }
 
-/* Overclocked: green pips */
 .transit-line.status-overclocked .transit-meter-pip.lit {
   background: #8dff8d;
   box-shadow: 0 0 4px rgba(141, 255, 141, 0.6);
 }
 
-/* Delayed: red pips */
 .transit-line.status-delayed .transit-meter-pip.lit {
   background: #ff6060;
   box-shadow: 0 0 4px rgba(255, 96, 96, 0.6);
 }
 
 /* ── Status Badge ────────────────────────────────────────────────── */
-
 .transit-line-status {
   padding: 0 12px 0 0;
   display: flex;
@@ -405,7 +388,6 @@
   white-space: nowrap;
 }
 
-/* Operational — teal/green */
 .transit-status-badge.operational {
   color: #8dff8d;
   border-color: rgba(141, 255, 141, 0.4);
@@ -413,7 +395,6 @@
   text-shadow: 0 0 6px rgba(141, 255, 141, 0.7);
 }
 
-/* Overclocked — bright amber */
 .transit-status-badge.overclocked {
   color: #ffe066;
   border-color: rgba(255, 224, 102, 0.4);
@@ -432,21 +413,18 @@
   }
 }
 
-/* Stable — dim amber */
 .transit-status-badge.stable {
   color: #ff9d00;
   border-color: rgba(255, 157, 0, 0.35);
   background: rgba(255, 157, 0, 0.05);
 }
 
-/* Active — light orange */
 .transit-status-badge.active {
   color: #ffb347;
   border-color: rgba(255, 179, 71, 0.4);
   background: rgba(255, 179, 71, 0.05);
 }
 
-/* Delayed — red */
 .transit-status-badge.delayed {
   color: #ff6060;
   border-color: rgba(255, 96, 96, 0.4);
@@ -464,8 +442,7 @@
   }
 }
 
-/* ── STATION LOG PANEL (hover reveal) ──────────────────────────── */
-
+/* ── STATION LOG PANEL ──────────────────────────────────────────── */
 .transit-log {
   position: relative;
   z-index: 5;
@@ -476,7 +453,6 @@
   transition: min-height 0.25s ease;
 }
 
-/* Log inner */
 .transit-log-inner {
   position: relative;
   padding: 10px 14px 12px;
@@ -485,7 +461,6 @@
   gap: 6px;
 }
 
-/* CRT phosphor tint on log panel */
 .transit-log-inner::before {
   content: "";
   position: absolute;
@@ -528,7 +503,6 @@
   }
 }
 
-/* Individual log entries */
 .transit-log-entry {
   display: flex;
   gap: 10px;
@@ -553,7 +527,6 @@
   margin: 0;
 }
 
-/* Default state — no line selected */
 .transit-log-hint {
   font-family: "VT323", monospace;
   font-size: 12px;
@@ -586,7 +559,6 @@
 }
 
 /* ── TICKER STRIP ────────────────────────────────────────────────── */
-
 .transit-ticker {
   position: relative;
   z-index: 5;
@@ -627,7 +599,6 @@
 }
 
 /* ── FOOTER STATUS BAR ──────────────────────────────────────────── */
-
 .transit-footer {
   position: relative;
   z-index: 5;
@@ -669,7 +640,7 @@
   box-shadow: 0 0 5px rgba(255, 157, 0, 0.7);
 }
 
-/* ── Chromatic aberration effect on topbar title (subtle) ───────── */
+/* ── Chromatic aberration ────────────────────────────────────────── */
 @keyframes chromAberration {
   0%,
   100% {
@@ -691,10 +662,6 @@
   }
 }
 
-.transit-topbar-title {
-  animation: chromAberration 8s ease-in-out infinite;
-}
-
 /* ── Analog noise overlay ────────────────────────────────────────── */
 .transit-noise {
   position: absolute;
@@ -705,4 +672,161 @@
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-size: 200px 200px;
   mix-blend-mode: overlay;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   DESKTOP PROPORTIONS
+════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .transit-topbar {
+    padding: 8px 18px 8px 16px;
+  }
+
+  .transit-topbar-title {
+    font-size: 18px;
+    letter-spacing: 0.32em;
+  }
+
+  .transit-clock {
+    font-size: 15px;
+  }
+
+  .transit-status-pill {
+    font-size: 12px;
+  }
+
+  .transit-col-headers {
+    grid-template-columns: 72px 1fr 120px 140px;
+    padding: 5px 18px 4px 16px;
+  }
+
+  .transit-col-hdr {
+    font-size: 10px;
+    letter-spacing: 0.28em;
+  }
+
+  .transit-line {
+    grid-template-columns: 72px 1fr 120px 140px;
+  }
+
+  .transit-line-code {
+    padding: 16px 0 16px 16px;
+  }
+
+  .transit-line-code span {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+  }
+
+  .transit-line-name {
+    padding: 0 12px;
+    gap: 10px;
+  }
+
+  .transit-line-bullet {
+    width: 10px;
+    height: 10px;
+  }
+
+  .transit-line-label {
+    font-size: 1.35rem;
+    letter-spacing: 0.08em;
+  }
+
+  .transit-meter-pip {
+    width: 6px;
+    height: 10px;
+  }
+
+  .transit-status-badge {
+    font-size: 14px;
+    padding: 3px 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .transit-line-status {
+    padding: 0 16px 0 0;
+  }
+
+  .transit-log-inner {
+    padding: 14px 18px 16px;
+    gap: 8px;
+  }
+
+  .transit-log-header {
+    font-size: 11px;
+    letter-spacing: 0.28em;
+  }
+
+  .transit-log-cursor {
+    width: 7px;
+    height: 12px;
+  }
+
+  .transit-log-ts {
+    font-size: 13px;
+  }
+
+  .transit-log-text {
+    font-size: 11.5px;
+    line-height: 1.7;
+  }
+
+  .transit-log-hint {
+    font-size: 13px;
+    padding: 22px 18px;
+  }
+
+  .transit-ticker-inner span {
+    font-size: 12px;
+    letter-spacing: 0.24em;
+  }
+
+  .transit-footer {
+    padding: 5px 18px;
+  }
+
+  .transit-footer-left,
+  .transit-footer-right {
+    font-size: 9px;
+  }
+
+  .transit-bolt {
+    width: 9px;
+    height: 9px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .transit-topbar-title {
+    font-size: 20px;
+  }
+
+  .transit-col-headers {
+    grid-template-columns: 80px 1fr 140px 160px;
+    padding: 6px 22px 5px 20px;
+  }
+
+  .transit-line {
+    grid-template-columns: 80px 1fr 140px 160px;
+  }
+
+  .transit-line-label {
+    font-size: 1.5rem;
+  }
+
+  .transit-log-text {
+    font-size: 12px;
+  }
+
+  .transit-meter-pip {
+    width: 7px;
+    height: 12px;
+  }
+
+  .transit-status-badge {
+    font-size: 15px;
+    padding: 3px 12px;
+  }
 }

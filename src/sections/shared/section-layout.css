@@ -32,3 +32,17 @@
   height: 1px;
   background: linear-gradient(90deg, rgba(232, 164, 74, 0.4), transparent);
 }
+
+@media (min-width: 1024px) {
+  .section-label {
+    font-size: 16px;
+    margin-bottom: 0.65rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .section-label {
+    font-size: 17px;
+    margin-bottom: 0.75rem;
+  }
+}

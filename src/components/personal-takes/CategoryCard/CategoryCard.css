@@ -53,7 +53,6 @@
   outline: none;
 }
 
-/* Scanline overlay */
 .takes-category-card::after {
   content: "";
   position: absolute;
@@ -93,7 +92,6 @@
   user-select: none;
 }
 
-/* Blinking signal dot */
 .takes-category-card__blink {
   display: inline-block;
   width: 5px;
@@ -189,12 +187,59 @@
   .takes-category-card__title {
     font-size: 0.95rem;
   }
-
   .takes-category-card__count {
     font-size: 9px;
   }
-
   .takes-category-card__top {
     padding: 0.65rem 0.7rem 0.5rem;
+  }
+}
+
+/* ─── Desktop ────────────────────────────────────────────────────────────── */
+
+@media (min-width: 1024px) {
+  .takes-category-card__top {
+    padding: 0.9rem 1rem 0.7rem;
+  }
+
+  .takes-category-card__channel {
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    margin-bottom: 0.55rem;
+  }
+
+  .takes-category-card__icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .takes-category-card__title {
+    font-size: 1.2rem;
+  }
+
+  .takes-category-card__footer {
+    padding: 0.5rem 1rem 0.55rem;
+  }
+
+  .takes-category-card__count {
+    font-size: 10.5px;
+  }
+
+  .takes-category-card__arrow {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .takes-category-card__top {
+    padding: 1rem 1.1rem 0.8rem;
+  }
+
+  .takes-category-card__title {
+    font-size: 1.3rem;
+  }
+
+  .takes-category-card__count {
+    font-size: 11px;
   }
 }

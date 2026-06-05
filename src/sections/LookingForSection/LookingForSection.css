@@ -969,3 +969,24 @@
   padding: 0 2px;
   opacity: 0.88;
 }
+
+/* ── DESKTOP: wider LCD frequency display ────────────────────── */
+@media (min-width: 1024px) {
+  .radio-lcd-freq {
+    font-size: 3.4rem;
+  }
+
+  .radio-readout-message {
+    font-size: clamp(12px, 1.4vw, 14px);
+  }
+
+  .radio-presets {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .radio-lcd-freq {
+    font-size: 3.8rem;
+  }
+}

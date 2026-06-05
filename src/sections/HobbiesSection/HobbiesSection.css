@@ -569,7 +569,6 @@
   flex: 1;
   overflow: hidden;
   min-width: 0;
-  /* Fixed height on mobile so cards have room */
   height: 260px;
 }
 
@@ -646,15 +645,12 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  /* Mobile: bigger card */
   width: 130px;
   cursor: pointer;
   position: absolute;
   left: 50%;
   top: 50%;
-  /* Center: half of card width + some offset for footer */
   margin-left: -65px;
-  /* 130px * 4/3 = ~173px height + ~28px footer ≈ 201px total / 2 = ~100px */
   margin-top: -100px;
 }
 
@@ -662,7 +658,6 @@
   .hs-slot {
     width: 150px;
     margin-left: -75px;
-    /* 150 * 4/3 = 200px + 28px footer = 228px / 2 = 114px */
     margin-top: -114px;
   }
 }
@@ -671,7 +666,6 @@
   .hs-slot {
     width: 160px;
     margin-left: -80px;
-    /* 160 * 4/3 = 213px + 28px footer = 241px / 2 = ~120px */
     margin-top: -120px;
   }
 }
@@ -878,4 +872,168 @@
 .hs-coin-dot.active {
   background: var(--sky-teal);
   box-shadow: 0 0 4px var(--sky-teal);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   DESKTOP PROPORTIONS
+════════════════════════════════════════════════════════════════════ */
+
+@media (min-width: 1024px) {
+  .hs-layout {
+    min-height: 460px;
+  }
+
+  .hs-detail-container {
+    width: 60%;
+    min-height: 460px;
+  }
+
+  .hs-carousel-wrapper {
+    width: 40%;
+  }
+
+  .hs-marquee-inner {
+    padding: 0.7rem 1.1rem 0.65rem;
+  }
+
+  .hs-marquee-title {
+    font-size: 1.65rem;
+    letter-spacing: 0.18em;
+  }
+
+  .hs-marquee-coin,
+  .hs-marquee-credits {
+    font-size: 0.8rem;
+  }
+
+  .hs-detail {
+    padding: 2rem 2.25rem;
+  }
+
+  .hs-detail-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    margin-bottom: 0.4rem;
+  }
+
+  .hs-detail-title {
+    font-size: 2.2rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .hs-detail-desc {
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+
+  .hs-detail-meter {
+    margin-top: 1rem;
+    padding: 7px 10px;
+  }
+
+  .hs-meter-label {
+    font-size: 0.8rem;
+  }
+
+  .hs-meter-pip {
+    height: 9px;
+  }
+
+  .hs-screen-hud {
+    font-size: 0.78rem;
+    top: 8px;
+    right: 10px;
+  }
+
+  .hs-insert-coin {
+    font-size: 0.85rem;
+    letter-spacing: 0.32em;
+    padding: 0.65rem 0 0.15rem;
+  }
+
+  .hs-nav-btn {
+    width: 38px;
+    height: 80px;
+    font-size: 1rem;
+  }
+
+  .hs-slot {
+    width: 180px;
+    margin-left: -90px;
+    /* 180 * 4/3 = 240 + 28 footer = 268 / 2 = 134 */
+    margin-top: -134px;
+  }
+
+  .hs-carousel-stage {
+    min-height: 320px;
+  }
+
+  .hs-slot-channel {
+    font-size: 0.75rem;
+  }
+
+  .hs-slot-name {
+    font-size: 0.78rem;
+  }
+
+  .hs-coin-footer {
+    padding: 7px 1.25rem;
+  }
+
+  .hs-coin-text {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+
+  .hs-coin-dot {
+    width: 6px;
+    height: 6px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hs-layout {
+    min-height: 520px;
+  }
+
+  .hs-detail-container {
+    min-height: 520px;
+  }
+
+  .hs-detail {
+    padding: 2.25rem 2.75rem;
+  }
+
+  .hs-detail-title {
+    font-size: 2.5rem;
+  }
+
+  .hs-detail-desc {
+    font-size: 0.84rem;
+  }
+
+  .hs-slot {
+    width: 200px;
+    margin-left: -100px;
+    /* 200 * 4/3 = 267 + 28 footer = 295 / 2 = 147 */
+    margin-top: -147px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .hs-layout {
+    min-height: 580px;
+  }
+
+  .hs-detail-container {
+    min-height: 580px;
+  }
+
+  .hs-detail-title {
+    font-size: 2.8rem;
+  }
+
+  .hs-detail-desc {
+    font-size: 0.88rem;
+  }
 }

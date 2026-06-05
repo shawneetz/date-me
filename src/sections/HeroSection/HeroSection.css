@@ -222,7 +222,7 @@
   letter-spacing: 0.1em;
 }
 
-/* ── Stat block (desktop: below photo, stacked rows) ─────────────── */
+/* ── Stat block ─────────────────────────────────────────────────── */
 .hero-stat-block {
   padding: 8px 10px 10px;
   border-top: 1px solid rgba(96, 200, 208, 0.2);
@@ -371,7 +371,7 @@
   user-select: none;
 }
 
-/* Fun fact — ">> SYS NOTE" style */
+/* Fun fact */
 .hero-sysnote {
   border-left: 2px solid rgba(96, 200, 208, 0.35);
   background: rgba(96, 200, 208, 0.04);
@@ -429,7 +429,6 @@
    ══════════════════════════════════════════════════════════════════ */
 @media (max-width: 639px) {
   .hero-card {
-    /* Stack: topbar / portrait-col / info-col / cityscape */
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto auto;
   }
@@ -439,17 +438,15 @@
     grid-row: 1;
   }
 
-  /* ── Portrait col: full width, fixed height ── */
   .hero-portrait-col {
     grid-column: 1;
     grid-row: 2;
     border-right: none;
     border-bottom: 2px solid var(--sky-teal);
-    flex-direction: column; /* photo stacked above stats */
+    flex-direction: column;
     height: auto;
   }
 
-  /* Photo fills width, taller on mobile for presence */
   .hero-photo-slot {
     width: 100%;
     height: 300px;
@@ -463,20 +460,18 @@
     left: 6px;
   }
 
-  /* ── Stats: horizontal 3-column grid across full width ── */
   .hero-stat-block {
     border-top: 1px solid rgba(96, 200, 208, 0.25);
     border-left: none;
     padding: 0;
-    flex-direction: row; /* three cells side by side */
+    flex-direction: row;
     gap: 0;
     background: rgba(0, 0, 0, 0.38);
   }
 
-  /* Each stat-row becomes a column cell */
   .hero-stat-row {
     flex: 1;
-    flex-direction: column; /* label above value */
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 2px;
@@ -484,7 +479,6 @@
     text-align: center;
   }
 
-  /* Dividers between cells */
   .hero-stat-row + .hero-stat-row {
     border-left: 1px solid rgba(96, 200, 208, 0.18);
   }
@@ -502,7 +496,6 @@
     text-align: center;
   }
 
-  /* ── Info col: full width below portrait ── */
   .hero-info-col {
     grid-column: 1;
     grid-row: 3;
@@ -510,7 +503,6 @@
     gap: 9px;
   }
 
-  /* Bigger name on mobile — fills the width better */
   .hero-name-line1 {
     font-size: clamp(2.8rem, 11vw, 3.4rem);
   }
@@ -532,11 +524,9 @@
   }
 
   .hero-name-line1 {
-    font-family: "VT323", monospace;
     font-size: clamp(1.8rem, 3vw, 2.4rem);
   }
   .hero-name-line2 {
-    font-family: "VT323", monospace;
     font-size: clamp(2.4rem, 5vw, 3.4rem);
   }
 }
@@ -544,15 +534,171 @@
 /* ── DESKTOP ─────────────────────────────────────────────────────── */
 @media (min-width: 1024px) {
   .hero-card {
-    grid-template-columns: 215px 1fr;
+    grid-template-columns: 280px 1fr;
+  }
+
+  .hero-topbar {
+    padding: 7px 14px 7px 12px;
+  }
+
+  .hero-topbar-title {
+    font-size: 15px;
+    letter-spacing: 0.26em;
+  }
+
+  .hero-topbar-signal {
+    font-size: 12px;
+  }
+
+  .hero-topbar-sigdot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .hero-photo-slot {
+    min-height: 220px;
+  }
+
+  .hero-player-badge {
+    font-size: 0.5rem;
+    padding: 3px 7px;
+    top: 10px;
+    left: 10px;
+  }
+
+  .hero-corner {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero-stat-block {
+    padding: 10px 14px 12px;
+    gap: 7px;
+  }
+
+  .hero-stat-key {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+
+  .hero-stat-val {
+    font-size: 16px;
+    letter-spacing: 0.12em;
+  }
+
+  .hero-info-col {
+    padding: 22px 28px 20px 28px;
+    gap: 13px;
+  }
+
+  .hero-eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.26em;
   }
 
   .hero-name-line1 {
-    font-family: "VT323", monospace;
-    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    font-size: clamp(2.4rem, 3vw, 3.2rem);
   }
   .hero-name-line2 {
-    font-family: "VT323", monospace;
-    font-size: clamp(2.8rem, 5.5vw, 4.2rem);
+    font-size: clamp(3.4rem, 5vw, 5.5rem);
+  }
+
+  .hero-terminal-rule {
+    font-size: 12px;
+  }
+
+  .hero-terminal-line {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .hero-sysnote {
+    padding: 10px 14px 10px 16px;
+    gap: 6px;
+  }
+
+  .hero-sysnote-label {
+    font-size: 11px;
+    letter-spacing: 0.22em;
+  }
+
+  .hero-sysnote p {
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  .hero-cityscape {
+    height: 48px;
+  }
+}
+
+/* ── WIDE DESKTOP ────────────────────────────────────────────────── */
+@media (min-width: 1280px) {
+  .hero-card {
+    grid-template-columns: 320px 1fr;
+  }
+
+  .hero-topbar-title {
+    font-size: 16px;
+  }
+
+  .hero-stat-block {
+    padding: 12px 16px 14px;
+    gap: 8px;
+  }
+
+  .hero-stat-key {
+    font-size: 12px;
+  }
+
+  .hero-stat-val {
+    font-size: 18px;
+  }
+
+  .hero-info-col {
+    padding: 28px 36px 24px 34px;
+    gap: 16px;
+  }
+
+  .hero-name-line1 {
+    font-size: clamp(2.8rem, 3.2vw, 3.8rem);
+  }
+  .hero-name-line2 {
+    font-size: clamp(4rem, 5.5vw, 6.5rem);
+  }
+
+  .hero-terminal-line {
+    font-size: 12.5px;
+  }
+
+  .hero-sysnote p {
+    font-size: 12.5px;
+  }
+
+  .hero-cityscape {
+    height: 56px;
+  }
+}
+
+/* ── ULTRA WIDE ──────────────────────────────────────────────────── */
+@media (min-width: 1536px) {
+  .hero-card {
+    grid-template-columns: 360px 1fr;
+  }
+
+  .hero-name-line1 {
+    font-size: clamp(3.2rem, 3.4vw, 4.2rem);
+  }
+  .hero-name-line2 {
+    font-size: clamp(4.5rem, 5.8vw, 7.2rem);
+  }
+
+  .hero-info-col {
+    padding: 32px 44px 28px 40px;
+  }
+
+  .hero-terminal-line,
+  .hero-sysnote p {
+    font-size: 13px;
   }
 }

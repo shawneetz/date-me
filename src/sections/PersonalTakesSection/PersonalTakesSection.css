@@ -1,9 +1,47 @@
-@import "../shared/section-layout.css";
+.takes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.35rem 0.15rem;
+}
 
-.takes-section-hint {
-  margin-bottom: 0.5rem;
-  font-family: "Space Mono", monospace;
-  font-size: 12px;
-  line-height: 1.55;
-  color: var(--sky-dusk);
+.takes-grid > [role="listitem"] {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.takes-grid > [role="listitem"]:hover,
+.takes-grid > [role="listitem"]:focus-within {
+  z-index: 10;
+}
+
+/* Tablet: 3 columns */
+@media (min-width: 640px) {
+  .takes-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    padding: 0.5rem 0.25rem;
+  }
+}
+
+/* Desktop: 4 columns, bigger cards */
+@media (min-width: 1024px) {
+  .takes-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.85rem;
+    padding: 0.6rem 0.3rem;
+  }
+}
+
+/* Wide desktop: still 3, but with generous gap — avoids cards that are too squat */
+@media (min-width: 1280px) {
+  .takes-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    padding: 0.65rem 0.35rem;
+  }
 }
